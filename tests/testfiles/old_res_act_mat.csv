@@ -1,0 +1,13 @@
+,place_order,send_invoice,receive_payment,check_availability,pick_item,pack_items,store_package,load_package,start_route,deliver_package,failed_delivery,unload_package,end_route
+Resource1,0,5,,,,,,,,,,,
+Resource2,0,7,,,,,,,,,,,
+Resource3,0,9,,,,,,,,,,,
+Resource4,,,5,5,5,,,,,,,,
+Resource5,,,7,7,7,,,,,,,,
+Resource6,,,9,9,9,,,,,,,,
+Resource7,,,,,,5,5,,,,,,
+Resource8,,,,,,7,5,,,,,,
+Resource9,,,,,,9,5,,,,,,
+Resource10,,,,,,,,5,1,5,5,5,1
+Resource11,,,,,,,,5,1,5,5,5,1
+Resource12,,,,,,,,5,1,5,5,5,1
