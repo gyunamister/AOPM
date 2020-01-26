@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="04ffe2e9-9f54-4b3b-b0c6-9a0a75dd3cd3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/algorithms" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/connections" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/dialogs" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/help" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/models" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/parameters" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/plugins" afterDir="true" />
+      <change beforePath="$PROJECT_DIR$/src/org/processmining/models" beforeDir="true" />
+      <change beforePath="$PROJECT_DIR$/src/org/processmining/newpackage/algorithms/YourAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/algorithms/YourAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/processmining/newpackage/connections/YourConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/connections/YourConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/processmining/newpackage/dialogs/YourDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/dialogs/YourDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/processmining/newpackage/parameters/YourParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/parameters/YourParameters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/processmining/newpackage/plugins/YourPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/plugins/YourPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/processmining/plugins" beforeDir="true" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1StBPBwBquls8FMDuY4EI5uMikh" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="IvyIDEA.ProjectSettings" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.ProM Package Manager (Workshop)">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.processmining.newpackage.Main" />
+      <module name="Workshop" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.processmining.newpackage.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProM Package Manager (Workshop)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="org.processmining.contexts.uitopia.packagemanager.PMFrame" />
+      <module name="Workshop" />
+      <option name="VM_PARAMETERS" value="-ea -Xmx1G -Djava.library.path=.//lib;.//stdlib" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>$USER_HOME$/.subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/.settings" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/tests/libs-external" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/.settings" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/tests/libs-external" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="04ffe2e9-9f54-4b3b-b0c6-9a0a75dd3cd3" name="Default Changelist" comment="" />
+      <created>1572372985052</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572372985052</updated>
+      <workItem from="1572372990036" duration="615000" />
+      <workItem from="1572373712377" duration="374000" />
+      <workItem from="1572374151671" duration="585000" />
+      <workItem from="1572374867235" duration="318000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>

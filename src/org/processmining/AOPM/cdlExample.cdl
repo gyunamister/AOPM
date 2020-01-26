@@ -1,0 +1,16 @@
+DEFINE  "c1: An order must be delivered in 200"  AS
+CONTEXTUALIZE
+  ENTITY  "Order"
+  OBJECT  "Order",  "Item",  "Package",  "Route"
+EVALUATE
+  CONDITION "Throughput",	ACQUIRED BY "Throughput",	<,	200
+ACQUIRE	"Throughput"
+  CALCULATE	"MAX(Timestamp) - MIN(Timestamp)";
+
+DEFINE  "c2: An availability of item must be checked before picking"  AS
+CONTEXTUALIZE
+  ENTITY  "Item"
+  OBJECT  "Item"
+  CONTEXT	"pick_item",	IN,	{activity}
+EVALUATE
+  CONDITION	"check_availability",	EVENTUALLY,	"pick_item";
