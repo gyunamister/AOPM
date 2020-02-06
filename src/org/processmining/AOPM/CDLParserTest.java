@@ -13,6 +13,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.processmining.AOPM.parser.CDLLexer;
 import org.processmining.AOPM.parser.CDLListenerImpl;
 import org.processmining.AOPM.parser.CDLParser;
+
+import com.google.gson.Gson;
  
 @SuppressWarnings("deprecation")
 public class CDLParserTest
@@ -20,7 +22,7 @@ public class CDLParserTest
  
 	public static void main(String[] args) throws Exception 
 	{
-	    String content = new Scanner(new File("/Users/GYUNAM/Documents/Workshop/src/org/processmining/newpackage/cdlExample.txt")).useDelimiter("\\Z").next();
+	    String content = new Scanner(new File("/Users/GYUNAM/Documents/Workshop/src/org/processmining/AOPM/cdlExample.cdl")).useDelimiter("\\Z").next();
 	    System.out.println( "JSON File:\n" + content + "\n\n");
 	    
 		ANTLRInputStream input = new ANTLRInputStream( content );
@@ -41,5 +43,8 @@ public class CDLParserTest
 		ParseTreeWalker walker = new ParseTreeWalker();
 		walker.walk(listener, tree);
 		System.out.println(constraintMap);
+		Gson gson = new Gson(); 
+		String json = gson.toJson(constraintMap); 
+		System.out.println(json);
 	}
 }

@@ -17,18 +17,6 @@ public class CDLBaseListener implements CDLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterContextualizeQuery(@NotNull CDLParser.ContextualizeQueryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitContextualizeQuery(@NotNull CDLParser.ContextualizeQueryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNegation(@NotNull CDLParser.NegationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -65,18 +53,6 @@ public class CDLBaseListener implements CDLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEvaluateQuery(@NotNull CDLParser.EvaluateQueryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEvaluateQuery(@NotNull CDLParser.EvaluateQueryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterUnaryPredicate(@NotNull CDLParser.UnaryPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -101,13 +77,13 @@ public class CDLBaseListener implements CDLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterContextPredicate(@NotNull CDLParser.ContextPredicateContext ctx) { }
+	@Override public void enterValidatePredicate(@NotNull CDLParser.ValidatePredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitContextPredicate(@NotNull CDLParser.ContextPredicateContext ctx) { }
+	@Override public void exitValidatePredicate(@NotNull CDLParser.ValidatePredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -276,6 +252,18 @@ public class CDLBaseListener implements CDLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitConstraint(@NotNull CDLParser.ConstraintContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRelevantEntityName(@NotNull CDLParser.RelevantEntityNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelevantEntityName(@NotNull CDLParser.RelevantEntityNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

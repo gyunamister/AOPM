@@ -10,6 +10,7 @@ public abstract class ObjectType {
 	public int priority;
 	public String object_name;
 	public int prev_sojourn_time;
+	public Order order;
 	// Status: ready_to_assign, work_in_process, finished
 	public String status;
 	// History: historical events

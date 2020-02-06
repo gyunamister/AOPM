@@ -1,9 +1,9 @@
 package org.processmining.AOPM.connections;
 
-import org.processmining.AOPM.algorithms.Simulator;
 import org.processmining.AOPM.models.YourFirstInput;
 import org.processmining.AOPM.models.YourSecondInput;
 import org.processmining.AOPM.parameters.YourParameters;
+import org.processmining.AOPM.simulation.Simulator;
 import org.processmining.framework.connections.impl.AbstractConnection;
 
 public class YourConnection extends AbstractConnection {

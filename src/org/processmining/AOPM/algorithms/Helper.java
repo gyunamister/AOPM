@@ -55,7 +55,7 @@ public class Helper {
 		}
 		
 		//Process Entity Type
-		public List<ObjectType> getObjectEntityList(String entity,Map<String, Map<String, Object>> eventlog, List<ObjectType> ongoingObjectList){
+		public List<ObjectType> getObjectEntityList(String entity, List<ObjectType> ongoingObjectList){
 			List<ObjectType> entityList = new ArrayList<ObjectType>();
 			if(entity.equals("Item")) {
 				for(ObjectType o : ongoingObjectList) {
@@ -127,47 +127,6 @@ public class Helper {
 				entityEventMap.put(o.getObjectName(),sublog);
 			}
 			return entityEventMap;
-		}
-		
-		//Data ACQ
-		public int calcThroughputTime(Map<String, Map<String, Object>> sublog, int currentTime) {
-			List<Object> times = new ArrayList<Object>();
-			for(String e : sublog.keySet()) {			
-				times.add(sublog.get(e).get("timestamp"));
-			}
-			int max=0;
-			for(Object i : times) {
-				if((int) i>max) {
-					max=(int) i;
-				}
-			}
-			int min=10000000;
-			for(Object i : times) {
-				if((int) i<min) {
-					min= (int) i;
-				}
-			}
-			int throughput_time = max-min;
-			return throughput_time;
-		}
-		
-		//Evaluate
-		public String evalRelational(int a, String relation, int b) {
-			String result = "ok";
-			if(relation.equals(">")) {
-				if(a<=b) {
-					result = "nok";
-				}
-			}else if(relation.equals("=")) {
-				if(a!=b) {
-					result = "nok";
-				}
-			}else if(relation.equals("<")) {
-				if(a>=b) {
-					result = "nok";
-				}
-			}
-			return result;
 		}
 		
 		//generate constraint instance

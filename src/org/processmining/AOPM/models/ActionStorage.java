@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.processmining.AOPM.algorithms.Simulator;
+import org.processmining.AOPM.simulation.Simulator;
 
 public class ActionStorage { 
 	public Simulator simulator;

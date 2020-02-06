@@ -7,6 +7,7 @@ public class Route extends ObjectType {
 	public boolean delivery_falied=false;
 	
 	public Route(String name, Package p, int t) {
+		this.order = p.order;
 		this.object_name = name;
 		this.packages = p;
 		this.packages.re_route=false;

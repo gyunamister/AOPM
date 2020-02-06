@@ -12,6 +12,7 @@ public class Package extends ObjectType {
 	public boolean delivery_done;
 	
 	public Package(String name, List<Item> i, int t) {
+		this.order = i.get(0).order;
 		object_name = name;
 		items = i;
 		available_at = t;

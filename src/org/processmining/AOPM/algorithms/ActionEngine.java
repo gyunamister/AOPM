@@ -12,6 +12,7 @@ import org.processmining.AOPM.models.ActionSet;
 import org.processmining.AOPM.models.ActionStorage;
 import org.processmining.AOPM.models.ConstraintInstance;
 import org.processmining.AOPM.models.ConstraintStorage;
+import org.processmining.AOPM.simulation.MultiProcess;
 
 public class ActionEngine { 
 	public ActionStorage action_storage;

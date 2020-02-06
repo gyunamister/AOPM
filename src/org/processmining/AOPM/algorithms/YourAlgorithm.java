@@ -3,6 +3,7 @@ package org.processmining.AOPM.algorithms;
 import org.processmining.AOPM.models.YourFirstInput;
 import org.processmining.AOPM.models.YourSecondInput;
 import org.processmining.AOPM.parameters.YourParameters;
+import org.processmining.AOPM.simulation.Simulator;
 import org.processmining.framework.plugin.PluginContext;
 
 public class YourAlgorithm {

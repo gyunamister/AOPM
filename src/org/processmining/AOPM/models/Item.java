@@ -4,7 +4,7 @@ public class Item extends ObjectType {
 	//public ItemProcess process;
 	
 	public Item(ObjectType o1, String name, int t) {
-		ObjectType order = o1;
+		this.order = (Order)o1;
 		object_name = name;
 		available_at = t;
 		setProcess(new ItemProcess());
