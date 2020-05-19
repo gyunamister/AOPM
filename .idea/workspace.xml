@@ -18,37 +18,35 @@
       <change beforePath="$PROJECT_DIR$/src/org/processmining/newpackage/plugins/YourPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/processmining/newpackage/plugins/YourPlugin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/processmining/plugins" beforeDir="true" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ProjectId" id="1StBPBwBquls8FMDuY4EI5uMikh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="settings.editor.selected.configurable" value="IvyIDEA.ProjectSettings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Subversion" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.ProM Package Manager (Workshop)">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.processmining.newpackage.Main" />
-      <module name="Workshop" />
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.processmining.AOPM.Main" />
+      <module name="AOPM" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/org/processmining/AOPM" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.processmining.newpackage.*" />
+          <option name="PATTERN" value="org.processmining.AOPM.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -56,17 +54,56 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProM Package Manager (Workshop)" type="Application" factoryName="Application">
+    <configuration name="ProM Package Manager (AOPM)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.processmining.contexts.uitopia.packagemanager.PMFrame" />
-      <module name="Workshop" />
+      <module name="AOPM" />
       <option name="VM_PARAMETERS" value="-ea -Xmx1G -Djava.library.path=.//lib;.//stdlib" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProM Package Manager (Workshop)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="org.processmining.contexts.uitopia.packagemanager.PMFrame" />
+      <module name="AOPM" />
+      <option name="VM_PARAMETERS" value="-ea -Xmx1G -Djava.library.path=.//lib;.//stdlib" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProM with UITopia (Workshop)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="org.processmining.contexts.uitopia.UI" />
+      <module name="AOPM" />
+      <option name="VM_PARAMETERS" value="-ea -Xmx1G -Djava.library.path=.//lib;.//stdlib" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RealLogMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.processmining.AOPM.RealLogMain" />
+      <module name="AOPM" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.processmining.AOPM.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.ProM Package Manager (AOPM)" />
+      <item itemvalue="Application.ProM Package Manager (Workshop)" />
+      <item itemvalue="Application.ProM with UITopia (Workshop)" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.RealLogMain" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RealLogMain" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -74,40 +111,6 @@
   <component name="SvnConfiguration" cleanupOnStartRun="true">
     <configuration>$USER_HOME$/.subversion</configuration>
     <supportedVersion>125</supportedVersion>
-  </component>
-  <component name="SvnFileUrlMappingImpl">
-    <option name="myMappingRoots">
-      <list>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$" />
-        </SvnCopyRootSimple>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$/.settings" />
-        </SvnCopyRootSimple>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$/tests/libs-external" />
-        </SvnCopyRootSimple>
-      </list>
-    </option>
-    <option name="myMoreRealMappingRoots">
-      <list>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$" />
-        </SvnCopyRootSimple>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$/.settings" />
-        </SvnCopyRootSimple>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$/tests/libs-external" />
-        </SvnCopyRootSimple>
-      </list>
-    </option>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -120,10 +123,60 @@
       <workItem from="1572373712377" duration="374000" />
       <workItem from="1572374151671" duration="585000" />
       <workItem from="1572374867235" duration="318000" />
+      <workItem from="1589744192337" duration="14000" />
+      <workItem from="1589744214143" duration="33000" />
+      <workItem from="1589747465924" duration="2642000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1208" y="27" key="#Main" timestamp="1589748146154">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1208" y="27" key="#Main/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589748146154" />
+    <state x="-1208" y="27" key="#Main_(1)" timestamp="1589747568129">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1208" y="27" key="#Main_(1)/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589747568129" />
+    <state x="-1150" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589748850973">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1150" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589748850973" />
+    <state x="-1121" y="204" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1589748141540">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1121" y="204" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589748141540" />
+    <state width="1358" height="217" key="GridCell.Tab.0.bottom" timestamp="1589827332124">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state width="1358" height="217" key="GridCell.Tab.0.bottom/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589827332124" />
+    <state width="1358" height="217" key="GridCell.Tab.0.center" timestamp="1589827332123">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state width="1358" height="217" key="GridCell.Tab.0.center/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589827332123" />
+    <state width="1358" height="217" key="GridCell.Tab.0.left" timestamp="1589827332122">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state width="1358" height="217" key="GridCell.Tab.0.left/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589827332122" />
+    <state width="1358" height="217" key="GridCell.Tab.0.right" timestamp="1589827332124">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state width="1358" height="217" key="GridCell.Tab.0.right/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589827332124" />
+    <state x="-1192" y="-146" key="SettingsEditor" timestamp="1589749027840">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1192" y="-146" key="SettingsEditor/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589749027840" />
+    <state x="-1071" y="192" key="chooseDestDirectoryDialog" timestamp="1589748341137">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1071" y="192" key="chooseDestDirectoryDialog/0.23.1440.877/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1589748341137" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/AOPM$Main.ic" NAME="Main Coverage Results" MODIFIED="1589748897583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.processmining.AOPM.*</FILTER>
+    </SUITE>
   </component>
 </project>

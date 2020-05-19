@@ -8,61 +8,30 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CDLListenerImpl extends CDLBaseListener {
-	Map<String, Map<String, Map<String,List<String>>>> constraintMap;
-	Map<String, Map<String,List<String>>> constraint;
-	public CDLListenerImpl(Map<String, Map<String, Map<String,List<String>>>> c) {
-		constraintMap = c;
+	Map<String, Map<String, Object>> constraintMap;
+	public Map<String, Object> constraint = this.generateConstraint();
+	public CDLListenerImpl(Map<String, Map<String, Object>> c) {
+		this.constraintMap = c;
 	} 
 	
-	public Map<String, Map<String,List<String>>> generateConstraint() {
-		Map<String, Map<String,List<String>>> constraint = new LinkedHashMap<String, Map<String,List<String>>>();
-		List<String> nametList = new ArrayList();
-		List<String> processEntityList = new ArrayList();
-		Map<String, List<String>> info = new LinkedHashMap<String, List<String>>();
-		info.put("constraintName",nametList);
-		info.put("processEntity",processEntityList);
-		constraint.put("constraintINFO", info);
-		
-		List<String> relevantEntityList = new ArrayList();
-		Map<String, List<String>> filter = new LinkedHashMap<String, List<String>>();
-		filter.put("relevantEntity", relevantEntityList);
-		constraint.put("filter", filter);
-		
-		List<String> validList = new ArrayList();
-		Map<String, List<String>> validate = new LinkedHashMap<String, List<String>>();
-		validate.put("condition", validList);
-		constraint.put("validate", validate);
-		
-		List<String> conditionList = new ArrayList();
-		Map<String, List<String>> evaluate = new LinkedHashMap<String, List<String>>();
-		evaluate.put("condition", conditionList);
-		constraint.put("evaluate", evaluate);
-		
-		/*
-		List<String> formulaList = new ArrayList();
-		List<String> formulaNameList = new ArrayList();
-		Map<String, List<String>> acq = new LinkedHashMap<String, List<String>>();
-		acq.put("formulaNameList",formulaNameList);
-		acq.put("formulaList",formulaList);
-		constraint.put("Acquire", acq);
-		
-		*/
+	public Map<String, Object> generateConstraint() {
+		Map<String, Object> constraint = new LinkedHashMap<String, Object>();
 		return constraint;
 	}
 	
 	@Override public void enterConstraintName(CDLParser.ConstraintNameContext ctx) { 
-		constraint = this.generateConstraint();
-        String constraintName = ctx.getText().substring(1,ctx.getText().length()-1);;
-        constraint.get("constraintINFO").get("constraintName").add(constraintName);   
+		String constraintName = ctx.getText().substring(1,ctx.getText().length()-1);;
+        this.constraint.put("constraintName", constraintName);   
     }
 	@Override public void enterEntityName(CDLParser.EntityNameContext ctx) { 
-		String entity = ctx.getText().substring(1,ctx.getText().length()-1);
-		constraint.get("constraintINFO").get("processEntity").add(entity);
+		String processEntityName = ctx.getText().substring(1,ctx.getText().length()-1);
+		constraint.put("processEntityName",processEntityName);
     }
-	@Override public void enterRelevantEntityName(CDLParser.RelevantEntityNameContext ctx) { 
-		String relavantEntity = ctx.getText().substring(1,ctx.getText().length()-1);
-		constraint.get("filter").get("relevantEntity").add(relavantEntity);
+	@Override public void enterFilterName(CDLParser.FilterNameContext ctx) { 
+		String filterName = ctx.getText().substring(1,ctx.getText().length()-1);;
+        this.constraint.put("filter", filterName);   
     }
+	
 	@Override public void enterRelationalPredicate(CDLParser.RelationalPredicateContext ctx) { 
 		String condition = ctx.getText();
 		List<String> conditionList = new ArrayList<String>(Arrays.asList(condition.split(",")));
@@ -77,7 +46,7 @@ public class CDLListenerImpl extends CDLBaseListener {
         String reunion = conditionList.stream()
 			      .map(n -> String.valueOf(n))
 			      .collect(Collectors.joining(","));
-		constraint.get("evaluate").get("condition").add(reunion);
+        this.constraint.put("evaluation", reunion);
     }
 	
 	@Override public void enterBinaryPredicate(CDLParser.BinaryPredicateContext ctx) { 
@@ -90,7 +59,7 @@ public class CDLListenerImpl extends CDLBaseListener {
         String reunion = conditionList.stream()
 			      .map(n -> String.valueOf(n))
 			      .collect(Collectors.joining(","));
-		constraint.get("evaluate").get("condition").add(reunion);
+        this.constraint.put("evaluation", reunion);
     }
 	
 	@Override public void enterSetPredicate(CDLParser.SetPredicateContext ctx) { 
@@ -104,18 +73,13 @@ public class CDLListenerImpl extends CDLBaseListener {
         String reunion = conditionList.stream()
 			      .map(n -> String.valueOf(n))
 			      .collect(Collectors.joining(","));
-		constraint.get("validate").get("condition").add(reunion);
+        this.constraint.put("evaluation", reunion);
     }
 	
-	@Override public void enterAcquireQuery(CDLParser.AcquireQueryContext ctx) { 
-		String expr = ctx.getText();
-		String formulaName = expr.split("\"")[1];
-		String formula = expr.split("\"")[3];
-		constraint.get("Acquire").get("formulaNameList").add(formulaName);
-		constraint.get("Acquire").get("formulaList").add(formula);
-    }
+	
 	@Override public void enterEos(CDLParser.EosContext ctx) { 
-		constraintMap.put(constraint.get("constraintINFO").get("constraintName").get(0),constraint);
+		constraintMap.put((String) this.constraint.get("constraintName"),this.constraint);
+		this.constraint = this.generateConstraint();
     }
 	
 }

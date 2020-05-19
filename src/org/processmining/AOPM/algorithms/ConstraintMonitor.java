@@ -1,169 +1,135 @@
 package org.processmining.AOPM.algorithms;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-import org.processmining.AOPM.models.ActionSet;
-import org.processmining.AOPM.models.ConstraintFunction;
+import org.processmining.AOPM.models.CMConfig;
+import org.processmining.AOPM.models.Constraint;
 import org.processmining.AOPM.models.ConstraintInstance;
-import org.processmining.AOPM.models.ObjectType;
-import org.processmining.AOPM.simulation.MultiProcess;
+import org.processmining.AOPM.models.EvalResult;
+import org.processmining.AOPM.models.EventStream;
+import org.processmining.AOPM.models.TimeMoment;
 
 public class ConstraintMonitor {
-	public MultiProcess mp;
-	public List<String> constraint_list = new ArrayList<String>();
-	public Map<String, ActionSet> action_pack;
-	ConstraintFunction cf;
+	CMConfig cmConfig;
+	Classification cl;
 	Helper helper;
 	Derivation calculator;
 	Evaluation evaluator;
-	
-	public ConstraintMonitor(MultiProcess m, Map<String, ActionSet> ap) {
-		action_pack = ap;
-		cf  = new ConstraintFunction();
-		mp = m; 
+
+	public ConstraintMonitor(CMConfig cmConfig) {
+		cl = new Classification();
 		helper = new Helper();
 		calculator = new Derivation();
 		evaluator = new Evaluation();
+		this.cmConfig=cmConfig;
 	}
-	
-//	public void setConstraintList(List<String> s) { 
-//		constraint_list = s;
-//	}
-	public List<ConstraintInstance> evaluate(int currentTime) {
-		List<ConstraintInstance> outputs = new ArrayList<ConstraintInstance>();
-		for(String asName : action_pack.keySet()) {
-			List<ConstraintInstance> ciList = newCheck(currentTime, action_pack.get(asName));
-			outputs.addAll(ciList);
-		}
-		return outputs;
-	}
-	
-	public List<ConstraintInstance> newCheck(int currentTime,ActionSet as){
-		//initialize list for monitoring output
-		List<ConstraintInstance> outputs = new ArrayList<ConstraintInstance>();
-		Map<String, Map<String, Object>> filteredLog = mp.eventlog; 
-		
-		//set constraints to monitor
-		Map<String, Map<String,List<String>>> constraint = as.constraint;
 
-		//filter object
-//		Current : {c1: An order must be delivered in 200={constraintINFO=
-//		{constraintName=[c1: An order must be delivered in 200]}, 
-//		Contextualize={Object=[Order, Item, Package, Route], ProcessEntity=[Order], Context=[]}, 
-//		Evaluate={Condition=[Throughput,<,200]}, 
-//		Acquire={formulaNameList=[Throughput], formulaList=[MAX(Timestamp) - MIN(Timestamp)]}}}
 
-//		Update: ConstraintINFO={ConstraintName=[],processEntity=[]}, Filter={Associate=[Item,Package,Route]}, 
-//		Validate={Context:[]}, Evaluate={Condition:[Throughput,<,200]}
-		List<String> relevantEntityType = constraint.get("filter").get("relevantEntity");
-		List<ObjectType> ongoingObjectList = mp.object_list;
-
-		//not necessary (Optional)
-		//Map<String, Map<String, Object>> filteredLog = helper.getEventsByObject(mp.eventlog, ongoingObjectList, relevantEntityType);
-		
-		//get process entities
-		String selectedEntity = constraint.get("constraintINFO").get("processEntity").get(0);
-		List<ObjectType> entityList = helper.getObjectEntityList(selectedEntity,ongoingObjectList);
-		
-		//ignore context
-		List<String> selectedContextList = constraint.get("validate").get("condition");
-		
-//		(TODO) At the moment, we assume that all related objects are considered. Instead, we need rel function defined at Helper.
-		//generate event collections
-		Map<String,List<ObjectType>> objectGraph = mp.object_graph;
-		Map<String, Map<String, Map<String, Object>>> setOfEntityEvents;
-		if(relevantEntityType.size()==1) {
-			setOfEntityEvents =
-					helper.generateEventsByObject(filteredLog,entityList);
-		}else {
-			setOfEntityEvents =
-					helper.generateEventsByGraph(filteredLog,objectGraph,entityList);
-		}
-		
-		//condition check 
-		List<String> selectedCondList = constraint.get("evaluate").get("condition");
-		for(String entity: setOfEntityEvents.keySet()) {
-			//We simply assume that we already have predefined functions. So, what we need to is just to call the function.
-			//evaluate
-			String result = "ok";
-			for(String c : selectedCondList) { 
-				if(c.contains(">") | c.contains("=") | c.contains("<")) {
-					String valueName=c.split(",")[0];
-					String comp=c.split(",")[1];
-					int thres=Integer.parseInt(c.split(",")[2]);
-					int val = 0;
-					if(c.contains("Throughput")) {
-						val = calculator.calcThroughputTime(setOfEntityEvents.get(entity), currentTime);
+	public Set<ConstraintInstance> monitor(int currentTime, EventStream es) {
+		Set<ConstraintInstance> outputs = new HashSet<ConstraintInstance>();
+		if(es.getEventSet().size()!=0) {
+			for(Constraint c : this.cmConfig.getConstraintSet()) {
+				Set<EvalResult> evalResults=new HashSet<EvalResult>();
+				for(TimeMoment tm: c.getTM()) {
+					if(tm.getTime()==currentTime) {
+						evalResults = c.getCF().apply(es.getEventSet(), tm.getTimeWindow());
 					}
-					result = evaluator.evalRelational(val,comp,thres);
-					if(result.equals("nok")) {
-						break;
-					}
-				}else if(c.contains("EVENTUALLY")) {
-					result = evaluator.evalEventually(c,setOfEntityEvents.get(entity));
+				}
+				for(EvalResult evalResult:evalResults) {
+					ConstraintInstance ci = new ConstraintInstance(c.getCF().cfName,evalResult.getContext(), currentTime,evalResult.outc);
+					outputs.add(ci);
 				}
 			}
-			ConstraintInstance ci = helper.generateConstraintInstance(as.constraint.get("constraintINFO").get("constraintName").get(0), entity, currentTime, result);
-			outputs.add(ci);
 		}
+		this.recordCI(outputs, currentTime);
 		return outputs;
 	}
-	
+
+	public void recordCI(Set<ConstraintInstance> cis, int currentTime) {
+		if(currentTime == 1) {
+			String dirName = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/wo-constraint-log-%s.csv",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+			Path file = Paths.get(dirName);
+			try {
+				String temp="";
+				List<String> lines = Arrays.asList(temp);
+				Files.write(file, lines, StandardCharsets.UTF_8);
+			} catch (IOException ex) {
+				System.out.println(ex);
+			}
+		}
+		for(ConstraintInstance ci:cis) {
+			List<String> lines = Arrays.asList(ci.toString());
+			String dirName = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/wo-constraint-log-%s.csv",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+			Path file = Paths.get(dirName);
+			try {
+				Files.write(file, lines, StandardOpenOption.APPEND);
+			} catch (IOException ex) {
+				System.out.println(ex);
+			}
+		}
+	}
+
 	/*
 	 * Below is a reference for stream operation!
 	 */
-	public Map<String, Map<String, Object>> getAllEvents(Map<String, Map<String, Object>> eventlog, List<ObjectType> g){
-		List<String> events = new ArrayList<String>();
-		for(ObjectType v : g) {
-			events.addAll(v.history);
-		}
-		Map<String, Map<String, Object>> sublog = new HashMap<String, Map<String, Object>>();
-		for(String s: events) {
-			Map<String, Object> e = eventlog.get(s);
-			sublog.put(s,e);
-		}
-		return sublog;
-	}
-	
-	public Map<String, Map<String, Object>> getSingleObjectEvents(Map<String, Map<String, Object>> eventlog, ObjectType o){
-		List<String> events = new ArrayList<String>();
-		events.addAll(o.history);
-		Map<String, Map<String, Object>> sublog = new HashMap<String, Map<String, Object>>();
-		for(String s: events) {
-			Map<String, Object> e = eventlog.get(s);
-			sublog.put(s,e);
-		}
-		return sublog;
-	}
-	
-	public Map<String, Map<String, Object>> getProcessComponentEvents(Map<String, Map<String, Object>> eventlog, String comp, String v, int t){
-		int  relative_from_t;
-		int from_t=100;
-		if(t-from_t<0) {
-			relative_from_t = 0;
-		}else {
-			relative_from_t = t-from_t;
-		}
-		List<String> events = new ArrayList<String>();
-		events = eventlog.entrySet().stream()
-				.filter(x -> x.getValue().get(comp).toString().equals(v) && relative_from_t<= (int)x.getValue().get("timestamp"))
-				.map(x -> x.getKey()).collect(Collectors.toList());
-		Map<String, Map<String, Object>> sublog = new HashMap<String, Map<String, Object>>();
-		for(String s: events) {
-			Map<String, Object> e = eventlog.get(s);
-			sublog.put(s,e);
-		}
-		return sublog;
-	}
-	
-	private double calculateAverage(List <Integer> marks) {
-		OptionalDouble average = marks.stream().mapToDouble(a -> a).average();
-		return average.isPresent() ? average.getAsDouble() : 0;
-	}
-	
+//	public Map<String, Map<String, Object>> getAllEvents(Map<String, Map<String, Object>> eventSet, Set<ObjectType> g){
+//		Set<String> events = new HashSet<String>();
+//		for(ObjectType v : g) {
+//			events.addAll(v.history);
+//		}
+//		Map<String, Map<String, Object>> sublog = new HashMap<String, Map<String, Object>>();
+//		for(String s: events) {
+//			Map<String, Object> e = eventSet.get(s);
+//			sublog.put(s,e);
+//		}
+//		return sublog;
+//	}
+//
+//	public Map<String, Map<String, Object>> getSingleObjectEvents(Map<String, Map<String, Object>> eventSet, ObjectType o){
+//		Set<String> events = new HashSet<String>();
+//		events.addAll(o.history);
+//		Map<String, Map<String, Object>> sublog = new HashMap<String, Map<String, Object>>();
+//		for(String s: events) {
+//			Map<String, Object> e = eventSet.get(s);
+//			sublog.put(s,e);
+//		}
+//		return sublog;
+//	}
+//
+//	public Map<String, Map<String, Object>> getProcessComponentEvents(Map<String, Map<String, Object>> eventSet, String comp, String v, int t){
+//		int  relative_from_t;
+//		int from_t=100;
+//		if(t-from_t<0) {
+//			relative_from_t = 0;
+//		}else {
+//			relative_from_t = t-from_t;
+//		}
+//		Set<String> events = new HashSet<String>();
+//		events = eventSet.entrySet().stream()
+//				.filter(x -> x.getValue().get(comp).toString().equals(v) && relative_from_t<= (int)x.getValue().get("timestamp"))
+//				.map(x -> x.getKey()).collect(Collectors.toSet());
+//		Map<String, Map<String, Object>> sublog = new HashMap<String, Map<String, Object>>();
+//		for(String s: events) {
+//			Map<String, Object> e = eventSet.get(s);
+//			sublog.put(s,e);
+//		}
+//		return sublog;
+//	}
+//
+//	private double calculateAverage(Set <Integer> marks) {
+//		OptionalDouble average = marks.stream().mapToDouble(a -> a).average();
+//		return average.isPresent() ? average.getAsDouble() : 0;
+//	}
+
 }

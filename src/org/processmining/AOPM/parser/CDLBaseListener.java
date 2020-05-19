@@ -53,6 +53,18 @@ public class CDLBaseListener implements CDLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFilterName(@NotNull CDLParser.FilterNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFilterName(@NotNull CDLParser.FilterNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUnaryPredicate(@NotNull CDLParser.UnaryPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -252,18 +264,6 @@ public class CDLBaseListener implements CDLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitConstraint(@NotNull CDLParser.ConstraintContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRelevantEntityName(@NotNull CDLParser.RelevantEntityNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRelevantEntityName(@NotNull CDLParser.RelevantEntityNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

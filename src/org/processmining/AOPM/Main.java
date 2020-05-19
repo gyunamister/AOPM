@@ -1,11 +1,17 @@
 package org.processmining.AOPM;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import org.processmining.AOPM.models.ActionSet;
+import org.processmining.AOPM.models.AEConfig;
+import org.processmining.AOPM.models.ActionFormula;
+import org.processmining.AOPM.models.CMConfig;
+import org.processmining.AOPM.models.ConstraintFormula;
+import org.processmining.AOPM.models.ContextDescription;
+import org.processmining.AOPM.models.TimeWindow;
+import org.processmining.AOPM.simulation.ProcessSimulation;
 import org.processmining.AOPM.simulation.Simulator;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -13,50 +19,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class Main {
 	public static void main (String[] args) throws JsonParseException, JsonMappingException, IOException{		
-		int e=1;
-		String s = "{\"c1: An order must be delivered in 200\":{\"constraintINFO\":{\"constraintName\":[\"c1: An order must be delivered in 200\"],\"processEntity\":[\"Order\"]},\"filter\":{\"relevantEntity\":[\"Order\",\"Item\",\"Package\",\"Route\"]},\"validate\":{\"condition\":[\"membership,IN,Gold\"]},\"evaluate\":{\"condition\":[\"Throughput,>,200\"]}}}";
-		System.out.println(s);
-		Map<String, Map<String,List<String>>> constraint = new LinkedHashMap<String, Map<String,List<String>>>();
-		List<String> nametList = new ArrayList();
-		nametList.add("c1: An order must be delivered in 200");
-		List<String> processEntityList = new ArrayList();
-		processEntityList.add("Order");
-		Map<String, List<String>> info = new LinkedHashMap<String, List<String>>();
-		info.put("constraintName",nametList);
-		info.put("processEntity",processEntityList);
-		constraint.put("constraintINFO", info);
 		
-		List<String> relevantEntityList = new ArrayList();
-		relevantEntityList.add("Order");
-		relevantEntityList.add("Item");
-		relevantEntityList.add("Package");
-		relevantEntityList.add("Route");
-		Map<String, List<String>> filter = new LinkedHashMap<String, List<String>>();
-		filter.put("relevantEntity", relevantEntityList);
-		constraint.put("filter", filter);
-		
-		List<String> validList = new ArrayList();
-		validList.add("membership,IN,Gold");
-		Map<String, List<String>> validate = new LinkedHashMap<String, List<String>>();
-		validate.put("condition", validList);
-		constraint.put("validate", validate);
-		
-		List<String> conditionList = new ArrayList();
-		conditionList.add("Throughput,>,200");
-		Map<String, List<String>> evaluate = new LinkedHashMap<String, List<String>>();
-		evaluate.put("condition", conditionList);
-		constraint.put("evaluate", evaluate);
-		String action_condition1 = "count,>,10";
-		String action1 = "alert operation manager";
-		ActionSet as = new ActionSet(constraint,action_condition1,action1);
-		System.out.println(as);
-		Map<String, ActionSet> action_pack = new LinkedHashMap<String, ActionSet>();
-		action_pack.put("c1", as);
 		/*
 		String constraint2 = "c2: An availability of item must be checked before picking";
 		String action_condition2 = "count,>,3";
 		String action2 = "alert operation manager";
-		List<String> temp_set2 = new ArrayList<String>();
+		Set<String> temp_set2 = new HashSet<String>();
 		temp_set2.add(constraint2);
 		temp_set2.add(action_condition2);
 		temp_set2.add(action2);
@@ -65,7 +33,7 @@ public class Main {
 		String constraint3 = "cp1: no activity exceeds average sojourn time of 100";
 		String action_condition3 = "count,>,10";
 		String action3 = "alert operation manager";
-		List<String> temp_set3 = new ArrayList<String>();
+		Set<String> temp_set3 = new HashSet<String>();
 		temp_set3.add(constraint3);
 		temp_set3.add(action_condition3);
 		temp_set3.add(action3);
@@ -74,16 +42,77 @@ public class Main {
 		String constraint4 = "cp2: no resource involved in more than 3 activities";
 		String action_condition4 = "count,>,1";
 		String action4 = "alert operation manager";
-		List<String> temp_set4 = new ArrayList<String>();
+		Set<String> temp_set4 = new HashSet<String>();
 		temp_set4.add(constraint4);
 		temp_set4.add(action_condition4);
 		temp_set4.add(action4);
 		action_pack.put("c4",temp_set4);
 		*/
+		CMConfig cmConfig = new CMConfig(10000);
+		String cfName = "c1: An order must be delivered in 72";
+		String filter= "event";
 		
-		Simulator sm = new Simulator(action_pack);
-		for(int t=0;t<1000;t++) {
-			e = sm.simulate(t,e);
+		Set<String> procSet = new HashSet<String>();
+		Set<String> actSet = new HashSet<String>();
+		Set<String> resSet = new HashSet<String>();
+		Map<String,Set<String>> omap = new LinkedHashMap<String,Set<String>>();
+		Map<String,Set<String>> vmap = new LinkedHashMap<String,Set<String>>();
+		String proc = "OH";
+		Set<String> orderSet = new HashSet<String>();
+		orderSet.add("forall");
+		omap.put("Order", orderSet);
+		ContextDescription ctxdesc = new ContextDescription(procSet,actSet,resSet,omap,vmap);
+		
+		String predicate = "Throughput,<,72";
+		
+		ConstraintFormula cf = new ConstraintFormula(cfName, ctxdesc, filter, predicate);
+		Map<String, Object> constraint = new LinkedHashMap<String, Object>();
+		constraint.put("cf", cf);
+		cmConfig.addConstraint(cf, 24, 24, new TimeWindow(-144,0));;
+		
+//		Map<String, Set<String>> ccvDescription = new LinkedHashMap<String, Set<String>>();
+		AEConfig aeConfig = new AEConfig(10000);
+		String afName = "a1: set higher priority for delayed orders";
+		Map<String, Set <String>> ccvDescription = new LinkedHashMap<String, Set <String>>();
+		Set<String> cfs = new HashSet<String>();
+		cfs.add("c1: An order must be delivered in 72");
+		ccvDescription.put("cf", cfs);
+		Set<String> orders = new HashSet<String>();
+		orders.add("foreach");
+		ccvDescription.put("Order", orders);
+		Set<String> timeSet = new HashSet<String>();
+		timeSet.add("all");
+		ccvDescription.put("time", timeSet);
+		String actionPredicate = "count,>,0";
+		String operation = "Set higher priority";
+		Map<String, String> pmap = new LinkedHashMap<String, String>();
+		pmap.put("target", "Order");
+		ActionFormula af = new ActionFormula(afName, ccvDescription, actionPredicate, operation, pmap);
+		aeConfig.addAction(af, 24, 24, new TimeWindow(-24,0));
+
+		String afName2 = "a2: alert case manager for the delayed orders";
+		Map<String, Set <String>> ccvDescription2 = new LinkedHashMap<String, Set <String>>();
+		Set<String> cfs2 = new HashSet<String>();
+		cfs2.add("c1: An order must be delivered in 72");
+		ccvDescription2.put("cf", cfs2);
+		Set<String> orders2 = new HashSet<String>();
+		orders2.add("foreach");
+		ccvDescription2.put("Order", orders2);
+		Set<String> timeSet2 = new HashSet<String>();
+		timeSet2.add("all");
+		ccvDescription2.put("time", timeSet2);
+		String actionPredicate2 = "count,>,1";
+		String operation2 = "Send an email to the case manager";
+		Map<String, String> pmap2 = new LinkedHashMap<String, String>();
+		pmap2.put("target", "Order");
+		ActionFormula af2 = new ActionFormula(afName2, ccvDescription2, actionPredicate2, operation2, pmap2);
+		aeConfig.addAction(af2, 24, 24, new TimeWindow(-48,0));
+		
+		ProcessSimulation pSim = new ProcessSimulation();
+		Simulator sm = new Simulator(cmConfig,aeConfig,pSim);
+		for(int t=0;t<720;t++) {
+			pSim.simulateProcess(t);
+			sm.simulate(t);
 		}
 	}
 }

@@ -1,35 +1,62 @@
 package org.processmining.AOPM.models;
 
+import java.util.Set;
+
 public class ConstraintInstance {
-	public String constraint_name;
-	public String object_id;
-	public String check;
+	public String cfName;
+	public Context ctx;
+	public String outc;
 	public int time;
 	
-	public ConstraintInstance(String constr, String o, int t, String c) {
-		this.constraint_name = constr;
-		this.object_id = o;
-		this.check = c;
+	public ConstraintInstance(String cfName, Context ctx, int t, String outcome) {
+		this.cfName = cfName;
+		this.ctx = ctx;
+		this.outc = outcome;
 		this.time = t;
 	}
 	
-	public String getConstraintName() {
-		return this.constraint_name;
+	public ConstraintInstance getThis() {
+		return this;
 	}
 	
-	public String getObjectId() {
-		return this.object_id;
+	public String getcfName() {
+		return this.cfName;
 	}
 	
-	public String getCheck() {
-		return this.check;
+	public Context getContext() {
+		return this.ctx;
+	}
+	
+	public String getoutc() {
+		return this.outc;
 	}
 	
 	public int getTime() {
 		return this.time;
 	}
 	
+	public String getOrder() {
+		return this.ctx.getOmap().get("Order").iterator().next();
+	}
+	
+	public String getNull() {
+		return "null";
+	}
+	
+	public Set<String> projectContext(String d){
+		if(d=="proc") {
+			return this.ctx.getProcSet();
+		}else if(d=="act") {
+			return this.ctx.getActSet();
+		}else if(d=="res") {
+			return this.ctx.getResSet();
+		}else {
+			return this.ctx.getOmap().get(d);
+		}
+	}
+	
 	public String toString() {
-		return this.constraint_name + this.object_id + this.check + this.time;
+//		return this.cfName + "," + this.ctx + "," + this.time + "," + this.outc;
+		return this.ctx.getOmap().get("Order").iterator().next() + "," + this.time + "," + this.outc;
 	}
 }

@@ -4,6 +4,7 @@ import org.processmining.AOPM.models.YourFirstInput;
 import org.processmining.AOPM.models.YourSecondInput;
 import org.processmining.AOPM.parameters.YourParameters;
 import org.processmining.AOPM.simulation.Simulator;
+import org.processmining.EIS.Simulation.ProcessSimulation;
 import org.processmining.framework.connections.impl.AbstractConnection;
 
 public class YourConnection extends AbstractConnection {
@@ -11,7 +12,7 @@ public class YourConnection extends AbstractConnection {
 	/**
 	 * Label for first input.
 	 */
-	public final static String FIRSTINPUT = "First Input";
+	public final static String FIRSTINPUT = "Artificial Information System";
 
 	/**
 	 * Label for second input.
@@ -39,6 +40,19 @@ public class YourConnection extends AbstractConnection {
 		super("Your Connection");
 		put(FIRSTINPUT, input1);
 		put(SECONDINPUT, input2);
+		put(OUTPUT, output);
+		this.parameters = new YourParameters(parameters);
+	}
+	
+	public YourConnection(ProcessSimulation input1, Simulator output, YourParameters parameters) {
+		super("Your Connection");
+		put(FIRSTINPUT, input1);
+		put(OUTPUT, output);
+		this.parameters = new YourParameters(parameters);
+	}
+	
+	public YourConnection(Simulator output, YourParameters parameters) {
+		super("Your Connection");
 		put(OUTPUT, output);
 		this.parameters = new YourParameters(parameters);
 	}

@@ -1,10 +1,8 @@
 package org.processmining.AOPM.algorithms;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
-
-import org.processmining.AOPM.models.ConstraintInstance;
+import java.util.Set;
 
 public class Evaluation {
 		//Evaluate
@@ -30,7 +28,7 @@ public class Evaluation {
 			String result = "ok";
 			String a = c.split(",")[0];
 			String b = c.split(",")[2];
-			List<Object> acts = new ArrayList<Object>();
+			Set<Object> acts = new HashSet<Object>();
 			for(String e : eventCollection.keySet()) {
 				acts.add(eventCollection.get(e).get("activity"));
 			}
@@ -38,11 +36,6 @@ public class Evaluation {
 				result = "nok";
 			}
 			return result;
-		}
-		
-		//generate constraint instance
-		public ConstraintInstance generateConstraintInstance(String constraintName, String entityName, int currentTime, String result) {
-			return new ConstraintInstance(constraintName, entityName, currentTime, result);
 		}
 	
 	

@@ -1,7 +1,7 @@
 package org.processmining.AOPM.dialogs;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,11 +13,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -25,19 +22,21 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.processmining.AOPM.models.ActionSet;
-import org.processmining.AOPM.models.YourFirstInput;
-import org.processmining.AOPM.models.YourSecondInput;
+import org.processmining.AOPM.models.AEConfig;
+import org.processmining.AOPM.models.ActionFormula;
+import org.processmining.AOPM.models.CMConfig;
+import org.processmining.AOPM.models.ConstraintFormula;
+import org.processmining.AOPM.models.TimeWindow;
 import org.processmining.AOPM.parameters.YourParameters;
+import org.processmining.AOPM.parser.ADLLexer;
+import org.processmining.AOPM.parser.ADLListenerImpl;
+import org.processmining.AOPM.parser.ADLParser;
 import org.processmining.AOPM.parser.CDLLexer;
 import org.processmining.AOPM.parser.CDLListenerImpl;
 import org.processmining.AOPM.parser.CDLParser;
-import org.processmining.AOPM.plugins.RelativeLayout;
 import org.processmining.contexts.uitopia.UIPluginContext;
-import org.processmining.framework.plugin.PluginContext;
 import org.processmining.framework.util.ui.widgets.ProMComboBox;
 import org.processmining.framework.util.ui.widgets.ProMTable;
-import org.processmining.framework.util.ui.widgets.ProMTextField;
 
 import com.fluxicon.slickerbox.factory.SlickerFactory;
 
@@ -45,374 +44,297 @@ import info.clearthought.layout.TableLayout;
 import info.clearthought.layout.TableLayoutConstants;
 
 public class InputDialog extends JPanel {
-	private int set_number = 1;
-//	public ConstraintPanel const_panel;
+	public int constrNumber=1;
+	public int actionNumber=1;
+	Map<String, Map<String, Object>> constraintMap = new LinkedHashMap<String, Map<String, Object>>();
+	Map<String, ConstraintFormula> cfMap;
+//	Map<String, Map<String, Object>> cmConfig = new LinkedHashMap<String, Map<String, Object>>();
+	CMConfig cmConfig = new CMConfig(10000);
+	Map<String, Map<String, Object>> actionMap = new LinkedHashMap<String, Map<String, Object>>();
+	Map<String, ActionFormula> afMap;
+//	Map<String, Map<String, Object>> aeConfig = new LinkedHashMap<String, Map<String, Object>>();
+	AEConfig aeConfig = new AEConfig(10000);
 	public String constraint;
-	Map<String, Map<String, Map<String,List<String>>>> constraintMap;
 	public String action;
-	public ConditionPanel cond_panel;
-//	public ActionPanel act_panel;
-	/**
-	 *
-	 */
+	public ConstraintConfPanel constraintPanel;
+	public ActionConfPanel actionPanel;
+	public ProMTable constrTable;
+	public ProMTable actionTable;
+	public YourParameters parameters;
+
 	private static final long serialVersionUID = -60087716353524468L;
 
 	/**
 	 * The JPanel that allows the user to set (a subset of) the parameters.
 	 */
-	
+
 	public ParseTree readCDL()  {
 		String content = "File not found";
 		try {
-			content = new Scanner(new File("/Users/GYUNAM/Documents/Workshop/src/org/processmining/AOPM/cdlExample.cdl")).useDelimiter("\\Z").next();
+			content = new Scanner(new File("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/cdlExample.cdl")).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println( "CDL File:\n" + content + "\n\n");
-		
+
 		ANTLRInputStream input = new ANTLRInputStream( content );
-		
+
 		CDLLexer lexer = new CDLLexer(input);
-		
+
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		
+
 		CDLParser parser = new CDLParser(tokens);
-		
+
 		ParseTree tree = parser.constraint();
 		return tree;
 	}
-	
-	public InputDialog(UIPluginContext context, YourFirstInput input1, YourSecondInput input2,
+
+	public ParseTree readADL()  {
+		String content = "File not found";
+		try {
+			content = new Scanner(new File("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/adlExample.adl")).useDelimiter("\\Z").next();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println( "ADL File:\n" + content + "\n\n");
+
+		ANTLRInputStream input = new ANTLRInputStream( content );
+
+		ADLLexer lexer = new ADLLexer(input);
+
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+		ADLParser parser = new ADLParser(tokens);
+
+		ParseTree tree = parser.action();
+		return tree;
+	}
+
+	public Map<String, ConstraintFormula> gencfMap(Map<String, Map<String, Object>> constraintMap) {
+		Map<String, ConstraintFormula> cfMap = new LinkedHashMap<String, ConstraintFormula>();
+		for(String cfName:constraintMap.keySet()) {
+			Map<String, Object> constraint = constraintMap.get(cfName);
+			ConstraintFormula cf = new ConstraintFormula(cfName, (String) constraint.get("processEntityName"), (String) constraint.get("filter"), (String) constraint.get("evaluation"));
+			cfMap.put(cfName,cf);
+		}
+		return cfMap;
+	}
+
+	public Map<String, ActionFormula> genafMap(Map<String, Map<String, Object>> actionMap) {
+		Map<String, ActionFormula> afMap = new LinkedHashMap<String, ActionFormula>();
+		for(String afName:actionMap.keySet()) {
+			Map<String, Object> action = actionMap.get(afName);
+			ActionFormula af = new ActionFormula(afName, (Map<String, List<String>>) action.get("ccv"), (String) action.get("assessment"), (String) action.get("action"), (Map<String, Object>) action.get("parameter"));
+			afMap.put(afName,af);
+		}
+		return afMap;
+	}
+
+	public InputDialog(UIPluginContext context,
 			final YourParameters parameters) {
 		//read CDL
-		ParseTree tree = this.readCDL();
-		constraintMap = new LinkedHashMap<String, Map<String, Map<String,List<String>>>>(); 
-		CDLListenerImpl listener = new CDLListenerImpl(constraintMap);
-		ParseTreeWalker walker = new ParseTreeWalker();
-		walker.walk(listener, tree);
-		
-		
-		double size[][] = { { TableLayoutConstants.FILL }, { 30, 30, 30, 30, TableLayoutConstants.FILL } };
+		this.parameters = parameters;
+		ParseTree cdlTree = this.readCDL();
+		CDLListenerImpl cdlListener = new CDLListenerImpl(this.constraintMap);
+		ParseTreeWalker cdlWalker = new ParseTreeWalker();
+		cdlWalker.walk(cdlListener, cdlTree);
+		this.cfMap = this.gencfMap(this.constraintMap);
+
+		//read ADL
+		ParseTree adlTree = this.readADL();
+		ADLListenerImpl adlListener = new ADLListenerImpl(this.actionMap);
+		ParseTreeWalker adlWalker = new ParseTreeWalker();
+		adlWalker.walk(adlListener, adlTree);
+		this.afMap = this.genafMap(this.actionMap);
+
+
+		double size[][] = { { TableLayoutConstants.FILL }, { 30, 30, 30, 30, TableLayoutConstants.FILL, 30, 30, 30, 30, TableLayoutConstants.FILL } };
 		setLayout(new TableLayout(size));
 
-		//const_panel = new ConstraintPanel(context);
-		
-//		String constraint_list[] = {
-//				"Select constraint", 
-//				"c1: An order must be delivered in 200",  
-//				"c2: An availability of item must be checked before picking",
-//				"c3: An order must be delivered in 100",
-//				"cp1: Maximum number of ongoing orders is 50", 
-//				"cp2: There is no resource involved in more than 5 activities" 
-//			};
+		this.constrTable = this.genConstraintTable();
+		this.constrTable.setPreferredSize(new Dimension(50, 100));
+		add(this.constrTable, "0, 4");
+
+		JLabel cLabel = this.genLabel("Constraint Monitoring");
+		cLabel.setPreferredSize(new Dimension(15, 100));
+		add(cLabel,"0, 0");
+
+		//Part1: Constraint selection
+		ProMComboBox<String> constraintComboBox = this.genConstraintComboBox();
+		add(constraintComboBox, "0, 1");
+
+		//Part2: Constraint specification
+		this.constraintPanel = new ConstraintConfPanel(context,constrTable);
+		this.constraintPanel.setPreferredSize(new Dimension(15, 100));
+		add(this.constraintPanel, "0, 2");
+
+		JButton constrAddButton = this.genConstAddButton();
+		add(constrAddButton,"0, 3");
+
+		this.actionTable = this.genActionTable();
+		this.actionTable.setPreferredSize(new Dimension(15, 100));
+		add(this.actionTable, "0, 9");
+
+		JLabel aLabel = this.genLabel("Action Engine");
+		aLabel.setPreferredSize(new Dimension(15, 100));
+		add(aLabel,"0, 5");
+
+		//Part3: Action selection
+		ProMComboBox<String> actionComboBox = this.genActionComboBox();
+		add(actionComboBox, "0, 6");
+
+		//Part4: Action specification
+		this.actionPanel = new ActionConfPanel(context, actionTable);
+		this.actionPanel.setPreferredSize(new Dimension(15, 100));
+		add(this.actionPanel, "0, 7");
+
+		JButton actionAddButton = this.genActionAddButton();
+		add(actionAddButton,"0, 8");
+	}
+
+	public JLabel genLabel(String title) {
+		JLabel label = SlickerFactory.instance().createLabel(title);
+		label.setFont(new Font("Serif", Font.BOLD, 14));
+		return label;
+	}
+
+	public ProMComboBox<String> genConstraintComboBox() {
 		List<String> constraintList = new ArrayList<String>();
 		constraintList.add("Select constraint");
-		for(String constraintName:constraintMap.keySet()) {
+		for(String constraintName:this.constraintMap.keySet()) {
 			constraintList.add(constraintName);
 		}
-		
+
 		final ProMComboBox<String> constraintComboBox = new ProMComboBox<String>(constraintList);
 		constraintComboBox.setSelectedIndex(0);
 		constraintComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println(c_constraint.getSelectedItem());
 				constraint = constraintComboBox.getSelectedItem().toString();
 			}
 		});
-		constraintComboBox.setPreferredSize(new Dimension(30, 100));
-		add(constraintComboBox, "0, 0");
-		
-		cond_panel = new ConditionPanel(context);
-		cond_panel.setPreferredSize(new Dimension(30, 100));
-		add(cond_panel, "0, 1");
-		
-		/*
-		act_panel = new ActionPanel(context);
-		add(act_panel, "0, 2");
-		*/
-		String action_list[] = {
-				"Select action", 
-				"a1: alert case manager", 
-				"a2: alert operation director", 
-				"a3: alert managing director",
-				"a4: alert case manager with suggestion",
-				"a5: alert operation director with suggestion",
-				"a6: alert managing director with suggestion",
-				"a7: add resource" 
-			};
-		final ProMComboBox<String> actionComboBox = new ProMComboBox<String>(action_list);
-		actionComboBox.setOpaque(false);
+		constraintComboBox.setPreferredSize(new Dimension(15, 100));
+		return constraintComboBox;
+	}
+
+	public ProMComboBox<String> genActionComboBox() {
+		List<String> actionList = new ArrayList<String>();
+		actionList.add("Select action");
+		for(String actionName:actionMap.keySet()) {
+			actionList.add(actionName);
+		}
+
+		final ProMComboBox<String> actionComboBox = new ProMComboBox<String>(actionList);
 		actionComboBox.setSelectedIndex(0);
 		actionComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println(c_action.getSelectedItem());
 				action = actionComboBox.getSelectedItem().toString();
 			}
 		});
-		actionComboBox.setPreferredSize(new Dimension(30, 100));
-//		add(actionComboBox, new Float(20));
-		add(actionComboBox, "0, 2");
-		
-		
-        TableModel t = new DefaultTableModel() { 
-        	String[] column_names = {"Action set", "Constraint", "Action condition", "Action"}; 
+		actionComboBox.setPreferredSize(new Dimension(15, 100));
+		return actionComboBox;
+	}
 
-            @Override 
-            public int getColumnCount() { 
-                return column_names.length; 
-            } 
+	public ProMTable genActionTable() {
+		TableModel actionTableModel = new DefaultTableModel() {
+        	String[] column_names = {"Action ID", "Action Description", "Interval", "Offset", "Time"};
 
-            @Override 
-            public String getColumnName(int index) { 
-                return column_names[index]; 
-            } 
+            @Override
+            public int getColumnCount() {
+                return column_names.length;
+            }
+
+            @Override
+            public String getColumnName(int index) {
+                return column_names[index];
+            }
         };
 
-		final ProMTable table = new ProMTable(t);
-		//table.getTable().addColumn(new TableColumn(3));
-		//table.column
-		table.setPreferredSize(new Dimension(50, 100));
-		add(table, "0, 4");
-		
-		
-		JButton add_button = SlickerFactory.instance().createButton("add");
-		add_button.addActionListener(new ActionListener() {
+		ProMTable actionTable = new ProMTable(actionTableModel);
+		return actionTable;
+	}
+
+	public ProMTable genConstraintTable() {
+		TableModel constrTableModel = new DefaultTableModel() {
+        	String[] column_names = {"Constraint ID", "Constraint Description", "Interval", "Offset", "Time Window"};
+
+            @Override
+            public int getColumnCount() {
+                return column_names.length;
+            }
+
+            @Override
+            public String getColumnName(int index) {
+                return column_names[index];
+            }
+        };
+
+		ProMTable constrTable = new ProMTable(constrTableModel);
+		return constrTable;
+	}
+
+	public JButton genConstAddButton() {
+		JButton constraintAddButton = SlickerFactory.instance().createButton("Add");
+		constraintAddButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				System.out.println(constraint + " and " + action);
-				DefaultTableModel model = (DefaultTableModel) table.getTable().getModel();
-				String action_set_name = "as" + set_number;
-//				List<String> action_set = new ArrayList<String>();
-				ActionSet action_set = new ActionSet(constraintMap.get(constraint),cond_panel.condition,action);
-//				action_set.add(constraint);
-//				action_set.add(cond_panel.condition);
-//				action_set.add(action);
-				parameters.addActionSet(action_set, action_set_name);
-				 
+				DefaultTableModel model = (DefaultTableModel) constrTable.getTable().getModel();
+				String cfName = "cf" + constrNumber;
+
 				List<String> row = new ArrayList<String>();
-				row.add(action_set_name);
+				row.add(cfName);
 				row.add(constraint);
-				row.add(cond_panel.condition);
-				row.add(action);
+				row.add(Integer.toString(constraintPanel.timeInterval));
+				row.add(Integer.toString(constraintPanel.timeOffset));
+				row.add(constraintPanel.timeWindow);
 				model.addRow(row.toArray());
-				
-				//reset selections
-				constraintComboBox.setSelectedIndex(0);
-				if(!cond_panel.checkBox.isSelected()) {
-					cond_panel.checkBox.doClick(); 
-				}
-				cond_panel.aggComboBox.setSelectedIndex(0);
-				cond_panel.comparatorComboBox.setSelectedIndex(0);
-				cond_panel.valueTextField.setText("insert threshold");
-				actionComboBox.setSelectedIndex(0);
-				
-				set_number+=1;
+//				Map<String,Object> configuration = new LinkedHashMap<String,Object>();
+//				configuration.put("monitoringInterval", constraintPanel.timeInterval);
+//				configuration.put("monitoringOffset", constraintPanel.timeOffset);
+				TimeWindow tw = new TimeWindow(Integer.parseInt(constraintPanel.timeWindow.split(",")[0]), Integer.parseInt(constraintPanel.timeWindow.split(",")[1]));
+//				configuration.put("monitoringTimeWindow", tw);
+				cmConfig.addConstraint(cfMap.get(constraint), constraintPanel.timeOffset, constraintPanel.timeInterval, tw);
+				constrNumber+=1;
+				System.out.println(cmConfig);
+				parameters.updateCMConf(cmConfig);
 			}
 		});
-		add_button.setPreferredSize(new Dimension(30, 100));
-		add(add_button, "0, 3");
+		return constraintAddButton;
 	}
-	
-	class ConditionPanel extends JPanel{
-		PluginContext context;
-		public String action_condition = "";
-		public String cond_aggregator;
-		public String cond_comparator;
-		public String cond_value;
-		public String condition;
-		public JCheckBox checkBox;
-		public ProMComboBox<String> aggComboBox;
-		public ProMComboBox<String> comparatorComboBox;
-		public ProMTextField valueTextField;
-//		ProMComboBox<String> aggComboBox;
-		public ConditionPanel(PluginContext ctx) {
-			context = ctx;
-			Color prom_color = new Color(238, 238, 238);
-			this.setOpaque(false);
-			this.setBackground(prom_color);
-			this.setForeground(prom_color);
-			RelativeLayout rl = new RelativeLayout(RelativeLayout.X_AXIS);
-			this.setLayout(rl);
-			this.addCheckBox();
-//			this.addLabel();
-			this.addAggComboBox();
-			this.addComparatorComboBox();
-			this.addValueTextField();
-		}
-		
-		public void addLabel() {
-			JLabel conditionLabel = SlickerFactory.instance().createLabel("Action condition");
-			add(conditionLabel, new Float(20));
-		}
-		
-		public void addCheckBox() {
-			checkBox = SlickerFactory.instance().createCheckBox("with action condition?", false);
-			checkBox.setSelected(true);
 
-			checkBox.addActionListener(new ActionListener() {
-			
-			
-				public void actionPerformed(ActionEvent e) {
-					if(checkBox.isSelected()) {
-						aggComboBox.enable();
-						comparatorComboBox.enable();
-						valueTextField.enable();
-					}else {
-						aggComboBox.disable();
-						comparatorComboBox.disable();
-						valueTextField.disable();
-						condition=null;
-					}
-				}
-			});
+	public JButton genActionAddButton() {
+		JButton actionAddButton = SlickerFactory.instance().createButton("Add");
+		actionAddButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model = (DefaultTableModel) actionTable.getTable().getModel();
+				String afName = "af" + actionNumber;
 
-			checkBox.setOpaque(false);
-			add(checkBox, new Float(20));
-		}
-		
-		public void addAggComboBox() {
-			String agg_list[] = { 
-					"Select aggregator",
-					"ratio",
-					"count",
-					"mean",
-					"median" };
-			aggComboBox = new ProMComboBox<String>(agg_list);
-			aggComboBox.setSelectedIndex(0);
-			aggComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					cond_aggregator = aggComboBox.getSelectedItem().toString();
-					condition = cond_panel.cond_aggregator 
-							+ "," + cond_panel.cond_comparator 
-							+ "," + cond_panel.cond_value;
-				}
-			});
-			add(aggComboBox, new Float(20)); 
-		}
-		
-		public void addComparatorComboBox() {
-			String agg_list[] = { 
-					"Select comparator",
-					">",
-					"=",
-					"<"};
-			comparatorComboBox = new ProMComboBox<String>(agg_list);
-			comparatorComboBox.setSelectedIndex(0);
-			comparatorComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					cond_comparator = comparatorComboBox.getSelectedItem().toString();
-					condition = cond_panel.cond_aggregator 
-							+ "," + cond_panel.cond_comparator 
-							+ "," + cond_panel.cond_value;
-				}
-			});
-			add(comparatorComboBox, new Float(20));
-		}
-		
-		public void addValueTextField() {
-			valueTextField = new ProMTextField();
-			valueTextField.setText("insert threshold");
-			valueTextField.setEditable(true);
-			valueTextField.getDocument().addDocumentListener(new DocumentListener() {
-				  public void changedUpdate(DocumentEvent e) {
-					    cond_value = valueTextField.getText();
-					    condition = cond_panel.cond_aggregator 
-								+ "," + cond_panel.cond_comparator 
-								+ "," + cond_panel.cond_value;
-					  }
-					  public void removeUpdate(DocumentEvent e) {
-						  cond_value = valueTextField.getText();
-						  condition = cond_panel.cond_aggregator 
-									+ "," + cond_panel.cond_comparator 
-									+ "," + cond_panel.cond_value;
-					  }
-					  public void insertUpdate(DocumentEvent e) {
-						  cond_value = valueTextField.getText();
-						  condition = cond_panel.cond_aggregator 
-									+ "," + cond_panel.cond_comparator 
-									+ "," + cond_panel.cond_value;
-					  }
-			});
-			add(valueTextField, new Float(20));
-		}	
-	} 
-	
-	/*
-	class ConstraintPanel extends JPanel{
-		PluginContext context;
-		public String constraint = "";
-		
-		public ConstraintPanel(PluginContext ctx) {
-			context = ctx;
-			RelativeLayout rl = new RelativeLayout(RelativeLayout.X_AXIS);
-			this.setLayout(rl);
-			this.addConstraintComboBox();
-		}
-		
-		public void addLabel() {
-			JLabel constraintLabel = SlickerFactory.instance().createLabel("Constraint");
-			add(constraintLabel, new Float(20));
-		}
-		
-		public void addConstraintComboBox() {
-			String constraint_list[] = {
-					"Select constraint", 
-					"c1: An order must be delivered in 200", 
-					"c2: An availability of item must be checked before picking",
-					"c3: An order must be delivered in 100",
-					"cp1: Maximum number of ongoing orders is 50", 
-					"cp2: There is no resource involved in more than 5 activities" 
-				}; 
-			final ProMComboBox<String> constraintComboBox = new ProMComboBox<String>(constraint_list);
-			constraintComboBox.setSelectedIndex(0);
-			constraintComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					//System.out.println(c_constraint.getSelectedItem());
-					constraint = constraintComboBox.getSelectedItem().toString();
-				}
-			});
-			add(constraintComboBox, new Float(20));
-		}	
+				List<String> row = new ArrayList<String>();
+				row.add(afName);
+				row.add(action);
+				row.add(Integer.toString(actionPanel.timeInterval));
+				row.add(Integer.toString(actionPanel.timeOffset));
+				row.add(actionPanel.timeWindow);
+				model.addRow(row.toArray());
+//				actionComboBox.setSelectedIndex(0);
+//				aeConfig.put(action, afSet.get(action));
+//				Map<String,Object> configuration = new LinkedHashMap<String,Object>();
+//				configuration.put("monitoringInterval", actionPanel.timeInterval);
+//				configuration.put("monitoringOffset", actionPanel.timeOffset);
+				TimeWindow tw = new TimeWindow(Integer.parseInt(actionPanel.timeWindow.split(",")[0]), Integer.parseInt(actionPanel.timeWindow.split(",")[1]));
+//				configuration.put("monitoringTimeWindow", tw);
+//				aeConfig.get(action).put("configuration", configuration);
+				aeConfig.addAction(afMap.get(action), actionPanel.timeOffset, actionPanel.timeInterval, tw);
+				actionNumber+=1;
+				System.out.println(aeConfig);
+				parameters.updateAEConf(aeConfig);
+			}
+		});
+		return actionAddButton;
 	}
-	*/
-	
-	
-	/*
-	class ActionPanel extends JPanel{
-		PluginContext context;
-		public String action = "";
-		public ActionPanel(PluginContext ctx) {
-			context = ctx;
-			RelativeLayout rl = new RelativeLayout(RelativeLayout.X_AXIS);
-			this.setLayout(rl);
-			this.addActionComboBox();
-		}
-		
-		public void addLabel() {
-			JLabel constraintLabel = SlickerFactory.instance().createLabel("Action");
-			add(constraintLabel, new Float(20));
-		}
-		
-		public void addActionComboBox() {
-			String action_list[] = {
-					"Select action", 
-					"a1: alert case manager", 
-					"a2: alert operation director", 
-					"a3: alert managing director",
-					"a4: alert case manager with suggestion",
-					"a5: alert operation director with suggestion",
-					"a6: alert managing director with suggestion",
-					"a7: add resource"
-				};
-			final ProMComboBox<String> actionComboBox = new ProMComboBox<String>(action_list);
-			actionComboBox.setSelectedIndex(0);
-			actionComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					action = actionComboBox.getSelectedItem().toString();
-				}
-			});
-			add(actionComboBox, new Float(20));
-		}
+
+	public void setActiveAction() {
+
 	}
-	*/
+
 }

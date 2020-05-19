@@ -2,44 +2,50 @@ package org.processmining.AOPM.simulation;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.processmining.AOPM.algorithms.ActionEngine;
 import org.processmining.AOPM.algorithms.ConstraintMonitor;
-import org.processmining.AOPM.models.ActionSet;
-import org.processmining.AOPM.models.ActionStorage;
+import org.processmining.AOPM.models.AEConfig;
+import org.processmining.AOPM.models.ActionGateway;
+import org.processmining.AOPM.models.CMConfig;
 import org.processmining.AOPM.models.ConstraintInstance;
 import org.processmining.AOPM.models.ConstraintStorage;
-import org.processmining.AOPM.models.Resource;
+import org.processmining.AOPM.models.Dashboard;
+import org.processmining.AOPM.models.Event;
+import org.processmining.AOPM.models.EventStream;
 
 import com.opencsv.CSVReader;
 
 
 public class Simulator implements Runnable{
-//	public Map<String,List <String>> action_pack;
-	public Map<String, ActionSet> action_pack;
-//	public List<String> constraints;
-	public MultiProcess mp;
-	public Scheduler sch;
+	public CMConfig cmConfig;
+	public AEConfig aeConfig;
 	public ConstraintMonitor cm;
 	public ConstraintStorage cs;
+	public Dashboard db;
 	public ActionEngine ae;
+	public EventStream es;
+	public ProcessSimulation pSimulator;
+	public ActionGateway aGateway;
+//	public List<Event> eventlog;
+	public Set<String> objectSet = new HashSet<String>();
+	
 	public int speed;
- 
-	public List<Resource> resource_list;
+	public String mode = "order-handling-process";
 	
 	public int t=0;
 	public int e=1;
 	public boolean isRestart = false;
 	public boolean isSleep = false;
-	//public ChartVisualizePanel cvp;
 
 	public void run() {
-		synchronized(this) {
+		synchronized(this) { 
 			for(int i=t;i<10000;i++) { 
-				e = simulate(i,e);
+				simulate(i);
 				try {
 					isSleep=false;
 					Thread.sleep(1000/(speed*10));
@@ -51,90 +57,86 @@ public class Simulator implements Runnable{
 		}
 	}
 
-	public Simulator(Map<String, ActionSet> s){
-		action_pack = s;
-		mp = new MultiProcess();
-		cm = new ConstraintMonitor(mp, action_pack);
-		cs = new ConstraintStorage();
-		ae = new ActionEngine(mp, new ActionStorage(this), action_pack);
-		String csvFile = "/Users/GYUNAM/Documents/Workshop/tests/testfiles/res_act_mat.csv";
-		resource_list = this.generateResource(csvFile);
-		sch = new Scheduler(this);
-		mp.setResourceNames(sch.getResourceNames());
-	}
-
-	
-
-
-
-	public int simulate(int a, int e) {
-		System.out.println(t + " begins:");
-		/*
-		 * process runs at every time step.
-		 * 1. generate order with probability
-		 * 2. initialize relevant items
-		 * 3. check if a set of items is ready to be packed
-		 * 4. if so, initialize package
-		 * 5. check if a package is ready to be delivered
-		 * 6. initialize delivery (route)
-		 * 7. if delivery failed, initialize another delivery
-		 * 8. find ready-to-assign objects and give them priority (for resource scheduling)
-		 * 9. Remove relevant objects if delivery is done
-		 * */ 
-		this.mp.run(t);
-		/*
-		 * update the current status of resources - to identify who is ready for assignment.
-		 * */
-		this.sch.updateResourceStatus(t);
-		/*
-		 * assign resource and generate event
-		 * */
-		e = this.sch.assign(mp.eventlog, mp.ready_object_list, t, e);
-		/*
-		 * 
-		 * */
-		List<ConstraintInstance> ci = cm.evaluate(t);
-		cs.addInstances(ci);
-		ae.setConstraintStorage(cs);
-		ae.executeSingleAction(t);
-		ae.executeAggAction(t);
-		t=a;
-		return e;
-	}
-	
-	public List<Resource> generateResource(String csvFile) {
-		List<Resource> rl = new ArrayList<Resource>();
-		//String csvFile = "/Users/GYUNAM/Documents/Workshop/tests/testfiles/res_act_mat.csv";
-
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(csvFile));
-            String[] line;
-            String[] header = reader.readNext();
-            
-            while ((line = reader.readNext()) != null) {
-                //System.out.println("Country [id= " + line[0] + ", code= " + line[1] + " , name=" + line[2] + "]");
-            		Resource r = new Resource(line[0]);
-            		rl.add(r);
-            		for(int i=1;i<line.length;i++) {
-            			if(!line[i].isEmpty()) {
-            				r.setTask(header[i], Integer.parseInt(line[i]));
-            			}
-            			
-            		}
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return rl;
-	}
-	
-	public void addResource(String r_name, Map<String,Integer> tasks) {
-		Resource r = new Resource(r_name);
-		for(String task:tasks.keySet()) {
-			r.setTask(task, tasks.get(task));	
+	public Simulator(CMConfig cmConfig, AEConfig aeConfig){
+		if(this.mode=="order-handling-process") {
+//			this.eventlog = new ArrayList<Event>();
+			this.es = new EventStream();
+			this.cm = new ConstraintMonitor(cmConfig);
+			this.cs = new ConstraintStorage();
+//			this.db = new Dashboard(cmConfig, this.cs);
+			this.ae = new ActionEngine(this.cs, aeConfig);
+			this.cmConfig = cmConfig;
+			this.aeConfig = aeConfig;
+		}else if(this.mode=="log-replay") {
+		}else {
+			System.out.println("Mode not existing");
 		}
-		this.resource_list.add(r);
 		
 	}
-}
+	
+	public Simulator(CMConfig cmConfig, AEConfig aeConfig, ProcessSimulation pSimulator){
+		if(this.mode=="order-handling-process") {
+//			this.eventlog = new ArrayList<Event>();
+			this.es = new EventStream();
+			this.cm = new ConstraintMonitor(cmConfig);
+			this.cs = new ConstraintStorage();
+//			this.db = new Dashboard(cmConfig, this.cs);
+			this.ae = new ActionEngine(this.cs, aeConfig);
+			this.cmConfig = cmConfig;
+			this.aeConfig = aeConfig;
+			this.aGateway = new ActionGateway(pSimulator);
+		}else {
+			System.out.println("Mode not existing");
+		}
+		
+	}
+
+	
+
+
+
+	public void simulate(int t) {
+		Set<Event> eventsAtT = this.readEvents(t);
+		this.es.setEventSet(eventsAtT);
+//		int monitorInterval = 24; 
+//		int executeInterval = 24;
+		Set<ConstraintInstance> cis = this.cm.monitor(t,this.es);
+		this.cs.addInstances(cis);
+//		this.db.updateVMap(t);
+//		Set<ActionInstance> ais = this.ae.generateInstanceLevelAction(t);
+//		this.aGateway.apply(ais);
+	}
+	
+	public Set<Event> readEvents(int time) {
+		Set<Event> eventAtT = new HashSet<Event>();  
+		try {
+			CSVReader csvReader = new CSVReader(new FileReader("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/IS_OHP/eventlog.csv"));
+			String[] row;
+			int e = -1;
+			while ((row = csvReader.readNext()) != null) {
+				e+=1;
+				if(e==0) {
+					continue;
+				}
+				String[] objectNames = {"Order", "Item", "Package", "Route"};
+				Map<String,Set<String>> omap = new LinkedHashMap<String,Set<String>>();
+				for(int i=5;i<row.length;i++) {
+					Set<String> objectSet = new HashSet<String>();
+					for(String s:row[i].split("&")) {
+						objectSet.add(s);
+					}
+					omap.put(objectNames[i-5], objectSet);
+				}
+				//Read the events at time t
+				if(time==Integer.parseInt(row[4])) {
+					Event event = new Event(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]),omap);
+					eventAtT.add(event);
+				}
+			}
+			csvReader.close();
+		}catch (IOException ex) {
+			System.out.println(ex);
+		}
+		return eventAtT;
+	}
+	}

@@ -1,0 +1,21 @@
+eid,Caseid,Activity,Resource,CompleteTimestamp
+24314,4508068000_00020,Create Purchase Order Item,user_286,7889
+24330,4508068001_00070,Create Purchase Order Item,user_286,7889
+24331,4508068001_00070,Change Quantity,user_286,7954
+24332,4508068001_00070,Vendor creates invoice,NONE,9384
+25199,4508071093_00030,Create Purchase Order Item,user_286,8245
+25206,4508071101_00010,Create Purchase Order Item,user_286,8245
+25265,4508071206_00230,Create Purchase Order Item,user_286,8248
+25306,4508071214_00050,Create Purchase Order Item,user_286,8248
+25307,4508071214_00050,Vendor creates invoice,NONE,9312
+25509,4508071957_00020,Create Purchase Requisition Item,user_439,8352
+25510,4508071957_00020,Create Purchase Order Item,user_286,8363
+25512,4508071957_00070,Create Purchase Requisition Item,batch_08,8352
+25513,4508071957_00070,Create Purchase Order Item,user_286,8363
+25864,4508073360_00010,Create Purchase Requisition Item,user_421,8496
+25865,4508073360_00010,Create Purchase Order Item,user_102,8535
+25899,4508073525_00190,Create Purchase Order Item,user_286,8554
+26025,4508074146_00030,Create Purchase Order Item,user_286,8608
+26353,4508075635_00010,Create Purchase Requisition Item,user_480,8760
+26354,4508075635_00010,Create Purchase Order Item,user_142,8773
+26355,4508075635_00010,Change Quantity,user_286,9376

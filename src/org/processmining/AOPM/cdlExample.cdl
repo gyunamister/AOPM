@@ -1,10 +1,14 @@
-DEFINE  "c1: An order must be delivered in 200"  AS
+DEFINE "c1: An order must be delivered in 72"  AS
+CONTEXT {"Proc":{"OH"}, "omap":{Order:{"forall"}}}
+FILTER "event"
+EVALUATE "Throughput", <, 72; 
+
+DEFINE  "c1: An order must be delivered in 72"  AS
 ENTITY "Order"
-ASSOCIATE "Order", "Item", "Package", "Route"
-VALIDATE "membership", IN, {"Gold"}
-EVALUATE "Throughput", <, 200;
+FILTER "entity"
+EVALUATE "Throughput", <, 72;
 
 DEFINE  "c2: An availability of item must be checked before picking"  AS
 ENTITY "Item"
-VALIDATE "pick_item", IN, {activity}
+FILTER "event"
 EVALUATE "check_availability", EVENTUALLY, "pick_item";

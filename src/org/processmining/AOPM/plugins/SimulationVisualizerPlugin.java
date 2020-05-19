@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -39,7 +40,8 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.processmining.AOPM.models.ActionSet;
+import org.processmining.AOPM.models.Action;
+import org.processmining.AOPM.models.ActionFormula;
 import org.processmining.AOPM.simulation.Simulator;
 import org.processmining.contexts.uitopia.annotations.Visualizer;
 import org.processmining.framework.plugin.PluginContext;
@@ -167,7 +169,7 @@ class RightPanel extends JPanel {
 					attrPanel.timer.stop();
 					leftPanel.chartVisualizePanel.timer.stop();
 					play.stop();
-					simulator = new Simulator(simulator.action_pack);
+					simulator = new Simulator(simulator.cmConfig, simulator.aeConfig);
 					leftPanel.chartVisualizePanel.simulator=simulator;
 					attrPanel.simulator=simulator;
 					simulator.speed=1;
@@ -317,19 +319,19 @@ class ChartVisualizePanel extends JPanel implements ActionListener{
 //		setLayout(rl);
 		setLayout(new GridLayout(0,2));
 		
-		for(String s:simulator.action_pack.keySet()) {
+		for(String cfName:simulator.cmConfig.getCFNames()) {
 			XYSeriesCollection dataset = new XYSeriesCollection();
-			XYSeries series = new XYSeries(s);
-			series_map.put(s,series);
+			XYSeries series = new XYSeries(cfName);
+			series_map.put(cfName,series);
 		    dataset.addSeries(series);
-		    double thre;
-		    if(simulator.action_pack.get(s).actionRequisite=="empty") {
-		    		thre = 999999999;
-		    }else {
-		    		thre = Double.parseDouble(simulator.action_pack.get(s).actionRequisite.split(",")[2]);
-		    } 
+//		    double thre;
+//		    if(cf.actionRequisite=="empty") {
+//		    		thre = 999999999;
+//		    }else {
+//		    		thre = Double.parseDouble(cf.actionRequisite.split(",")[2]);
+//		    } 
 		    
-		    JFreeChart chart = createChart(s,dataset,thre);
+		    JFreeChart chart = createChart(cfName,dataset);
 		    //Sets background color of chart
 	        chart.setBackgroundPaint(Color.LIGHT_GRAY);
 	 
@@ -349,7 +351,7 @@ class ChartVisualizePanel extends JPanel implements ActionListener{
         timer.start();
 	}
 	
-	private JFreeChart createChart(String name, final XYDataset dataset, double thre) {
+	private JFreeChart createChart(String name, final XYDataset dataset) {
         final JFreeChart result = ChartFactory.createXYLineChart(
         		name,
             "Time",
@@ -358,7 +360,7 @@ class ChartVisualizePanel extends JPanel implements ActionListener{
         );
 //        ValueMarker marker = new Marker(0, Color.red, new BasicStroke(1), Color.red, 1f);
         final XYPlot plot = result.getXYPlot();
-        ValueMarker marker1 = new ValueMarker(thre);
+        ValueMarker marker1 = new ValueMarker(0);
         marker1.setPaint(Color.BLUE);
         plot.addRangeMarker(marker1);
  
@@ -383,11 +385,11 @@ class ChartVisualizePanel extends JPanel implements ActionListener{
     }
 	
 	public void actionPerformed(final ActionEvent e) {
-        for(String s:simulator.action_pack.keySet()) {
-        		XYSeries series = series_map.get(s);
+        for(String cfName:simulator.cmConfig.getCFNames()) {
+        		XYSeries series = series_map.get(cfName);
 	        	series.clear();
-	        	for(int i=0;i<simulator.ae.agg_values.get(s).size();i++) {
-	    			series.add(i,simulator.ae.agg_values.get(s).get(i));
+	        	for(int i=0;i<simulator.db.vMap.get(cfName).size();i++) {
+	    			series.add(i,simulator.db.vMap.get(cfName).get(i));
 	    		}
         }
     }
@@ -420,10 +422,17 @@ class InfoPanel extends JPanel {
 		setLayout(rl);
 		createInfoTable();
 	}
+	
+	public String convertWithStream(Map<String, ?> map) {
+	    String mapAsString = map.keySet().stream()
+	      .map(key -> key + "=" + map.get(key))
+	      .collect(Collectors.joining(", ", "{", "}"));
+	    return mapAsString;
+	}
 
 	public void createInfoTable() {
 		TableModel model = new DefaultTableModel() { 
-            String[] column_names = {"Action set", "Constraint", "Action condition", "Action"}; 
+            String[] column_names = {"Action Name", "Action", "Action parameters", "CCV", "Action condition"}; 
 
             @Override 
             public int getColumnCount() { 
@@ -438,15 +447,16 @@ class InfoPanel extends JPanel {
         
 		table = new JTable(model);
 		 
-		for(String asName : simulator.action_pack.keySet()) {
+		for(Action a : simulator.aeConfig.getActionSet()) {
 			List<String> row = new ArrayList<String>();
-			ActionSet as = simulator.action_pack.get(asName); 
-			row.add(asName);
-			String constraintName = as.constraint.get("constraintINFO").get("constraintName").get(0);
-			row.add(constraintName);
-			System.out.println(simulator.action_pack);
-			row.add(as.actionRequisite);
-			row.add(as.action);
+			ActionFormula af = a.getAF(); 
+			row.add(af.afName);
+			row.add(af.op);
+			row.add(convertWithStream(af.pmap));
+//			String constraintName = af.ccv.get("constraintList").get(0);
+//			row.add(constraintName);
+			row.add(convertWithStream(af.ccv));
+			row.add(af.assessment);
 			((DefaultTableModel) model).addRow(row.toArray());
 		}
 		

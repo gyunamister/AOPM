@@ -39,6 +39,16 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitEvaluatePredicate(@NotNull CDLParser.EvaluatePredicateContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CDLParser#filterName}.
+	 * @param ctx the parse tree
+	 */
+	void enterFilterName(@NotNull CDLParser.FilterNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#filterName}.
+	 * @param ctx the parse tree
+	 */
+	void exitFilterName(@NotNull CDLParser.FilterNameContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CDLParser#unaryPredicate}.
 	 * @param ctx the parse tree
 	 */
@@ -208,16 +218,6 @@ public interface CDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConstraint(@NotNull CDLParser.ConstraintContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CDLParser#relevantEntityName}.
-	 * @param ctx the parse tree
-	 */
-	void enterRelevantEntityName(@NotNull CDLParser.RelevantEntityNameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CDLParser#relevantEntityName}.
-	 * @param ctx the parse tree
-	 */
-	void exitRelevantEntityName(@NotNull CDLParser.RelevantEntityNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CDLParser#binaryPredicateName}.
 	 * @param ctx the parse tree

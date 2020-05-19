@@ -1,11 +1,10 @@
 package org.processmining.AOPM.parameters;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.processmining.AOPM.models.ActionSet;
+import org.processmining.AOPM.models.AEConfig;
+import org.processmining.AOPM.models.CMConfig;
 import org.processmining.AOPM.models.YourFirstInput;
 import org.processmining.AOPM.models.YourSecondInput;
+import org.processmining.AOPM.simulation.ProcessSimulation;
 import org.processmining.basicutils.parameters.impl.PluginParametersImpl;
 
 public class YourParameters extends PluginParametersImpl {
@@ -13,13 +12,20 @@ public class YourParameters extends PluginParametersImpl {
 	private boolean yourBoolean;
 	private int yourInteger;
 	private String yourString;
-	public Map<String, ActionSet> action_pack = new LinkedHashMap<String, ActionSet>();
-
+	public AEConfig aeConfig;
+	public CMConfig cmConfig;
 	public YourParameters(YourFirstInput input1, YourSecondInput input2) {
 		super();
 		setYourBoolean(input1.equals(input2));
 		setYourInteger(input1.toString().length() - input2.toString().length());
 		setYourString(input1.toString() + input2.toString());
+	}
+	
+	public YourParameters(ProcessSimulation input1) {
+		super();
+//		setYourBoolean(input1.equals(input2));
+//		setYourInteger(input1.toString().length() - input2.toString().length());
+//		setYourString(input1.toString() + input2.toString());
 	}
 	
 	public YourParameters() {
@@ -72,7 +78,11 @@ public class YourParameters extends PluginParametersImpl {
 		return "(" + getYourString() + "," + getYourInteger() + "," + isYourBoolean() + ")";
 	}
 	
-	public void addActionSet(ActionSet s, String name) {
-		action_pack.put(name,s);
+	public void updateAEConf(AEConfig aeConfig) {
+		this.aeConfig = aeConfig;
+	}
+	
+	public void updateCMConf(CMConfig cmConfig) {
+		this.cmConfig = cmConfig;
 	}
 }
