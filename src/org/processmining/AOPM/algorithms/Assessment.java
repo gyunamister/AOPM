@@ -1,14 +1,14 @@
 package org.processmining.AOPM.algorithms;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.processmining.AOPM.models.ConstraintInstance;
 
 public class Assessment {
-	public boolean assess(List<ConstraintInstance> cInstanceList, String agg, String output, String relational, double thre) {
+	public boolean assess(Set<ConstraintInstance> cInstanceList, String agg, String relational, double thre) {
 		boolean isSatisfied=false;
-		double aggResult = aggregateCIs(cInstanceList, agg, output);
+		double aggResult = aggregateCIs(cInstanceList, agg);
 //		value_list.add(aggResult);
 		if(relational.equals("=")) {
 			if(aggResult==thre) {
@@ -29,9 +29,8 @@ public class Assessment {
 		return isSatisfied;
 	}
 	
-	public double aggregateCIs(List<ConstraintInstance> cInstanceList, String agg, String output) {
-		List<ConstraintInstance> filteredCInstanceList = cInstanceList.stream().filter((x) -> output
-			.equals(x.getoutc())).collect(Collectors.toList());
+	public double aggregateCIs(Set<ConstraintInstance> cInstanceList, String agg) {
+		Set<ConstraintInstance> filteredCInstanceList = cInstanceList.stream().filter((x) -> x.getoutc().equals("nok")).collect(Collectors.toSet());
 		//if null return 0 so that no action can be taken
 		double result = 0.0;
 		if(!cInstanceList.isEmpty()) {

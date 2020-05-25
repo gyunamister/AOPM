@@ -1,13 +1,20 @@
 package org.processmining.AOPM.parser;
-// Generated from CDL.g4 by ANTLR 4.4
-import org.antlr.v4.runtime.atn.*;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
+
+import org.antlr.v4.runtime.NoViableAltException;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.RuntimeMetaData;
+import org.antlr.v4.runtime.TokenStream;
+// Generated from CDL.g4 by ANTLR 4.4
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class CDLParser extends Parser {
@@ -17,31 +24,37 @@ public class CDLParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, VARIABLE_NAME=2, STRING=3, NUMBER=4, DEFINE=5, AS=6, FILTER=7, 
-		EVALUATE=8, ACQUIRE=9, ASSOCIATE=10, ENTITY=11, VALIDATE=12, CONDITION=13, 
-		CALCULATE=14, ACQUIRED_BY=15, IN=16, LP=17, RP=18, LB=19, RB=20, LSB=21, 
-		RSB=22, LTB=23, RTB=24, DQ=25, SEP=26, ASSIGN=27, TILDE=28, NOT=29, AND=30, 
-		OR=31, TRUE=32, FALSE=33, OCCUR=34, NEXT=35, EVENTUALLY=36, WS=37;
+		T__6=1, T__5=2, T__4=3, T__3=4, T__2=5, T__1=6, T__0=7, VARIABLE_NAME=8, 
+		STRING=9, NUMBER=10, DEFINE=11, AS=12, FILTER=13, EVALUATE=14, ACQUIRE=15, 
+		ASSOCIATE=16, CONTEXT=17, VALIDATE=18, CONDITION=19, CALCULATE=20, ACQUIRED_BY=21, 
+		IN=22, LP=23, RP=24, LB=25, RB=26, LSB=27, RSB=28, LTB=29, RTB=30, DQ=31, 
+		SEP=32, ASSIGN=33, MAP=34, TILDE=35, NOT=36, AND=37, OR=38, TRUE=39, FALSE=40, 
+		OCCUR=41, NEXT=42, EVENTUALLY=43, WS=44;
 	public static final String[] tokenNames = {
-		"<INVALID>", "';'", "VARIABLE_NAME", "STRING", "NUMBER", "'DEFINE'", "'AS'", 
-		"'FILTER'", "'EVALUATE'", "'ACQUIRE'", "'ASSOCIATE'", "'ENTITY'", "'VALIDATE'", 
-		"'CONDITION'", "'CALCULATE'", "'ACQUIRED BY'", "'IN'", "'('", "')'", "'{'", 
-		"'}'", "'['", "']'", "'<'", "'>'", "'\"'", "','", "'='", "'~'", "'NOT'", 
-		"'AND'", "'OR'", "'TRUE'", "'FALSE'", "'OCCUR'", "'NEXT'", "'EVENTUALLY'", 
-		"WS"
+		"<INVALID>", "'omap'", "'Act'", "'&'", "'vmap'", "';'", "'Proc'", "'Res'", 
+		"VARIABLE_NAME", "STRING", "NUMBER", "'DEFINE'", "'AS'", "'FILTER'", "'EVALUATE'", 
+		"'ACQUIRE'", "'ASSOCIATE'", "'CONTEXT'", "'VALIDATE'", "'CONDITION'", 
+		"'CALCULATE'", "'ACQUIRED BY'", "'IN'", "'('", "')'", "'{'", "'}'", "'['", 
+		"']'", "'<'", "'>'", "'\"'", "','", "'='", "':'", "'~'", "'NOT'", "'AND'", 
+		"'OR'", "'TRUE'", "'FALSE'", "'OCCUR'", "'NEXT'", "'EVENTUALLY'", "WS"
 	};
 	public static final int
 		RULE_constraint = 0, RULE_acquireQuery = 1, RULE_constraintName = 2, RULE_objectName = 3, 
-		RULE_entityName = 4, RULE_filterName = 5, RULE_acqName = 6, RULE_validatePredicate = 7, 
-		RULE_evaluatePredicate = 8, RULE_predicate = 9, RULE_proposition = 10, 
-		RULE_unaryPredicate = 11, RULE_unaryPredicateName = 12, RULE_binaryPredicate = 13, 
-		RULE_binaryPredicateName = 14, RULE_truthValue = 15, RULE_negation = 16, 
-		RULE_relationalPredicate = 17, RULE_setPredicate = 18, RULE_varName = 19, 
-		RULE_funcName = 20, RULE_eos = 21;
+		RULE_contextDetails = 4, RULE_ctxProc = 5, RULE_ctxAct = 6, RULE_ctxRes = 7, 
+		RULE_ctxOmap = 8, RULE_omap = 9, RULE_ctxVmap = 10, RULE_vmap = 11, RULE_procName = 12, 
+		RULE_actName = 13, RULE_resName = 14, RULE_objName = 15, RULE_objValue = 16, 
+		RULE_attrName = 17, RULE_attrValue = 18, RULE_entityName = 19, RULE_filterName = 20, 
+		RULE_acqName = 21, RULE_validatePredicate = 22, RULE_evaluatePredicate = 23, 
+		RULE_predicate = 24, RULE_proposition = 25, RULE_unaryPredicate = 26, 
+		RULE_unaryPredicateName = 27, RULE_binaryPredicate = 28, RULE_binaryPredicateName = 29, 
+		RULE_truthValue = 30, RULE_negation = 31, RULE_relationalPredicate = 32, 
+		RULE_setPredicate = 33, RULE_varName = 34, RULE_funcName = 35, RULE_eos = 36;
 	public static final String[] ruleNames = {
-		"constraint", "acquireQuery", "constraintName", "objectName", "entityName", 
-		"filterName", "acqName", "validatePredicate", "evaluatePredicate", "predicate", 
-		"proposition", "unaryPredicate", "unaryPredicateName", "binaryPredicate", 
+		"constraint", "acquireQuery", "constraintName", "objectName", "contextDetails", 
+		"ctxProc", "ctxAct", "ctxRes", "ctxOmap", "omap", "ctxVmap", "vmap", "procName", 
+		"actName", "resName", "objName", "objValue", "attrName", "attrValue", 
+		"entityName", "filterName", "acqName", "validatePredicate", "evaluatePredicate", 
+		"predicate", "proposition", "unaryPredicate", "unaryPredicateName", "binaryPredicate", 
 		"binaryPredicateName", "truthValue", "negation", "relationalPredicate", 
 		"setPredicate", "varName", "funcName", "eos"
 	};
@@ -66,16 +79,15 @@ public class CDLParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ConstraintContext extends ParserRuleContext {
+		public ContextDetailsContext contextDetails(int i) {
+			return getRuleContext(ContextDetailsContext.class,i);
+		}
 		public TerminalNode FILTER(int i) {
 			return getToken(CDLParser.FILTER, i);
 		}
 		public TerminalNode AS(int i) {
 			return getToken(CDLParser.AS, i);
 		}
-		public TerminalNode ENTITY(int i) {
-			return getToken(CDLParser.ENTITY, i);
-		}
-		public List<TerminalNode> ENTITY() { return getTokens(CDLParser.ENTITY); }
 		public TerminalNode EVALUATE(int i) {
 			return getToken(CDLParser.EVALUATE, i);
 		}
@@ -102,6 +114,9 @@ public class CDLParser extends Parser {
 			return getToken(CDLParser.DEFINE, i);
 		}
 		public List<TerminalNode> DEFINE() { return getTokens(CDLParser.DEFINE); }
+		public List<ContextDetailsContext> contextDetails() {
+			return getRuleContexts(ContextDetailsContext.class);
+		}
 		public FilterNameContext filterName(int i) {
 			return getRuleContext(FilterNameContext.class,i);
 		}
@@ -115,6 +130,10 @@ public class CDLParser extends Parser {
 		public List<FilterNameContext> filterName() {
 			return getRuleContexts(FilterNameContext.class);
 		}
+		public TerminalNode CONTEXT(int i) {
+			return getToken(CDLParser.CONTEXT, i);
+		}
+		public List<TerminalNode> CONTEXT() { return getTokens(CDLParser.CONTEXT); }
 		public List<TerminalNode> FILTER() { return getTokens(CDLParser.FILTER); }
 		public ConstraintContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -137,35 +156,49 @@ public class CDLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44); match(DEFINE);
-			setState(45); constraintName();
-			setState(46); match(AS);
-			setState(47); match(ENTITY);
-			setState(48); entityName();
-			setState(49); match(FILTER);
-			setState(50); filterName();
-			setState(51); match(EVALUATE);
-			setState(52); evaluatePredicate();
-			setState(53); eos();
-			setState(67);
+			setState(74); match(DEFINE);
+			setState(75); constraintName();
+			setState(76); match(AS);
+			setState(77); match(CONTEXT);
+			setState(78); contextDetails();
+			setState(83);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==T__4) {
+				{
+				{
+				setState(79); match(T__4);
+				setState(80); contextDetails();
+				}
+				}
+				setState(85);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(86); match(FILTER);
+			setState(87); filterName();
+			setState(88); match(EVALUATE);
+			setState(89); evaluatePredicate();
+			setState(90); eos();
+			setState(104);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==DEFINE) {
 				{
 				{
-				setState(54); match(DEFINE);
-				setState(55); constraintName();
-				setState(56); match(AS);
-				setState(57); match(ENTITY);
-				setState(58); entityName();
-				setState(59); match(FILTER);
-				setState(60); filterName();
-				setState(61); match(EVALUATE);
-				setState(62); evaluatePredicate();
-				setState(63); eos();
+				setState(91); match(DEFINE);
+				setState(92); constraintName();
+				setState(93); match(AS);
+				setState(94); match(CONTEXT);
+				setState(95); entityName();
+				setState(96); match(FILTER);
+				setState(97); filterName();
+				setState(98); match(EVALUATE);
+				setState(99); evaluatePredicate();
+				setState(100); eos();
 				}
 				}
-				setState(69);
+				setState(106);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -208,9 +241,9 @@ public class CDLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(70); acqName();
-			setState(71); match(CALCULATE);
-			setState(72); match(STRING);
+			setState(107); acqName();
+			setState(108); match(CALCULATE);
+			setState(109); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -246,7 +279,7 @@ public class CDLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(74); match(STRING);
+			setState(111); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -282,7 +315,815 @@ public class CDLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(76); match(STRING);
+			setState(113); match(STRING);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ContextDetailsContext extends ParserRuleContext {
+		public CtxResContext ctxRes() {
+			return getRuleContext(CtxResContext.class,0);
+		}
+		public CtxProcContext ctxProc() {
+			return getRuleContext(CtxProcContext.class,0);
+		}
+		public CtxVmapContext ctxVmap() {
+			return getRuleContext(CtxVmapContext.class,0);
+		}
+		public CtxActContext ctxAct() {
+			return getRuleContext(CtxActContext.class,0);
+		}
+		public CtxOmapContext ctxOmap() {
+			return getRuleContext(CtxOmapContext.class,0);
+		}
+		public ContextDetailsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_contextDetails; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterContextDetails(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitContextDetails(this);
+		}
+	}
+
+	public final ContextDetailsContext contextDetails() throws RecognitionException {
+		ContextDetailsContext _localctx = new ContextDetailsContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_contextDetails);
+		try {
+			setState(120);
+			switch (_input.LA(1)) {
+			case T__1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(115); ctxProc();
+				}
+				break;
+			case T__5:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(116); ctxAct();
+				}
+				break;
+			case T__0:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(117); ctxRes();
+				}
+				break;
+			case T__6:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(118); ctxOmap();
+				}
+				break;
+			case T__3:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(119); ctxVmap();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CtxProcContext extends ParserRuleContext {
+		public TerminalNode ASSIGN() { return getToken(CDLParser.ASSIGN, 0); }
+		public List<TerminalNode> SEP() { return getTokens(CDLParser.SEP); }
+		public ProcNameContext procName(int i) {
+			return getRuleContext(ProcNameContext.class,i);
+		}
+		public TerminalNode RB() { return getToken(CDLParser.RB, 0); }
+		public TerminalNode LB() { return getToken(CDLParser.LB, 0); }
+		public TerminalNode SEP(int i) {
+			return getToken(CDLParser.SEP, i);
+		}
+		public List<ProcNameContext> procName() {
+			return getRuleContexts(ProcNameContext.class);
+		}
+		public CtxProcContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ctxProc; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterCtxProc(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitCtxProc(this);
+		}
+	}
+
+	public final CtxProcContext ctxProc() throws RecognitionException {
+		CtxProcContext _localctx = new CtxProcContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_ctxProc);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(122); match(T__1);
+			setState(123); match(ASSIGN);
+			setState(124); match(LB);
+			setState(125); procName();
+			setState(130);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
+				{
+				setState(126); match(SEP);
+				setState(127); procName();
+				}
+				}
+				setState(132);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(133); match(RB);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CtxActContext extends ParserRuleContext {
+		public TerminalNode ASSIGN() { return getToken(CDLParser.ASSIGN, 0); }
+		public List<ActNameContext> actName() {
+			return getRuleContexts(ActNameContext.class);
+		}
+		public List<TerminalNode> SEP() { return getTokens(CDLParser.SEP); }
+		public ActNameContext actName(int i) {
+			return getRuleContext(ActNameContext.class,i);
+		}
+		public TerminalNode RB() { return getToken(CDLParser.RB, 0); }
+		public TerminalNode LB() { return getToken(CDLParser.LB, 0); }
+		public TerminalNode SEP(int i) {
+			return getToken(CDLParser.SEP, i);
+		}
+		public CtxActContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ctxAct; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterCtxAct(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitCtxAct(this);
+		}
+	}
+
+	public final CtxActContext ctxAct() throws RecognitionException {
+		CtxActContext _localctx = new CtxActContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_ctxAct);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(135); match(T__5);
+			setState(136); match(ASSIGN);
+			setState(137); match(LB);
+			setState(138); actName();
+			setState(143);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
+				{
+				setState(139); match(SEP);
+				setState(140); actName();
+				}
+				}
+				setState(145);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(146); match(RB);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CtxResContext extends ParserRuleContext {
+		public TerminalNode ASSIGN() { return getToken(CDLParser.ASSIGN, 0); }
+		public ResNameContext resName(int i) {
+			return getRuleContext(ResNameContext.class,i);
+		}
+		public List<TerminalNode> SEP() { return getTokens(CDLParser.SEP); }
+		public TerminalNode RB() { return getToken(CDLParser.RB, 0); }
+		public TerminalNode LB() { return getToken(CDLParser.LB, 0); }
+		public TerminalNode SEP(int i) {
+			return getToken(CDLParser.SEP, i);
+		}
+		public List<ResNameContext> resName() {
+			return getRuleContexts(ResNameContext.class);
+		}
+		public CtxResContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ctxRes; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterCtxRes(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitCtxRes(this);
+		}
+	}
+
+	public final CtxResContext ctxRes() throws RecognitionException {
+		CtxResContext _localctx = new CtxResContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_ctxRes);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(148); match(T__0);
+			setState(149); match(ASSIGN);
+			setState(150); match(LB);
+			setState(151); resName();
+			setState(156);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
+				{
+				setState(152); match(SEP);
+				setState(153); resName();
+				}
+				}
+				setState(158);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(159); match(RB);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CtxOmapContext extends ParserRuleContext {
+		public TerminalNode ASSIGN() { return getToken(CDLParser.ASSIGN, 0); }
+		public OmapContext omap(int i) {
+			return getRuleContext(OmapContext.class,i);
+		}
+		public List<TerminalNode> SEP() { return getTokens(CDLParser.SEP); }
+		public List<OmapContext> omap() {
+			return getRuleContexts(OmapContext.class);
+		}
+		public TerminalNode RB() { return getToken(CDLParser.RB, 0); }
+		public TerminalNode LB() { return getToken(CDLParser.LB, 0); }
+		public TerminalNode SEP(int i) {
+			return getToken(CDLParser.SEP, i);
+		}
+		public CtxOmapContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ctxOmap; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterCtxOmap(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitCtxOmap(this);
+		}
+	}
+
+	public final CtxOmapContext ctxOmap() throws RecognitionException {
+		CtxOmapContext _localctx = new CtxOmapContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_ctxOmap);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(161); match(T__6);
+			setState(162); match(ASSIGN);
+			setState(163); match(LB);
+			setState(164); omap();
+			setState(169);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
+				{
+				setState(165); match(SEP);
+				setState(166); omap();
+				}
+				}
+				setState(171);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(172); match(RB);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class OmapContext extends ParserRuleContext {
+		public ObjNameContext objName() {
+			return getRuleContext(ObjNameContext.class,0);
+		}
+		public TerminalNode MAP() { return getToken(CDLParser.MAP, 0); }
+		public ObjValueContext objValue(int i) {
+			return getRuleContext(ObjValueContext.class,i);
+		}
+		public List<TerminalNode> SEP() { return getTokens(CDLParser.SEP); }
+		public List<ObjValueContext> objValue() {
+			return getRuleContexts(ObjValueContext.class);
+		}
+		public TerminalNode RB() { return getToken(CDLParser.RB, 0); }
+		public TerminalNode LB() { return getToken(CDLParser.LB, 0); }
+		public TerminalNode SEP(int i) {
+			return getToken(CDLParser.SEP, i);
+		}
+		public OmapContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_omap; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterOmap(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitOmap(this);
+		}
+	}
+
+	public final OmapContext omap() throws RecognitionException {
+		OmapContext _localctx = new OmapContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_omap);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(174); objName();
+			setState(175); match(MAP);
+			setState(176); match(LB);
+			setState(177); objValue();
+			setState(182);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
+				{
+				setState(178); match(SEP);
+				setState(179); objValue();
+				}
+				}
+				setState(184);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(185); match(RB);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CtxVmapContext extends ParserRuleContext {
+		public TerminalNode ASSIGN() { return getToken(CDLParser.ASSIGN, 0); }
+		public List<TerminalNode> SEP() { return getTokens(CDLParser.SEP); }
+		public TerminalNode RB() { return getToken(CDLParser.RB, 0); }
+		public TerminalNode LB() { return getToken(CDLParser.LB, 0); }
+		public List<VmapContext> vmap() {
+			return getRuleContexts(VmapContext.class);
+		}
+		public VmapContext vmap(int i) {
+			return getRuleContext(VmapContext.class,i);
+		}
+		public TerminalNode SEP(int i) {
+			return getToken(CDLParser.SEP, i);
+		}
+		public CtxVmapContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ctxVmap; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterCtxVmap(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitCtxVmap(this);
+		}
+	}
+
+	public final CtxVmapContext ctxVmap() throws RecognitionException {
+		CtxVmapContext _localctx = new CtxVmapContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_ctxVmap);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(187); match(T__3);
+			setState(188); match(ASSIGN);
+			setState(189); match(LB);
+			setState(190); vmap();
+			setState(195);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
+				{
+				setState(191); match(SEP);
+				setState(192); vmap();
+				}
+				}
+				setState(197);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(198); match(RB);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class VmapContext extends ParserRuleContext {
+		public TerminalNode ASSIGN() { return getToken(CDLParser.ASSIGN, 0); }
+		public AttrValueContext attrValue(int i) {
+			return getRuleContext(AttrValueContext.class,i);
+		}
+		public AttrNameContext attrName() {
+			return getRuleContext(AttrNameContext.class,0);
+		}
+		public List<TerminalNode> SEP() { return getTokens(CDLParser.SEP); }
+		public TerminalNode RB() { return getToken(CDLParser.RB, 0); }
+		public TerminalNode LB() { return getToken(CDLParser.LB, 0); }
+		public TerminalNode SEP(int i) {
+			return getToken(CDLParser.SEP, i);
+		}
+		public List<AttrValueContext> attrValue() {
+			return getRuleContexts(AttrValueContext.class);
+		}
+		public VmapContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_vmap; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterVmap(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitVmap(this);
+		}
+	}
+
+	public final VmapContext vmap() throws RecognitionException {
+		VmapContext _localctx = new VmapContext(_ctx, getState());
+		enterRule(_localctx, 22, RULE_vmap);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(200); attrName();
+			setState(201); match(ASSIGN);
+			setState(202); match(LB);
+			setState(203); attrValue();
+			setState(208);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
+				{
+				setState(204); match(SEP);
+				setState(205); attrValue();
+				}
+				}
+				setState(210);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(211); match(RB);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ProcNameContext extends ParserRuleContext {
+		public TerminalNode STRING() { return getToken(CDLParser.STRING, 0); }
+		public ProcNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_procName; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterProcName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitProcName(this);
+		}
+	}
+
+	public final ProcNameContext procName() throws RecognitionException {
+		ProcNameContext _localctx = new ProcNameContext(_ctx, getState());
+		enterRule(_localctx, 24, RULE_procName);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(213); match(STRING);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ActNameContext extends ParserRuleContext {
+		public TerminalNode STRING() { return getToken(CDLParser.STRING, 0); }
+		public ActNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_actName; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterActName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitActName(this);
+		}
+	}
+
+	public final ActNameContext actName() throws RecognitionException {
+		ActNameContext _localctx = new ActNameContext(_ctx, getState());
+		enterRule(_localctx, 26, RULE_actName);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(215); match(STRING);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ResNameContext extends ParserRuleContext {
+		public TerminalNode STRING() { return getToken(CDLParser.STRING, 0); }
+		public ResNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_resName; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterResName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitResName(this);
+		}
+	}
+
+	public final ResNameContext resName() throws RecognitionException {
+		ResNameContext _localctx = new ResNameContext(_ctx, getState());
+		enterRule(_localctx, 28, RULE_resName);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(217); match(STRING);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ObjNameContext extends ParserRuleContext {
+		public TerminalNode STRING() { return getToken(CDLParser.STRING, 0); }
+		public ObjNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_objName; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterObjName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitObjName(this);
+		}
+	}
+
+	public final ObjNameContext objName() throws RecognitionException {
+		ObjNameContext _localctx = new ObjNameContext(_ctx, getState());
+		enterRule(_localctx, 30, RULE_objName);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(219); match(STRING);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ObjValueContext extends ParserRuleContext {
+		public TerminalNode STRING() { return getToken(CDLParser.STRING, 0); }
+		public ObjValueContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_objValue; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterObjValue(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitObjValue(this);
+		}
+	}
+
+	public final ObjValueContext objValue() throws RecognitionException {
+		ObjValueContext _localctx = new ObjValueContext(_ctx, getState());
+		enterRule(_localctx, 32, RULE_objValue);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(221); match(STRING);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class AttrNameContext extends ParserRuleContext {
+		public TerminalNode STRING() { return getToken(CDLParser.STRING, 0); }
+		public AttrNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_attrName; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterAttrName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitAttrName(this);
+		}
+	}
+
+	public final AttrNameContext attrName() throws RecognitionException {
+		AttrNameContext _localctx = new AttrNameContext(_ctx, getState());
+		enterRule(_localctx, 34, RULE_attrName);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(223); match(STRING);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class AttrValueContext extends ParserRuleContext {
+		public TerminalNode STRING() { return getToken(CDLParser.STRING, 0); }
+		public AttrValueContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_attrValue; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).enterAttrValue(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CDLListener ) ((CDLListener)listener).exitAttrValue(this);
+		}
+	}
+
+	public final AttrValueContext attrValue() throws RecognitionException {
+		AttrValueContext _localctx = new AttrValueContext(_ctx, getState());
+		enterRule(_localctx, 36, RULE_attrValue);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(225); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -314,11 +1155,11 @@ public class CDLParser extends Parser {
 
 	public final EntityNameContext entityName() throws RecognitionException {
 		EntityNameContext _localctx = new EntityNameContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_entityName);
+		enterRule(_localctx, 38, RULE_entityName);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78); match(STRING);
+			setState(227); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -350,11 +1191,11 @@ public class CDLParser extends Parser {
 
 	public final FilterNameContext filterName() throws RecognitionException {
 		FilterNameContext _localctx = new FilterNameContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_filterName);
+		enterRule(_localctx, 40, RULE_filterName);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(80); match(STRING);
+			setState(229); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -386,11 +1227,11 @@ public class CDLParser extends Parser {
 
 	public final AcqNameContext acqName() throws RecognitionException {
 		AcqNameContext _localctx = new AcqNameContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_acqName);
+		enterRule(_localctx, 42, RULE_acqName);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(82); match(STRING);
+			setState(231); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -424,11 +1265,11 @@ public class CDLParser extends Parser {
 
 	public final ValidatePredicateContext validatePredicate() throws RecognitionException {
 		ValidatePredicateContext _localctx = new ValidatePredicateContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_validatePredicate);
+		enterRule(_localctx, 44, RULE_validatePredicate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(84); predicate();
+			setState(233); predicate();
 			}
 		}
 		catch (RecognitionException re) {
@@ -462,11 +1303,11 @@ public class CDLParser extends Parser {
 
 	public final EvaluatePredicateContext evaluatePredicate() throws RecognitionException {
 		EvaluatePredicateContext _localctx = new EvaluatePredicateContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_evaluatePredicate);
+		enterRule(_localctx, 46, RULE_evaluatePredicate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(86); predicate();
+			setState(235); predicate();
 			}
 		}
 		catch (RecognitionException re) {
@@ -500,11 +1341,11 @@ public class CDLParser extends Parser {
 
 	public final PredicateContext predicate() throws RecognitionException {
 		PredicateContext _localctx = new PredicateContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_predicate);
+		enterRule(_localctx, 48, RULE_predicate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(88); proposition();
+			setState(237); proposition();
 			}
 		}
 		catch (RecognitionException re) {
@@ -553,44 +1394,44 @@ public class CDLParser extends Parser {
 
 	public final PropositionContext proposition() throws RecognitionException {
 		PropositionContext _localctx = new PropositionContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_proposition);
+		enterRule(_localctx, 50, RULE_proposition);
 		try {
-			setState(96);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+			setState(245);
+			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(90); unaryPredicate();
+				setState(239); unaryPredicate();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(91); binaryPredicate();
+				setState(240); binaryPredicate();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(92); setPredicate();
+				setState(241); setPredicate();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(93); truthValue();
+				setState(242); truthValue();
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(94); negation();
+				setState(243); negation();
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(95); relationalPredicate();
+				setState(244); relationalPredicate();
 				}
 				break;
 			}
@@ -629,14 +1470,14 @@ public class CDLParser extends Parser {
 
 	public final UnaryPredicateContext unaryPredicate() throws RecognitionException {
 		UnaryPredicateContext _localctx = new UnaryPredicateContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_unaryPredicate);
+		enterRule(_localctx, 52, RULE_unaryPredicate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(98); unaryPredicateName();
-			setState(99); match(LP);
-			setState(100); match(STRING);
-			setState(101); match(RP);
+			setState(247); unaryPredicateName();
+			setState(248); match(LP);
+			setState(249); match(STRING);
+			setState(250); match(RP);
 			}
 		}
 		catch (RecognitionException re) {
@@ -668,11 +1509,11 @@ public class CDLParser extends Parser {
 
 	public final UnaryPredicateNameContext unaryPredicateName() throws RecognitionException {
 		UnaryPredicateNameContext _localctx = new UnaryPredicateNameContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_unaryPredicateName);
+		enterRule(_localctx, 54, RULE_unaryPredicateName);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(103); match(OCCUR);
+			setState(252); match(OCCUR);
 			}
 		}
 		catch (RecognitionException re) {
@@ -714,15 +1555,15 @@ public class CDLParser extends Parser {
 
 	public final BinaryPredicateContext binaryPredicate() throws RecognitionException {
 		BinaryPredicateContext _localctx = new BinaryPredicateContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_binaryPredicate);
+		enterRule(_localctx, 56, RULE_binaryPredicate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(105); match(STRING);
-			setState(106); match(SEP);
-			setState(107); binaryPredicateName();
-			setState(108); match(SEP);
-			setState(109); match(STRING);
+			setState(254); match(STRING);
+			setState(255); match(SEP);
+			setState(256); binaryPredicateName();
+			setState(257); match(SEP);
+			setState(258); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -755,12 +1596,12 @@ public class CDLParser extends Parser {
 
 	public final BinaryPredicateNameContext binaryPredicateName() throws RecognitionException {
 		BinaryPredicateNameContext _localctx = new BinaryPredicateNameContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_binaryPredicateName);
+		enterRule(_localctx, 58, RULE_binaryPredicateName);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(111);
+			setState(260);
 			_la = _input.LA(1);
 			if ( !(_la==NEXT || _la==EVENTUALLY) ) {
 			_errHandler.recoverInline(this);
@@ -798,12 +1639,12 @@ public class CDLParser extends Parser {
 
 	public final TruthValueContext truthValue() throws RecognitionException {
 		TruthValueContext _localctx = new TruthValueContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_truthValue);
+		enterRule(_localctx, 60, RULE_truthValue);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(113);
+			setState(262);
 			_la = _input.LA(1);
 			if ( !(_la==TRUE || _la==FALSE) ) {
 			_errHandler.recoverInline(this);
@@ -843,12 +1684,12 @@ public class CDLParser extends Parser {
 
 	public final NegationContext negation() throws RecognitionException {
 		NegationContext _localctx = new NegationContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_negation);
+		enterRule(_localctx, 62, RULE_negation);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(115); match(NOT);
-			setState(116); proposition();
+			setState(264); match(NOT);
+			setState(265); proposition();
 			}
 		}
 		catch (RecognitionException re) {
@@ -889,42 +1730,42 @@ public class CDLParser extends Parser {
 
 	public final RelationalPredicateContext relationalPredicate() throws RecognitionException {
 		RelationalPredicateContext _localctx = new RelationalPredicateContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_relationalPredicate);
+		enterRule(_localctx, 64, RULE_relationalPredicate);
 		int _la;
 		try {
-			setState(132);
-			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			setState(281);
+			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(118); match(STRING);
-				setState(119); match(SEP);
-				setState(120);
+				setState(267); match(STRING);
+				setState(268); match(SEP);
+				setState(269);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LTB) | (1L << RTB) | (1L << ASSIGN))) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				consume();
-				setState(121); match(SEP);
-				setState(122); match(NUMBER);
+				setState(270); match(SEP);
+				setState(271); match(NUMBER);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(123); match(STRING);
-				setState(124); match(SEP);
-				setState(125); match(ACQUIRED_BY);
-				setState(126); funcName();
-				setState(127); match(SEP);
-				setState(128);
+				setState(272); match(STRING);
+				setState(273); match(SEP);
+				setState(274); match(ACQUIRED_BY);
+				setState(275); funcName();
+				setState(276); match(SEP);
+				setState(277);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LTB) | (1L << RTB) | (1L << ASSIGN))) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				consume();
-				setState(129); match(SEP);
-				setState(130); match(NUMBER);
+				setState(278); match(SEP);
+				setState(279); match(NUMBER);
 				}
 				break;
 			}
@@ -968,17 +1809,17 @@ public class CDLParser extends Parser {
 
 	public final SetPredicateContext setPredicate() throws RecognitionException {
 		SetPredicateContext _localctx = new SetPredicateContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_setPredicate);
+		enterRule(_localctx, 66, RULE_setPredicate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(134); match(STRING);
-			setState(135); match(SEP);
-			setState(136); match(IN);
-			setState(137); match(SEP);
-			setState(138); match(LB);
-			setState(139); varName();
-			setState(140); match(RB);
+			setState(283); match(STRING);
+			setState(284); match(SEP);
+			setState(285); match(IN);
+			setState(286); match(SEP);
+			setState(287); match(LB);
+			setState(288); varName();
+			setState(289); match(RB);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1010,11 +1851,11 @@ public class CDLParser extends Parser {
 
 	public final VarNameContext varName() throws RecognitionException {
 		VarNameContext _localctx = new VarNameContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_varName);
+		enterRule(_localctx, 68, RULE_varName);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(142); match(VARIABLE_NAME);
+			setState(291); match(VARIABLE_NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1046,11 +1887,11 @@ public class CDLParser extends Parser {
 
 	public final FuncNameContext funcName() throws RecognitionException {
 		FuncNameContext _localctx = new FuncNameContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_funcName);
+		enterRule(_localctx, 70, RULE_funcName);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(144); match(STRING);
+			setState(293); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1081,11 +1922,11 @@ public class CDLParser extends Parser {
 
 	public final EosContext eos() throws RecognitionException {
 		EosContext _localctx = new EosContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_eos);
+		enterRule(_localctx, 72, RULE_eos);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(146); match(T__0);
+			setState(295); match(T__2);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1100,43 +1941,97 @@ public class CDLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\'\u0097\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3.\u012c\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\3\2\3\2\3\2\3\2\3\2"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7\2D"+
-		"\n\2\f\2\16\2G\13\2\3\3\3\3\3\3\3\3\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3"+
-		"\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\5\fc\n\f\3\r"+
-		"\3\r\3\r\3\r\3\r\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\20\3\20\3\21"+
-		"\3\21\3\22\3\22\3\22\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\23"+
-		"\3\23\3\23\3\23\3\23\5\23\u0087\n\23\3\24\3\24\3\24\3\24\3\24\3\24\3\24"+
-		"\3\24\3\25\3\25\3\26\3\26\3\27\3\27\3\27\2\2\30\2\4\6\b\n\f\16\20\22\24"+
-		"\26\30\32\34\36 \"$&(*,\2\5\3\2%&\3\2\"#\4\2\31\32\35\35\u0087\2.\3\2"+
-		"\2\2\4H\3\2\2\2\6L\3\2\2\2\bN\3\2\2\2\nP\3\2\2\2\fR\3\2\2\2\16T\3\2\2"+
-		"\2\20V\3\2\2\2\22X\3\2\2\2\24Z\3\2\2\2\26b\3\2\2\2\30d\3\2\2\2\32i\3\2"+
-		"\2\2\34k\3\2\2\2\36q\3\2\2\2 s\3\2\2\2\"u\3\2\2\2$\u0086\3\2\2\2&\u0088"+
-		"\3\2\2\2(\u0090\3\2\2\2*\u0092\3\2\2\2,\u0094\3\2\2\2./\7\7\2\2/\60\5"+
-		"\6\4\2\60\61\7\b\2\2\61\62\7\r\2\2\62\63\5\n\6\2\63\64\7\t\2\2\64\65\5"+
-		"\f\7\2\65\66\7\n\2\2\66\67\5\22\n\2\67E\5,\27\289\7\7\2\29:\5\6\4\2:;"+
-		"\7\b\2\2;<\7\r\2\2<=\5\n\6\2=>\7\t\2\2>?\5\f\7\2?@\7\n\2\2@A\5\22\n\2"+
-		"AB\5,\27\2BD\3\2\2\2C8\3\2\2\2DG\3\2\2\2EC\3\2\2\2EF\3\2\2\2F\3\3\2\2"+
-		"\2GE\3\2\2\2HI\5\16\b\2IJ\7\20\2\2JK\7\5\2\2K\5\3\2\2\2LM\7\5\2\2M\7\3"+
-		"\2\2\2NO\7\5\2\2O\t\3\2\2\2PQ\7\5\2\2Q\13\3\2\2\2RS\7\5\2\2S\r\3\2\2\2"+
-		"TU\7\5\2\2U\17\3\2\2\2VW\5\24\13\2W\21\3\2\2\2XY\5\24\13\2Y\23\3\2\2\2"+
-		"Z[\5\26\f\2[\25\3\2\2\2\\c\5\30\r\2]c\5\34\17\2^c\5&\24\2_c\5 \21\2`c"+
-		"\5\"\22\2ac\5$\23\2b\\\3\2\2\2b]\3\2\2\2b^\3\2\2\2b_\3\2\2\2b`\3\2\2\2"+
-		"ba\3\2\2\2c\27\3\2\2\2de\5\32\16\2ef\7\23\2\2fg\7\5\2\2gh\7\24\2\2h\31"+
-		"\3\2\2\2ij\7$\2\2j\33\3\2\2\2kl\7\5\2\2lm\7\34\2\2mn\5\36\20\2no\7\34"+
-		"\2\2op\7\5\2\2p\35\3\2\2\2qr\t\2\2\2r\37\3\2\2\2st\t\3\2\2t!\3\2\2\2u"+
-		"v\7\37\2\2vw\5\26\f\2w#\3\2\2\2xy\7\5\2\2yz\7\34\2\2z{\t\4\2\2{|\7\34"+
-		"\2\2|\u0087\7\6\2\2}~\7\5\2\2~\177\7\34\2\2\177\u0080\7\21\2\2\u0080\u0081"+
-		"\5*\26\2\u0081\u0082\7\34\2\2\u0082\u0083\t\4\2\2\u0083\u0084\7\34\2\2"+
-		"\u0084\u0085\7\6\2\2\u0085\u0087\3\2\2\2\u0086x\3\2\2\2\u0086}\3\2\2\2"+
-		"\u0087%\3\2\2\2\u0088\u0089\7\5\2\2\u0089\u008a\7\34\2\2\u008a\u008b\7"+
-		"\22\2\2\u008b\u008c\7\34\2\2\u008c\u008d\7\25\2\2\u008d\u008e\5(\25\2"+
-		"\u008e\u008f\7\26\2\2\u008f\'\3\2\2\2\u0090\u0091\7\4\2\2\u0091)\3\2\2"+
-		"\2\u0092\u0093\7\5\2\2\u0093+\3\2\2\2\u0094\u0095\7\3\2\2\u0095-\3\2\2"+
-		"\2\5Eb\u0086";
+		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
+		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\4 \t \4!"+
+		"\t!\4\"\t\"\4#\t#\4$\t$\4%\t%\4&\t&\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7\2T\n"+
+		"\2\f\2\16\2W\13\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2"+
+		"\3\2\3\2\3\2\7\2i\n\2\f\2\16\2l\13\2\3\3\3\3\3\3\3\3\3\4\3\4\3\5\3\5\3"+
+		"\6\3\6\3\6\3\6\3\6\5\6{\n\6\3\7\3\7\3\7\3\7\3\7\3\7\7\7\u0083\n\7\f\7"+
+		"\16\7\u0086\13\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\7\b\u0090\n\b\f\b\16"+
+		"\b\u0093\13\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\7\t\u009d\n\t\f\t\16\t\u00a0"+
+		"\13\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u00aa\n\n\f\n\16\n\u00ad\13"+
+		"\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u00b7\n\13\f\13\16\13\u00ba"+
+		"\13\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\7\f\u00c4\n\f\f\f\16\f\u00c7"+
+		"\13\f\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u00d1\n\r\f\r\16\r\u00d4\13"+
+		"\r\3\r\3\r\3\16\3\16\3\17\3\17\3\20\3\20\3\21\3\21\3\22\3\22\3\23\3\23"+
+		"\3\24\3\24\3\25\3\25\3\26\3\26\3\27\3\27\3\30\3\30\3\31\3\31\3\32\3\32"+
+		"\3\33\3\33\3\33\3\33\3\33\3\33\5\33\u00f8\n\33\3\34\3\34\3\34\3\34\3\34"+
+		"\3\35\3\35\3\36\3\36\3\36\3\36\3\36\3\36\3\37\3\37\3 \3 \3!\3!\3!\3\""+
+		"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\5\"\u011c\n\"\3#"+
+		"\3#\3#\3#\3#\3#\3#\3#\3$\3$\3%\3%\3&\3&\3&\2\2\'\2\4\6\b\n\f\16\20\22"+
+		"\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJ\2\5\3\2,-\3\2)*\4\2"+
+		"\37 ##\u0119\2L\3\2\2\2\4m\3\2\2\2\6q\3\2\2\2\bs\3\2\2\2\nz\3\2\2\2\f"+
+		"|\3\2\2\2\16\u0089\3\2\2\2\20\u0096\3\2\2\2\22\u00a3\3\2\2\2\24\u00b0"+
+		"\3\2\2\2\26\u00bd\3\2\2\2\30\u00ca\3\2\2\2\32\u00d7\3\2\2\2\34\u00d9\3"+
+		"\2\2\2\36\u00db\3\2\2\2 \u00dd\3\2\2\2\"\u00df\3\2\2\2$\u00e1\3\2\2\2"+
+		"&\u00e3\3\2\2\2(\u00e5\3\2\2\2*\u00e7\3\2\2\2,\u00e9\3\2\2\2.\u00eb\3"+
+		"\2\2\2\60\u00ed\3\2\2\2\62\u00ef\3\2\2\2\64\u00f7\3\2\2\2\66\u00f9\3\2"+
+		"\2\28\u00fe\3\2\2\2:\u0100\3\2\2\2<\u0106\3\2\2\2>\u0108\3\2\2\2@\u010a"+
+		"\3\2\2\2B\u011b\3\2\2\2D\u011d\3\2\2\2F\u0125\3\2\2\2H\u0127\3\2\2\2J"+
+		"\u0129\3\2\2\2LM\7\r\2\2MN\5\6\4\2NO\7\16\2\2OP\7\23\2\2PU\5\n\6\2QR\7"+
+		"\5\2\2RT\5\n\6\2SQ\3\2\2\2TW\3\2\2\2US\3\2\2\2UV\3\2\2\2VX\3\2\2\2WU\3"+
+		"\2\2\2XY\7\17\2\2YZ\5*\26\2Z[\7\20\2\2[\\\5\60\31\2\\j\5J&\2]^\7\r\2\2"+
+		"^_\5\6\4\2_`\7\16\2\2`a\7\23\2\2ab\5(\25\2bc\7\17\2\2cd\5*\26\2de\7\20"+
+		"\2\2ef\5\60\31\2fg\5J&\2gi\3\2\2\2h]\3\2\2\2il\3\2\2\2jh\3\2\2\2jk\3\2"+
+		"\2\2k\3\3\2\2\2lj\3\2\2\2mn\5,\27\2no\7\26\2\2op\7\13\2\2p\5\3\2\2\2q"+
+		"r\7\13\2\2r\7\3\2\2\2st\7\13\2\2t\t\3\2\2\2u{\5\f\7\2v{\5\16\b\2w{\5\20"+
+		"\t\2x{\5\22\n\2y{\5\26\f\2zu\3\2\2\2zv\3\2\2\2zw\3\2\2\2zx\3\2\2\2zy\3"+
+		"\2\2\2{\13\3\2\2\2|}\7\b\2\2}~\7#\2\2~\177\7\33\2\2\177\u0084\5\32\16"+
+		"\2\u0080\u0081\7\"\2\2\u0081\u0083\5\32\16\2\u0082\u0080\3\2\2\2\u0083"+
+		"\u0086\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0085\3\2\2\2\u0085\u0087\3\2"+
+		"\2\2\u0086\u0084\3\2\2\2\u0087\u0088\7\34\2\2\u0088\r\3\2\2\2\u0089\u008a"+
+		"\7\4\2\2\u008a\u008b\7#\2\2\u008b\u008c\7\33\2\2\u008c\u0091\5\34\17\2"+
+		"\u008d\u008e\7\"\2\2\u008e\u0090\5\34\17\2\u008f\u008d\3\2\2\2\u0090\u0093"+
+		"\3\2\2\2\u0091\u008f\3\2\2\2\u0091\u0092\3\2\2\2\u0092\u0094\3\2\2\2\u0093"+
+		"\u0091\3\2\2\2\u0094\u0095\7\34\2\2\u0095\17\3\2\2\2\u0096\u0097\7\t\2"+
+		"\2\u0097\u0098\7#\2\2\u0098\u0099\7\33\2\2\u0099\u009e\5\36\20\2\u009a"+
+		"\u009b\7\"\2\2\u009b\u009d\5\36\20\2\u009c\u009a\3\2\2\2\u009d\u00a0\3"+
+		"\2\2\2\u009e\u009c\3\2\2\2\u009e\u009f\3\2\2\2\u009f\u00a1\3\2\2\2\u00a0"+
+		"\u009e\3\2\2\2\u00a1\u00a2\7\34\2\2\u00a2\21\3\2\2\2\u00a3\u00a4\7\3\2"+
+		"\2\u00a4\u00a5\7#\2\2\u00a5\u00a6\7\33\2\2\u00a6\u00ab\5\24\13\2\u00a7"+
+		"\u00a8\7\"\2\2\u00a8\u00aa\5\24\13\2\u00a9\u00a7\3\2\2\2\u00aa\u00ad\3"+
+		"\2\2\2\u00ab\u00a9\3\2\2\2\u00ab\u00ac\3\2\2\2\u00ac\u00ae\3\2\2\2\u00ad"+
+		"\u00ab\3\2\2\2\u00ae\u00af\7\34\2\2\u00af\23\3\2\2\2\u00b0\u00b1\5 \21"+
+		"\2\u00b1\u00b2\7$\2\2\u00b2\u00b3\7\33\2\2\u00b3\u00b8\5\"\22\2\u00b4"+
+		"\u00b5\7\"\2\2\u00b5\u00b7\5\"\22\2\u00b6\u00b4\3\2\2\2\u00b7\u00ba\3"+
+		"\2\2\2\u00b8\u00b6\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00bb\3\2\2\2\u00ba"+
+		"\u00b8\3\2\2\2\u00bb\u00bc\7\34\2\2\u00bc\25\3\2\2\2\u00bd\u00be\7\6\2"+
+		"\2\u00be\u00bf\7#\2\2\u00bf\u00c0\7\33\2\2\u00c0\u00c5\5\30\r\2\u00c1"+
+		"\u00c2\7\"\2\2\u00c2\u00c4\5\30\r\2\u00c3\u00c1\3\2\2\2\u00c4\u00c7\3"+
+		"\2\2\2\u00c5\u00c3\3\2\2\2\u00c5\u00c6\3\2\2\2\u00c6\u00c8\3\2\2\2\u00c7"+
+		"\u00c5\3\2\2\2\u00c8\u00c9\7\34\2\2\u00c9\27\3\2\2\2\u00ca\u00cb\5$\23"+
+		"\2\u00cb\u00cc\7#\2\2\u00cc\u00cd\7\33\2\2\u00cd\u00d2\5&\24\2\u00ce\u00cf"+
+		"\7\"\2\2\u00cf\u00d1\5&\24\2\u00d0\u00ce\3\2\2\2\u00d1\u00d4\3\2\2\2\u00d2"+
+		"\u00d0\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3\u00d5\3\2\2\2\u00d4\u00d2\3\2"+
+		"\2\2\u00d5\u00d6\7\34\2\2\u00d6\31\3\2\2\2\u00d7\u00d8\7\13\2\2\u00d8"+
+		"\33\3\2\2\2\u00d9\u00da\7\13\2\2\u00da\35\3\2\2\2\u00db\u00dc\7\13\2\2"+
+		"\u00dc\37\3\2\2\2\u00dd\u00de\7\13\2\2\u00de!\3\2\2\2\u00df\u00e0\7\13"+
+		"\2\2\u00e0#\3\2\2\2\u00e1\u00e2\7\13\2\2\u00e2%\3\2\2\2\u00e3\u00e4\7"+
+		"\13\2\2\u00e4\'\3\2\2\2\u00e5\u00e6\7\13\2\2\u00e6)\3\2\2\2\u00e7\u00e8"+
+		"\7\13\2\2\u00e8+\3\2\2\2\u00e9\u00ea\7\13\2\2\u00ea-\3\2\2\2\u00eb\u00ec"+
+		"\5\62\32\2\u00ec/\3\2\2\2\u00ed\u00ee\5\62\32\2\u00ee\61\3\2\2\2\u00ef"+
+		"\u00f0\5\64\33\2\u00f0\63\3\2\2\2\u00f1\u00f8\5\66\34\2\u00f2\u00f8\5"+
+		":\36\2\u00f3\u00f8\5D#\2\u00f4\u00f8\5> \2\u00f5\u00f8\5@!\2\u00f6\u00f8"+
+		"\5B\"\2\u00f7\u00f1\3\2\2\2\u00f7\u00f2\3\2\2\2\u00f7\u00f3\3\2\2\2\u00f7"+
+		"\u00f4\3\2\2\2\u00f7\u00f5\3\2\2\2\u00f7\u00f6\3\2\2\2\u00f8\65\3\2\2"+
+		"\2\u00f9\u00fa\58\35\2\u00fa\u00fb\7\31\2\2\u00fb\u00fc\7\13\2\2\u00fc"+
+		"\u00fd\7\32\2\2\u00fd\67\3\2\2\2\u00fe\u00ff\7+\2\2\u00ff9\3\2\2\2\u0100"+
+		"\u0101\7\13\2\2\u0101\u0102\7\"\2\2\u0102\u0103\5<\37\2\u0103\u0104\7"+
+		"\"\2\2\u0104\u0105\7\13\2\2\u0105;\3\2\2\2\u0106\u0107\t\2\2\2\u0107="+
+		"\3\2\2\2\u0108\u0109\t\3\2\2\u0109?\3\2\2\2\u010a\u010b\7&\2\2\u010b\u010c"+
+		"\5\64\33\2\u010cA\3\2\2\2\u010d\u010e\7\13\2\2\u010e\u010f\7\"\2\2\u010f"+
+		"\u0110\t\4\2\2\u0110\u0111\7\"\2\2\u0111\u011c\7\f\2\2\u0112\u0113\7\13"+
+		"\2\2\u0113\u0114\7\"\2\2\u0114\u0115\7\27\2\2\u0115\u0116\5H%\2\u0116"+
+		"\u0117\7\"\2\2\u0117\u0118\t\4\2\2\u0118\u0119\7\"\2\2\u0119\u011a\7\f"+
+		"\2\2\u011a\u011c\3\2\2\2\u011b\u010d\3\2\2\2\u011b\u0112\3\2\2\2\u011c"+
+		"C\3\2\2\2\u011d\u011e\7\13\2\2\u011e\u011f\7\"\2\2\u011f\u0120\7\30\2"+
+		"\2\u0120\u0121\7\"\2\2\u0121\u0122\7\33\2\2\u0122\u0123\5F$\2\u0123\u0124"+
+		"\7\34\2\2\u0124E\3\2\2\2\u0125\u0126\7\n\2\2\u0126G\3\2\2\2\u0127\u0128"+
+		"\7\13\2\2\u0128I\3\2\2\2\u0129\u012a\7\7\2\2\u012aK\3\2\2\2\16Ujz\u0084"+
+		"\u0091\u009e\u00ab\u00b8\u00c5\u00d2\u00f7\u011b";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

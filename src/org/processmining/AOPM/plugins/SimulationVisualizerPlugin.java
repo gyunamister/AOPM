@@ -455,8 +455,8 @@ class InfoPanel extends JPanel {
 			row.add(convertWithStream(af.pmap));
 //			String constraintName = af.ccv.get("constraintList").get(0);
 //			row.add(constraintName);
-			row.add(convertWithStream(af.ccv));
-			row.add(af.assessment);
+			row.add(convertWithStream(af.ccvDescription));
+			row.add(convertWithStream(af.ccvDescription));
 			((DefaultTableModel) model).addRow(row.toArray());
 		}
 		

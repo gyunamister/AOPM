@@ -1,6 +1,7 @@
 package org.processmining.EIS.OHP;
 
 import java.util.Map;
+import java.util.Set;
 
 public class OrderHandlingEvent {
 	String e;
@@ -8,15 +9,19 @@ public class OrderHandlingEvent {
 	String act;
 	String res;
 	int completeTimestamp;
-	Map<String,String> omap;
+	Map<String,Set<String>> omap;
 	
-	public OrderHandlingEvent(String e, String process, String act, String res, int complete, Map<String,String> omap) {
+	public OrderHandlingEvent(String e, String process, String act, String res, int complete, Map<String,Set<String>> omap) {
 		this.e = e;
 		this.proc = process;
 		this.act = act;
 		this.res = res;
 		this.omap = omap;
 		this.completeTimestamp = complete;
+	}
+	
+	public String getEventID() {
+		return this.e;
 	}
 	
 	public String getProcess() {
@@ -35,7 +40,7 @@ public class OrderHandlingEvent {
 		return this.completeTimestamp;  
 	}
 	
-	public Map<String,String> getOmap() {
+	public Map<String,Set<String>> getOmap() {
 		return this.omap;  
 	}
 	

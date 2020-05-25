@@ -58,7 +58,7 @@ public class ConstraintMonitor {
 
 	public void recordCI(Set<ConstraintInstance> cis, int currentTime) {
 		if(currentTime == 1) {
-			String dirName = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/wo-constraint-log-%s.csv",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+			String dirName = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/constraint-log-%s.csv",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			Path file = Paths.get(dirName);
 			try {
 				String temp="";
@@ -70,7 +70,7 @@ public class ConstraintMonitor {
 		}
 		for(ConstraintInstance ci:cis) {
 			List<String> lines = Arrays.asList(ci.toString());
-			String dirName = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/wo-constraint-log-%s.csv",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+			String dirName = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/constraint-log-%s.csv",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			Path file = Paths.get(dirName);
 			try {
 				Files.write(file, lines, StandardOpenOption.APPEND);

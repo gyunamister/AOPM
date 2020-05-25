@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,6 +28,7 @@ import org.processmining.AOPM.models.AEConfig;
 import org.processmining.AOPM.models.ActionFormula;
 import org.processmining.AOPM.models.CMConfig;
 import org.processmining.AOPM.models.ConstraintFormula;
+import org.processmining.AOPM.models.ContextDescription;
 import org.processmining.AOPM.models.TimeWindow;
 import org.processmining.AOPM.parameters.YourParameters;
 import org.processmining.AOPM.parser.ADLLexer;
@@ -116,7 +119,32 @@ public class InputDialog extends JPanel {
 		Map<String, ConstraintFormula> cfMap = new LinkedHashMap<String, ConstraintFormula>();
 		for(String cfName:constraintMap.keySet()) {
 			Map<String, Object> constraint = constraintMap.get(cfName);
-			ConstraintFormula cf = new ConstraintFormula(cfName, (String) constraint.get("processEntityName"), (String) constraint.get("filter"), (String) constraint.get("evaluation"));
+			Set<String> procSet = new HashSet<String>();
+			Set<String> actSet = new HashSet<String>();
+			Set<String> resSet = new HashSet<String>();
+			Map<String,Set<String>> omap = new LinkedHashMap<String,Set<String>>();
+			Map<String,Set<String>> vmap = new LinkedHashMap<String,Set<String>>();
+			for(String key: constraint.keySet()) {
+				if(key.equals("Proc")) {
+					procSet.addAll((Set) constraint.get("Proc"));
+				}else if(key.equals("Act")) {
+					actSet.addAll((Set) constraint.get("Act"));
+				}else if(key.equals("Res")) {
+					resSet.addAll((Set) constraint.get("Res"));
+				}else if(key.equals("omap")) {
+					Map<String, Set<String>> objectMapping = (Map) constraint.get("omap");
+					for(String ocName:  objectMapping.keySet()) {
+						omap.put(ocName, objectMapping.get(ocName));
+					}
+				}else if(key.equals("vmap")) {
+					Map<String, Set<String>> attrMapping = new LinkedHashMap<String, Set<String>>();
+					for(String attrName:  attrMapping.keySet()) {
+						vmap.put(attrName, attrMapping.get(attrName));
+					}
+				}
+			}
+			ContextDescription ctxdesc = new ContextDescription(procSet,actSet,resSet,omap,vmap);
+			ConstraintFormula cf = new ConstraintFormula(cfName, ctxdesc, (String) constraint.get("filter"), (String) constraint.get("evaluation"));
 			cfMap.put(cfName,cf);
 		}
 		return cfMap;
@@ -126,7 +154,34 @@ public class InputDialog extends JPanel {
 		Map<String, ActionFormula> afMap = new LinkedHashMap<String, ActionFormula>();
 		for(String afName:actionMap.keySet()) {
 			Map<String, Object> action = actionMap.get(afName);
-			ActionFormula af = new ActionFormula(afName, (Map<String, List<String>>) action.get("ccv"), (String) action.get("assessment"), (String) action.get("action"), (Map<String, Object>) action.get("parameter"));
+			Map<String, Set<String>> ccvDescription = new LinkedHashMap<String, Set<String>>();
+			Map<String, String> pmap = new LinkedHashMap<String, String>();
+			for(String key: action.keySet()) {
+				if(key.equals("cf")) {
+					Set<String> procSet = new HashSet<String>();
+					procSet.addAll((Set) action.get(key));
+					ccvDescription.put(key, procSet);
+				}else if(key.equals("proc")) {
+					Set<String> procSet = new HashSet<String>();
+					procSet.addAll((Set) action.get(key));
+					ccvDescription.put(key, procSet);
+				}else if(key.equals("act")) {
+					Set<String> actSet = new HashSet<String>();
+					actSet.addAll((Set) action.get(key));
+					ccvDescription.put(key, actSet);
+				}else if(key.equals("res")) {
+					Set<String> resSet = new HashSet<String>();
+					resSet.addAll((Set) action.get(key));
+					ccvDescription.put(key, resSet);
+				}else if(key.contains("object@")) {
+					Set<String> objSet = new HashSet<String>();
+					objSet.addAll((Set) action.get(key));
+					ccvDescription.put(key.split("@")[1], objSet);
+				}else if(key.contains("parameter@")) {
+					pmap.put(key.split("@")[1], (String) action.get(key));
+				}
+			}
+			ActionFormula af = new ActionFormula(afName, ccvDescription, (String) action.get("assessment"), (String) action.get("operation"), pmap);
 			afMap.put(afName,af);
 		}
 		return afMap;
@@ -141,6 +196,7 @@ public class InputDialog extends JPanel {
 		ParseTreeWalker cdlWalker = new ParseTreeWalker();
 		cdlWalker.walk(cdlListener, cdlTree);
 		this.cfMap = this.gencfMap(this.constraintMap);
+		System.out.println(this.cfMap);
 
 		//read ADL
 		ParseTree adlTree = this.readADL();

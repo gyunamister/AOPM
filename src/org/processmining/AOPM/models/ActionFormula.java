@@ -2,11 +2,14 @@ package org.processmining.AOPM.models;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.processmining.AOPM.ConstraintCube.ConstraintCubeStructure;
+import org.processmining.AOPM.ConstraintCube.ConstraintCubeView;
+import org.processmining.AOPM.ConstraintCube.CubeCell;
+import org.processmining.AOPM.algorithms.Assessment;
 import org.processmining.AOPM.algorithms.Materialization;
 
 public class ActionFormula {
@@ -15,6 +18,9 @@ public class ActionFormula {
 	public String actionPredicate;
 	public String op;
 	public Map<String, String> pmap;
+	ConstraintCubeStructure ccs;
+	ConstraintCubeView ccv;
+	Assessment as;
 	
 //	To delete
 	public Materialization mat;
@@ -30,38 +36,53 @@ public class ActionFormula {
 		this.op = op;
 		this.pmap = pmap;
 		this.mat = new Materialization();
+		this.as = new Assessment();
 	}
 	
-	public Map<String, Set<String>> genCCV() {
-//		(TODO)
-		Map<String, Set<String>> CCV =  new LinkedHashMap<String, Set<String>>();
+	public Set<Transaction> apply(ConstraintInstanceStream cis, ConstraintCubeStructure ccs,TimeWindow tw){
+		Set<Transaction> trans = new HashSet<Transaction>();
+		ConstraintCubeView ccv = new ConstraintCubeView(ccs,this.ccvDescription);
+		ccv.sliceTime(tw);
+//		System.out.println(ccv);
+		Map<CubeCell,Set<ConstraintInstance>> mat = ccv.materialize(cis.getCIs());
+		for(CubeCell cc: mat.keySet()) {
+			Set<ConstraintInstance> ciSet = mat.get(cc);
+			if(this.assess(ciSet)) {
+				Set<Transaction> tempTrans = this.genTrans(cc);
+				trans.addAll(tempTrans);
+			}
+		}
 		
-		
-		return CCV;
+		return trans;
 	}
 	
-	public Set<Transaction> apply(Set<ConstraintInstance> CIS,TimeWindow tw){
-		Set<Transaction> results = new HashSet<Transaction>();
-		String constraintName = this.ccvDescription.get("constraintSet").iterator().next();
-		//materialize
-		Map<String, Map<String, Map<Integer, List<ConstraintInstance>>>> matProcessCube = this.mat.materialize(CIS,tw.getEnd(),this.ccvDescription);
-		
-		return results;
+	public boolean assess(Set<ConstraintInstance> ciSet) {
+		boolean result = false;
+		String c = this.actionPredicate;
+		if(c.contains(">") | c.contains("=") | c.contains("<")) {
+			String valueName=c.split(",")[0];
+			String comp=c.split(",")[1];
+			int thres=Integer.parseInt(c.split(",")[2]);
+			result=this.as.assess(ciSet, valueName, comp, thres);
+		}
+		return result;
 	}
 	
 	public String toString() {
-		return this.ccvDescription + this.actionPredicate + this.op;
+		return this.afName + this.ccvDescription + this.actionPredicate + this.op + this.pmap;
 	}
 	
-	public Transaction genTrans(Map<String,String> cell){
-		Map<String,String> vmap = new LinkedHashMap<String,String>(); 
+	public Set<Transaction> genTrans(CubeCell cc){
+		Set<Transaction> trans = new HashSet<Transaction>();
 		for(Entry<String, String> param : this.pmap.entrySet()) {
-			vmap.put(param.getKey(), cell.get(this.pmap.get(param.getKey())));
-//			if(cell.get(param.getValue())!=null) {
-//				vmap.put(param.getKey(), cell.get(this.pmap.get(param.getKey())));
-//			}
+			for(String v:cc.getValues(this.pmap.get(param.getKey()))) {
+				Map<String,String> vmap = new LinkedHashMap<String,String>();
+				vmap.put(param.getKey(), v);
+				Transaction tr = new Transaction(this.op,vmap);
+				trans.add(tr);
+			}
 		}
-		return new Transaction(this.op,vmap);
+		return trans;
 	}
 	
 

@@ -49,7 +49,7 @@ public class YourAlgorithm {
 		parameters.displayMessage("[YourAlgorithm] First input = " + input1.toString());
 		parameters.displayMessage("[YourAlgorithm] Parameters = " + parameters.toString());
 		
-		Simulator sm = new Simulator(parameters.cmConfig, parameters.aeConfig);
+		Simulator sm = new Simulator(parameters.cmConfig, parameters.aeConfig,input1);
 		
 	    //YourOutput output = parameters.isYourBoolean() ? new YourOutput(input1) : new YourOutput(input2);
 		time += System.currentTimeMillis();

@@ -18,6 +18,18 @@ public class Context {
 		this.vmap = vmap;
 	}
 	
+	public Set<String> get(String d){
+		if(d.equals("Proc")) {
+			return this.procSet;
+		}else if(d.equals("Act")) {
+			return this.actSet;
+		}else if(d.equals("Res")) {
+			return this.resSet;
+		}else {
+			return this.omap.get(d);
+		}
+	}
+	
 	public Set<String> getProcSet(){
 		return this.procSet;
 	}

@@ -37,4 +37,8 @@ public class ContextDescription {
 	public Map<String,Set<String>> getVmap(){
 		return this.vmap;
 	}
+	
+	public String toString() {
+		return "Proc: " + this.procSet + "Act: " + this.actSet + "Res: " + this.resSet + "omap: " + this.omap + "vmap: " + this.vmap;
+	}
 }

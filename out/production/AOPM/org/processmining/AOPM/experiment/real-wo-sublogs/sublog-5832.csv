@@ -1,0 +1,444 @@
+eid,Caseid,Activity,Resource,CompleteTimestamp
+204,4507000907_00020,Create Purchase Order Item,user_172,370
+384,4507001411_00040,Create Purchase Order Item,user_172,466
+1084,4507003697_00020,Create Purchase Order Item,user_172,705
+1724,4507004361_00030,Create Purchase Order Item,user_172,802
+1726,4507004364_00040,Create Purchase Order Item,user_172,802
+1905,4507005107_00020,Vendor creates invoice,NONE,2568
+4194,4507010745_00030,Create Purchase Order Item,user_172,1474
+6489,4507017206_00020,Create Purchase Order Item,user_172,2145
+11012,4507029260_00020,Vendor creates invoice,NONE,3912
+12291,4507032427_00060,Vendor creates invoice,NONE,4608
+13210,4507035225_00010,Create Purchase Order Item,user_072,4090
+13215,4507035342_00020,Create Purchase Order Item,user_072,4095
+13230,4507035342_00090,Create Purchase Order Item,user_072,4095
+13241,4507035342_00130,Create Purchase Order Item,user_072,4095
+13450,4507036316_00010,Create Purchase Requisition Item,batch_08,4200
+13451,4507036316_00010,Create Purchase Order Item,user_142,4212
+13746,4507036715_00010,Create Purchase Order Item,user_043,4240
+13769,4507036724_00010,Create Purchase Order Item,user_043,4240
+13783,4507036732_00010,Create Purchase Order Item,user_043,4240
+13792,4507036736_00010,Create Purchase Order Item,user_043,4240
+13808,4507036756_00010,Create Purchase Order Item,user_043,4240
+13811,4507036758_00010,Create Purchase Order Item,user_043,4240
+13814,4507036759_00010,Create Purchase Order Item,user_043,4240
+13823,4507036762_00010,Create Purchase Order Item,user_043,4240
+13827,4507036763_00010,Create Purchase Order Item,user_043,4240
+13922,4507037273_00020,Create Purchase Order Item,user_147,4331
+13933,4507037280_00010,Create Purchase Order Item,user_147,4331
+13934,4507037280_00010,Change Quantity,user_286,5101
+13968,4507037470_00020,Create Purchase Order Item,user_042,4352
+14062,4507037749_00060,Create Purchase Order Item,user_147,4361
+14205,4507038025_00010,Create Purchase Order Item,user_147,4383
+14276,4507038324_00020,Create Purchase Order Item,user_147,4406
+14668,4507039189_00020,Create Purchase Order Item,user_147,4525
+14845,4507039599_00010,Create Purchase Order Item,user_147,4557
+14925,4507039787_00010,Create Purchase Order Item,user_147,4572
+14927,4507039787_00020,Create Purchase Order Item,user_147,4572
+15051,4507039812_00700,Vendor creates invoice,NONE,5064
+15052,4507039812_00700,Create Purchase Order Item,user_286,5080
+15307,4507040683_00010,Create Purchase Order Item,user_147,4690
+15318,4507040765_00010,Create Purchase Order Item,user_079,4691
+15452,4507041159_00010,Create Purchase Order Item,user_072,4721
+15453,4507041159_00010,Vendor creates invoice,NONE,5112
+15464,4507041258_00060,Create Purchase Order Item,user_079,4738
+15466,4507041258_00070,Create Purchase Order Item,user_079,4738
+15468,4507041258_00080,Create Purchase Order Item,user_079,4738
+15492,4507041368_00020,Create Purchase Order Item,user_147,4739
+15493,4507041368_00020,Vendor creates invoice,NONE,5592
+15519,4507041473_00020,Create Purchase Order Item,user_147,4743
+15520,4507041473_00020,Change Quantity,user_286,5605
+15523,4507041473_00040,Create Purchase Order Item,user_147,4743
+15526,4507041473_00050,Create Purchase Order Item,user_147,4743
+15599,4507041719_00010,Create Purchase Requisition Item,batch_08,4752
+15600,4507041719_00010,Create Purchase Order Item,user_142,4767
+15655,4507041852_00020,Create Purchase Order Item,user_147,4834
+15656,4507041852_00020,Change Price,user_039,4859
+15733,4508042220_00010,Create Purchase Order Item,user_091,4861
+15734,4508042220_00010,Vendor creates invoice,NONE,5544
+15749,4508042306_00010,Create Purchase Order Item,user_147,4863
+15753,4508042306_00020,Create Purchase Order Item,user_147,4863
+15757,4508042306_00030,Create Purchase Order Item,user_147,4863
+15759,4508042306_00040,Create Purchase Order Item,user_147,4863
+15947,4508042949_00060,Create Purchase Order Item,user_147,4918
+15949,4508042949_00070,Create Purchase Order Item,user_147,4918
+15951,4508042949_00090,Create Purchase Order Item,user_147,4918
+15953,4508042949_00100,Create Purchase Order Item,user_147,4918
+15955,4508042961_00010,Create Purchase Order Item,user_147,4918
+15972,4508043034_00030,Create Purchase Order Item,user_147,4929
+16000,4508043037_00010,Create Purchase Order Item,user_147,4929
+16077,4508043090_00010,Create Purchase Order Item,user_068,4931
+16225,4508043496_00010,Create Purchase Order Item,user_079,5008
+16226,4508043496_00010,Change Price,user_115,5027
+16228,4508043511_00010,Create Purchase Order Item,user_043,5009
+16233,4508043512_00010,Create Purchase Order Item,user_043,5009
+16244,4508043624_00010,Create Purchase Order Item,user_043,5027
+16247,4508043627_00010,Create Purchase Order Item,user_043,5027
+16248,4508043627_00010,Change Quantity,user_043,5051
+16346,4508043962_00010,Create Purchase Order Item,user_091,5053
+16347,4508043962_00010,Vendor creates invoice,NONE,5760
+16349,4508043965_00010,Create Purchase Order Item,user_091,5053
+16350,4508043965_00010,Vendor creates invoice,NONE,5712
+16352,4508043967_00010,Create Purchase Order Item,user_091,5053
+16353,4508043967_00010,Vendor creates invoice,NONE,5736
+16390,4508044040_00020,Create Purchase Order Item,user_147,5057
+16431,4508044043_00230,Create Purchase Order Item,user_286,5171
+16432,4508044043_00230,Vendor creates invoice,NONE,5448
+16493,4508044340_00010,Create Purchase Order Item,user_286,5079
+16502,4508044352_00030,Create Purchase Order Item,user_286,5079
+16508,4508044367_00030,Create Purchase Order Item,user_079,5080
+16509,4508044367_00030,Change Price,user_115,5193
+16511,4508044368_00020,Create Purchase Order Item,user_079,5080
+16527,4508044530_00010,Create Purchase Order Item,user_322,5101
+16539,4508044608_00150,Create Purchase Order Item,user_038,5168
+16540,4508044608_00150,Change Price,user_038,5193
+16592,4508044943_00020,Create Purchase Order Item,user_068,5198
+16596,4508044958_00040,Create Purchase Order Item,user_079,5199
+16598,4508044958_00050,Create Purchase Order Item,user_079,5199
+16600,4508044958_00080,Create Purchase Order Item,user_079,5199
+16602,4508044958_00090,Create Purchase Order Item,user_079,5199
+16604,4508044981_00010,Create Purchase Order Item,user_091,5199
+16607,4508044985_00010,Create Purchase Order Item,user_091,5199
+16610,4508045002_00010,Create Purchase Order Item,user_091,5200
+16611,4508045002_00010,Vendor creates invoice,NONE,5760
+16633,4508045013_00010,Create Purchase Order Item,user_079,5200
+16634,4508045013_00010,Change Price,user_039,5367
+16653,4508045033_00040,Create Purchase Order Item,user_147,5203
+16654,4508045033_00040,Change Quantity,user_286,5386
+16655,4508045033_00040,Vendor creates invoice,NONE,5448
+16663,4508045037_00010,Create Purchase Order Item,user_147,5203
+16665,4508045037_00020,Create Purchase Order Item,user_147,5203
+16705,4508045042_00020,Create Purchase Order Item,user_147,5203
+16713,4508045046_00010,Create Purchase Order Item,user_147,5203
+16714,4508045046_00010,Vendor creates invoice,NONE,5760
+16716,4508045046_00020,Create Purchase Order Item,user_147,5203
+16717,4508045046_00020,Vendor creates invoice,NONE,5760
+16719,4508045046_00030,Create Purchase Order Item,user_147,5203
+16720,4508045046_00030,Vendor creates invoice,NONE,5760
+16722,4508045047_00010,Create Purchase Order Item,user_147,5203
+16729,4508045056_00010,Create Purchase Order Item,user_286,5204
+16732,4508045056_00020,Create Purchase Order Item,user_286,5204
+16735,4508045058_00010,Create Purchase Order Item,user_286,5204
+16738,4508045059_00010,Create Purchase Order Item,user_286,5204
+16740,4508045060_00010,Create Purchase Order Item,user_286,5204
+16774,4508045174_00010,Create Purchase Order Item,user_059,5218
+16775,4508045174_00010,Vendor creates invoice,NONE,5760
+16777,4508045198_00010,Create Purchase Order Item,user_079,5219
+16779,4508045198_00020,Create Purchase Order Item,user_079,5219
+16781,4508045198_00030,Create Purchase Order Item,user_079,5219
+16816,4508045324_00020,Create Purchase Order Item,user_079,5224
+16817,4508045324_00020,Vendor creates invoice,NONE,5736
+16862,4508045542_00010,Create Purchase Order Item,user_204,5242
+16863,4508045542_00010,Change Price,user_102,5505
+16866,4508045553_00010,Create Purchase Order Item,user_043,5243
+16872,4508045554_00010,Create Purchase Order Item,user_043,5243
+16873,4508045554_00010,Vendor creates invoice,NONE,5688
+16876,4508045555_00010,Create Purchase Order Item,user_043,5243
+16880,4508045556_00010,Create Purchase Order Item,user_043,5243
+16883,4508045557_00010,Create Purchase Order Item,user_043,5243
+16886,4508045563_00010,Create Purchase Order Item,user_043,5243
+16889,4508045565_00010,Create Purchase Order Item,user_043,5243
+16892,4508045569_00010,Create Purchase Order Item,user_043,5243
+16904,4508045607_00070,Create Purchase Order Item,user_079,5245
+16971,4508045888_00050,Create Purchase Order Item,user_079,5269
+16973,4508045888_00060,Create Purchase Order Item,user_079,5269
+16979,4508045943_00020,Create Purchase Order Item,user_286,5272
+16980,4508045943_00020,Vendor creates invoice,NONE,5784
+16985,4508045943_00040,Create Purchase Order Item,user_286,5272
+16986,4508045943_00040,Vendor creates invoice,NONE,5784
+16988,4508045943_00050,Create Purchase Order Item,user_286,5272
+16989,4508045943_00050,Vendor creates invoice,NONE,5736
+16991,4508045943_00060,Create Purchase Order Item,user_286,5272
+16994,4508045943_00070,Create Purchase Order Item,user_286,5272
+16995,4508045943_00070,Vendor creates invoice,NONE,5784
+16998,4508045943_00080,Create Purchase Order Item,user_286,5272
+17002,4508045944_00010,Create Purchase Order Item,user_286,5272
+17013,4508045946_00020,Create Purchase Order Item,user_286,5272
+17015,4508045946_00030,Create Purchase Order Item,user_286,5272
+17017,4508045947_00010,Create Purchase Order Item,user_286,5272
+17018,4508045947_00010,Change Quantity,user_286,5386
+17020,4508045947_00020,Create Purchase Order Item,user_286,5272
+17022,4508045947_00030,Create Purchase Order Item,user_286,5272
+17023,4508045947_00030,Change Quantity,user_286,5386
+17025,4508045951_00220,Create Purchase Order Item,user_286,5272
+17027,4508045951_00230,Create Purchase Order Item,user_286,5272
+17037,4508045951_00450,Create Purchase Order Item,user_286,5272
+17039,4508045951_00460,Create Purchase Order Item,user_286,5272
+17044,4508045951_00480,Create Purchase Order Item,user_286,5272
+17045,4508045951_00480,Vendor creates invoice,NONE,5568
+17047,4508045951_00490,Create Purchase Order Item,user_286,5272
+17048,4508045951_00490,Vendor creates invoice,NONE,5568
+17067,4508045954_00030,Create Purchase Order Item,user_286,5272
+17074,4508045955_00070,Create Purchase Order Item,user_286,5273
+17080,4508045957_00060,Create Purchase Order Item,user_286,5273
+17111,4508045960_00190,Create Purchase Order Item,user_286,5273
+17117,4508045964_00010,Create Purchase Order Item,user_147,5273
+17118,4508045964_00010,Vendor creates invoice,NONE,5784
+17119,4508045964_00010,Vendor creates debit memo,NONE,5784
+17121,4508045966_00010,Create Purchase Order Item,user_147,5273
+17124,4508045969_00010,Create Purchase Order Item,user_147,5273
+17125,4508045969_00010,Vendor creates invoice,NONE,5712
+17127,4508045969_00020,Create Purchase Order Item,user_147,5273
+17128,4508045969_00020,Vendor creates invoice,NONE,5712
+17130,4508045970_00020,Create Purchase Order Item,user_147,5273
+17133,4508045974_00010,Create Purchase Order Item,user_147,5273
+17134,4508045974_00010,Vendor creates invoice,NONE,5688
+17164,4508046177_00010,Create Purchase Order Item,user_286,5339
+17174,4508046231_00010,Create Purchase Order Item,user_178,5341
+17175,4508046231_00010,Change Quantity,user_178,5366
+17180,4508046359_00010,Create Purchase Order Item,user_043,5360
+17189,4508046385_00010,Create Purchase Order Item,user_286,5361
+17193,4508046447_00010,Create Purchase Order Item,user_059,5363
+17196,4508046464_00010,Create Purchase Order Item,user_091,5364
+17199,4508046482_00010,Create Purchase Order Item,user_286,5365
+17201,4508046482_00020,Create Purchase Order Item,user_286,5365
+17205,4508046482_00030,Create Purchase Order Item,user_286,5365
+17208,4508046482_00040,Create Purchase Order Item,user_286,5365
+17211,4508046482_00050,Create Purchase Order Item,user_286,5365
+17213,4508046482_00060,Create Purchase Order Item,user_286,5365
+17216,4508046482_00070,Create Purchase Order Item,user_286,5365
+17220,4508046618_00010,Create Purchase Order Item,user_033,5381
+17247,4508046625_00240,Create Purchase Order Item,user_042,5383
+17248,4508046625_00240,Change Price,user_042,5386
+17262,4508046755_00060,Create Purchase Order Item,user_387,5413
+17263,4508046755_00060,Change Quantity,user_387,5432
+17266,4508046756_00010,Create Purchase Order Item,user_091,5389
+17271,4508046761_00010,Create Purchase Order Item,user_091,5389
+17274,4508046764_00010,Create Purchase Order Item,user_091,5389
+17299,4508046926_00010,Create Purchase Order Item,user_091,5411
+17302,4508046930_00010,Create Purchase Order Item,user_178,5411
+17379,4508047030_00140,Create Purchase Order Item,user_038,5431
+17380,4508047030_00140,Change Price,user_038,5433
+17381,4508047030_00140,Vendor creates invoice,NONE,5760
+17389,4508047143_00040,Create Purchase Order Item,user_142,5437
+17390,4508047143_00040,Vendor creates invoice,NONE,5784
+17395,4508047143_00060,Create Purchase Order Item,user_142,5437
+17396,4508047143_00060,Vendor creates invoice,NONE,5784
+17398,4508047143_00070,Create Purchase Order Item,user_142,5437
+17399,4508047143_00070,Vendor creates invoice,NONE,5784
+17413,4508047174_00020,Create Purchase Order Item,user_286,5438
+17416,4508047176_00030,Create Purchase Order Item,user_286,5438
+17419,4508047177_00010,Create Purchase Order Item,user_286,5438
+17425,4508047182_00030,Create Purchase Order Item,user_286,5439
+17427,4508047187_00010,Create Purchase Order Item,user_286,5439
+17431,4508047191_00010,Create Purchase Order Item,user_286,5439
+17432,4508047191_00010,Change Quantity,user_286,5559
+17435,4508047193_00010,Create Purchase Order Item,user_286,5439
+17438,4508047202_00010,Create Purchase Order Item,user_286,5439
+17459,4508047389_00020,Create Purchase Order Item,user_068,5507
+17462,4508047389_00030,Create Purchase Order Item,user_068,5507
+17465,4508047391_00010,Create Purchase Order Item,user_163,5507
+17466,4508047391_00010,Vendor creates invoice,NONE,5760
+17467,4508047391_00010,Vendor creates debit memo,NONE,5760
+17469,4508047414_00030,Create Purchase Order Item,user_142,5507
+17472,4508047414_00040,Create Purchase Order Item,user_142,5507
+17473,4508047414_00040,Vendor creates invoice,NONE,5784
+17481,4508047526_00040,Create Purchase Order Item,user_142,5746
+17484,4508047536_00020,Create Purchase Order Item,user_286,5510
+17485,4508047536_00020,Vendor creates invoice,NONE,5736
+17487,4508047536_00030,Create Purchase Order Item,user_286,5510
+17490,4508047536_00040,Create Purchase Order Item,user_286,5510
+17491,4508047536_00040,Vendor creates invoice,NONE,5784
+17494,4508047537_00010,Create Purchase Order Item,user_286,5510
+17495,4508047537_00010,Vendor creates invoice,NONE,5736
+17497,4508047537_00020,Create Purchase Order Item,user_286,5510
+17498,4508047537_00020,Vendor creates invoice,NONE,5736
+17500,4508047538_00010,Create Purchase Order Item,user_286,5510
+17503,4508047539_00030,Create Purchase Order Item,user_286,5511
+17506,4508047539_00040,Create Purchase Order Item,user_286,5511
+17509,4508047539_00050,Create Purchase Order Item,user_286,5511
+17511,4508047539_00060,Create Purchase Order Item,user_286,5511
+17513,4508047539_00070,Create Purchase Order Item,user_286,5511
+17515,4508047539_00080,Create Purchase Order Item,user_286,5511
+17517,4508047539_00090,Create Purchase Order Item,user_286,5511
+17520,4508047540_00010,Create Purchase Order Item,user_286,5511
+17522,4508047542_00020,Create Purchase Order Item,user_286,5511
+17524,4508047542_00030,Create Purchase Order Item,user_286,5511
+17526,4508047542_00040,Create Purchase Order Item,user_286,5511
+17528,4508047542_00050,Create Purchase Order Item,user_286,5511
+17530,4508047554_00280,Create Purchase Order Item,user_286,5511
+17532,4508047554_00290,Create Purchase Order Item,user_286,5511
+17535,4508047554_00300,Create Purchase Order Item,user_286,5511
+17538,4508047554_00310,Create Purchase Order Item,user_286,5511
+17541,4508047554_00320,Create Purchase Order Item,user_286,5511
+17544,4508047554_00380,Create Purchase Order Item,user_286,5511
+17546,4508047554_00390,Create Purchase Order Item,user_286,5511
+17548,4508047554_00400,Create Purchase Order Item,user_286,5511
+17550,4508047554_00410,Create Purchase Order Item,user_286,5511
+17552,4508047554_00420,Create Purchase Order Item,user_286,5511
+17554,4508047554_00430,Create Purchase Order Item,user_286,5511
+17556,4508047554_00440,Create Purchase Order Item,user_286,5511
+17558,4508047554_00450,Create Purchase Order Item,user_286,5511
+17560,4508047554_00460,Create Purchase Order Item,user_286,5511
+17562,4508047554_00470,Create Purchase Order Item,user_286,5511
+17564,4508047554_00480,Create Purchase Order Item,user_286,5511
+17566,4508047554_00490,Create Purchase Order Item,user_286,5511
+17568,4508047554_00500,Create Purchase Order Item,user_286,5511
+17570,4508047554_00510,Create Purchase Order Item,user_286,5511
+17572,4508047554_00520,Create Purchase Order Item,user_286,5511
+17574,4508047554_00530,Create Purchase Order Item,user_286,5511
+17576,4508047554_00640,Create Purchase Order Item,user_286,5511
+17579,4508047554_00670,Create Purchase Order Item,user_286,5511
+17581,4508047554_00680,Create Purchase Order Item,user_286,5511
+17583,4508047554_00690,Create Purchase Order Item,user_286,5511
+17585,4508047555_00010,Create Purchase Order Item,user_286,5511
+17588,4508047555_00020,Create Purchase Order Item,user_286,5511
+17591,4508047561_00100,Create Purchase Order Item,user_286,5511
+17594,4508047561_00160,Create Purchase Order Item,user_286,5511
+17597,4508047561_00230,Create Purchase Order Item,user_286,5511
+17600,4508047571_00010,Create Purchase Order Item,user_286,5511
+17603,4508047572_00010,Create Purchase Order Item,user_286,5511
+17617,4508047587_00210,Create Purchase Order Item,user_286,5511
+17620,4508047587_00230,Create Purchase Order Item,user_286,5511
+17623,4508047589_00010,Create Purchase Order Item,user_286,5512
+17631,4508047650_00010,Create Purchase Order Item,user_072,5528
+17633,4508047770_00010,Create Purchase Order Item,user_286,5533
+17641,4508047860_00010,Create Purchase Order Item,user_072,5552
+17643,4508047860_00020,Create Purchase Order Item,user_072,5552
+17661,4508047933_00010,Create Purchase Order Item,user_043,5553
+17664,4508047962_00010,Create Purchase Order Item,user_033,5554
+17667,4508048053_00010,Create Purchase Order Item,user_286,5558
+17669,4508048073_00010,Create Purchase Order Item,user_286,5559
+17672,4508048076_00010,Create Purchase Order Item,user_286,5559
+17675,4508048080_00010,Create Purchase Order Item,user_286,5559
+17677,4508048082_00010,Create Purchase Order Item,user_286,5559
+17680,4508048097_00020,Create Purchase Order Item,user_286,5561
+17683,4508048097_00030,Create Purchase Order Item,user_286,5561
+17684,4508048097_00030,Vendor creates invoice,NONE,5736
+17686,4508048097_00040,Create Purchase Order Item,user_286,5561
+17687,4508048097_00040,Change Quantity,user_286,5680
+17691,4508048098_00010,Create Purchase Order Item,user_286,5561
+17693,4508048098_00020,Create Purchase Order Item,user_286,5561
+17695,4508048099_00010,Create Purchase Order Item,user_286,5561
+17697,4508048099_00030,Create Purchase Order Item,user_286,5561
+17700,4508048099_00040,Create Purchase Order Item,user_286,5561
+17702,4508048099_00050,Create Purchase Order Item,user_286,5561
+17704,4508048100_00010,Create Purchase Order Item,user_286,5561
+17707,4508048100_00020,Create Purchase Order Item,user_286,5561
+17709,4508048100_00030,Create Purchase Order Item,user_286,5561
+17712,4508048101_00010,Create Purchase Order Item,user_286,5561
+17715,4508048102_00010,Create Purchase Order Item,user_286,5561
+17719,4508048102_00020,Create Purchase Order Item,user_286,5561
+17723,4508048102_00030,Create Purchase Order Item,user_286,5561
+17724,4508048102_00030,Change Quantity,user_286,5747
+17727,4508048102_00040,Create Purchase Order Item,user_286,5561
+17730,4508048102_00050,Create Purchase Order Item,user_286,5561
+17732,4508048102_00060,Create Purchase Order Item,user_286,5561
+17734,4508048104_00040,Create Purchase Order Item,user_286,5562
+17736,4508048104_00070,Create Purchase Order Item,user_286,5562
+17739,4508048104_00080,Create Purchase Order Item,user_286,5562
+17741,4508048104_00180,Create Purchase Order Item,user_286,5562
+17743,4508048104_00190,Create Purchase Order Item,user_286,5562
+17745,4508048105_00040,Create Purchase Order Item,user_286,5562
+17748,4508048107_00020,Create Purchase Order Item,user_286,5562
+17751,4508048107_00070,Create Purchase Order Item,user_286,5562
+17754,4508048107_00080,Create Purchase Order Item,user_286,5562
+17785,4508048269_00010,Create Purchase Order Item,user_142,5579
+17786,4508048269_00010,Vendor creates invoice,NONE,5784
+17791,4508048269_00110,Create Purchase Order Item,user_142,5579
+17792,4508048269_00110,Vendor creates invoice,NONE,5784
+17794,4508048269_00120,Create Purchase Order Item,user_142,5579
+17795,4508048269_00120,Vendor creates invoice,NONE,5784
+17797,4508048285_00010,Create Purchase Order Item,user_043,5580
+17801,4508048286_00010,Create Purchase Order Item,user_387,5580
+17804,4508048287_00010,Create Purchase Order Item,user_043,5580
+17807,4508048288_00010,Create Purchase Order Item,user_043,5580
+17811,4508048289_00010,Create Purchase Order Item,user_043,5580
+17818,4508048290_00010,Create Purchase Order Item,user_043,5580
+17822,4508048291_00010,Create Purchase Order Item,user_043,5580
+17829,4508048312_00020,Create Purchase Order Item,user_142,5746
+17833,4508048378_00010,Create Purchase Order Item,user_286,5585
+17834,4508048378_00010,Vendor creates invoice,NONE,5760
+17853,4508048410_00340,Create Purchase Order Item,user_038,5600
+17854,4508048410_00340,Change Price,user_038,5602
+17863,4508048410_00370,Create Purchase Order Item,user_038,5600
+17864,4508048410_00370,Vendor creates invoice,NONE,5712
+17868,4508048565_00010,Create Purchase Order Item,user_286,5608
+17869,4508048565_00010,Change Price,user_286,5770
+17870,4508048565_00010,Change Quantity,user_286,5770
+17872,4508048565_00020,Create Purchase Order Item,user_286,5608
+17873,4508048565_00020,Change Quantity,user_286,5727
+17874,4508048565_00020,Change Quantity,user_286,5727
+17875,4508048565_00020,Change Quantity,user_286,5727
+17878,4508048565_00040,Create Purchase Order Item,user_286,5608
+17881,4508048566_00010,Create Purchase Order Item,user_286,5608
+17884,4508048567_00010,Create Purchase Order Item,user_286,5608
+17887,4508048568_00010,Create Purchase Order Item,user_286,5608
+17888,4508048568_00010,Change Quantity,user_286,5680
+17891,4508048569_00070,Create Purchase Order Item,user_286,5608
+17893,4508048570_00010,Create Purchase Order Item,user_286,5608
+17896,4508048570_00020,Create Purchase Order Item,user_286,5608
+17899,4508048571_00010,Create Purchase Order Item,user_286,5608
+17901,4508048571_00020,Create Purchase Order Item,user_286,5608
+17904,4508048573_00060,Create Purchase Order Item,user_286,5608
+17907,4508048573_00070,Create Purchase Order Item,user_286,5608
+17910,4508048573_00170,Create Purchase Order Item,user_286,5608
+17913,4508048573_00190,Create Purchase Order Item,user_286,5608
+17916,4508048575_00010,Create Purchase Order Item,user_286,5608
+17919,4508048577_00010,Create Purchase Order Item,user_286,5608
+17922,4508048577_00020,Create Purchase Order Item,user_286,5608
+17925,4508048577_00030,Create Purchase Order Item,user_286,5608
+17928,4508048577_00040,Create Purchase Order Item,user_286,5608
+17931,4508048577_00050,Create Purchase Order Item,user_286,5608
+17934,4508048577_00070,Create Purchase Order Item,user_286,5608
+17937,4508048577_00080,Create Purchase Order Item,user_286,5608
+17959,4508048696_00050,Create Purchase Order Item,user_045,5673
+17963,4508048786_00030,Create Purchase Order Item,user_142,5678
+17966,4508048786_00060,Create Purchase Order Item,user_142,5678
+17969,4508048786_00090,Create Purchase Order Item,user_142,5678
+17972,4508048786_00100,Create Purchase Order Item,user_142,5678
+17975,4508048794_00010,Create Purchase Requisition Item,batch_08,5664
+17976,4508048794_00010,Create Purchase Order Item,user_142,5678
+17980,4508049072_00010,Create Purchase Order Item,user_286,5702
+17982,4508049075_00010,Create Purchase Order Item,user_286,5702
+17985,4508049075_00020,Create Purchase Order Item,user_286,5702
+18017,4508049176_00020,Create Purchase Order Item,user_033,5721
+18020,4508049176_00030,Create Purchase Order Item,user_033,5721
+18023,4508049176_00040,Create Purchase Order Item,user_033,5721
+18026,4508049176_00050,Create Purchase Order Item,user_033,5721
+18029,4508049190_00010,Create Purchase Order Item,user_059,5722
+18036,4508049376_00010,Create Purchase Order Item,user_122,5744
+18040,4508049377_00010,Create Purchase Order Item,user_164,5744
+18041,4508049377_00010,Vendor creates invoice,NONE,5760
+18043,4508049377_00020,Create Purchase Order Item,user_164,5744
+18044,4508049377_00020,Vendor creates invoice,NONE,5760
+18046,4508049394_00010,Create Purchase Order Item,user_164,5745
+18047,4508049394_00010,Vendor creates invoice,NONE,5784
+18049,4508049394_00020,Create Purchase Order Item,user_164,5745
+18050,4508049394_00020,Vendor creates invoice,NONE,5784
+18052,4508049398_00090,Create Purchase Order Item,user_040,5745
+18061,4508049528_00010,Create Purchase Order Item,user_286,5749
+18065,4508049528_00020,Create Purchase Order Item,user_286,5749
+18068,4508049529_00020,Create Purchase Order Item,user_286,5749
+18071,4508049530_00020,Create Purchase Order Item,user_286,5749
+18073,4508049532_00010,Create Purchase Order Item,user_286,5749
+18075,4508049532_00020,Create Purchase Order Item,user_286,5749
+18077,4508049533_00020,Create Purchase Order Item,user_286,5749
+18079,4508049533_00060,Create Purchase Order Item,user_286,5749
+18081,4508049533_00070,Create Purchase Order Item,user_286,5749
+18083,4508049533_00080,Create Purchase Order Item,user_286,5749
+18085,4508049533_00090,Create Purchase Order Item,user_286,5749
+18087,4508049533_00100,Create Purchase Order Item,user_286,5749
+18090,4508049534_00040,Create Purchase Order Item,user_286,5749
+18093,4508049534_00050,Create Purchase Order Item,user_286,5749
+18096,4508049612_00100,Create Purchase Order Item,user_038,5767
+18098,4508049613_00010,Create Purchase Order Item,user_038,5768
+18101,4508049613_00050,Create Purchase Order Item,user_038,5768
+18104,4508049613_00060,Create Purchase Order Item,user_038,5768
+18107,4508049613_00070,Create Purchase Order Item,user_038,5768
+18108,4508049613_00070,Change Price,user_038,5769
+18111,4508049613_00080,Create Purchase Order Item,user_038,5768
+18112,4508049613_00080,Change Price,user_038,5769
+18115,4508049613_00090,Create Purchase Order Item,user_038,5768
+18116,4508049613_00090,Change Price,user_038,5769
+18119,4508049613_00100,Create Purchase Order Item,user_038,5768
+18120,4508049613_00100,Change Price,user_038,5769
+18123,4508049613_00110,Create Purchase Order Item,user_038,5768
+18124,4508049613_00110,Change Price,user_038,5769
+18127,4508049613_00120,Create Purchase Order Item,user_038,5768
+18128,4508049613_00120,Change Price,user_038,5769
+18131,4508049613_00230,Create Purchase Order Item,user_038,5768
+18134,4508049613_00260,Create Purchase Order Item,user_038,5768
+18141,4508049738_00120,Create Purchase Order Item,user_142,5776
+18144,4508049738_00200,Create Purchase Order Item,user_142,5776
+25459,4508071590_00010,Create Purchase Requisition Item,batch_08,1656

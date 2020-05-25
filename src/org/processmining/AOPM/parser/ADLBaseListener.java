@@ -17,13 +17,13 @@ public class ADLBaseListener implements ADLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConstraintDim(@NotNull ADLParser.ConstraintDimContext ctx) { }
+	@Override public void enterViewObj(@NotNull ADLParser.ViewObjContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConstraintDim(@NotNull ADLParser.ConstraintDimContext ctx) { }
+	@Override public void exitViewObj(@NotNull ADLParser.ViewObjContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -89,6 +89,18 @@ public class ADLBaseListener implements ADLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterProcName(@NotNull ADLParser.ProcNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitProcName(@NotNull ADLParser.ProcNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUnaryPredicateName(@NotNull ADLParser.UnaryPredicateNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -120,6 +132,18 @@ public class ADLBaseListener implements ADLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProcessEntityDim(@NotNull ADLParser.ProcessEntityDimContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterActName(@NotNull ADLParser.ActNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitActName(@NotNull ADLParser.ActNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -168,6 +192,18 @@ public class ADLBaseListener implements ADLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFuncName(@NotNull ADLParser.FuncNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterResName(@NotNull ADLParser.ResNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitResName(@NotNull ADLParser.ResNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -245,6 +281,18 @@ public class ADLBaseListener implements ADLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterViewProc(@NotNull ADLParser.ViewProcContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitViewProc(@NotNull ADLParser.ViewProcContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTimeRange(@NotNull ADLParser.TimeRangeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -252,6 +300,18 @@ public class ADLBaseListener implements ADLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTimeRange(@NotNull ADLParser.TimeRangeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOpDesc(@NotNull ADLParser.OpDescContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOpDesc(@NotNull ADLParser.OpDescContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -269,13 +329,13 @@ public class ADLBaseListener implements ADLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConstraintName(@NotNull ADLParser.ConstraintNameContext ctx) { }
+	@Override public void enterViewRes(@NotNull ADLParser.ViewResContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConstraintName(@NotNull ADLParser.ConstraintNameContext ctx) { }
+	@Override public void exitViewRes(@NotNull ADLParser.ViewResContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -305,6 +365,18 @@ public class ADLBaseListener implements ADLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterViewCf(@NotNull ADLParser.ViewCfContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitViewCf(@NotNull ADLParser.ViewCfContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEndTime(@NotNull ADLParser.EndTimeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -312,6 +384,18 @@ public class ADLBaseListener implements ADLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEndTime(@NotNull ADLParser.EndTimeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCfName(@NotNull ADLParser.CfNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCfName(@NotNull ADLParser.CfNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -329,18 +413,6 @@ public class ADLBaseListener implements ADLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterActionDesc(@NotNull ADLParser.ActionDescContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitActionDesc(@NotNull ADLParser.ActionDescContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterActionName(@NotNull ADLParser.ActionNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -348,6 +420,18 @@ public class ADLBaseListener implements ADLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitActionName(@NotNull ADLParser.ActionNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterViewAct(@NotNull ADLParser.ViewActContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitViewAct(@NotNull ADLParser.ViewActContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

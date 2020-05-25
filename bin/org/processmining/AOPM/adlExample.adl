@@ -1,5 +1,5 @@
-DEFINE "a1: send-email" AS
-VIEW cf=["c1: An order must be delivered in 72"], pi=["process"], time=(-5,0)
-ASSESS "count", = , 3
-ACTION "Alert with email"
-PARAMETER "target"="order manager", "constraint"="cf" ;
+DEFINE "af1" AS
+VIEW "cf"={"cf1"} & "Order"={"foreach"}
+ASSESS "count",>,0
+OPERATION "Set higher priority"
+PARAMETER "target"="Order";

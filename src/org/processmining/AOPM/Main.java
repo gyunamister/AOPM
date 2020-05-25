@@ -11,8 +11,8 @@ import org.processmining.AOPM.models.CMConfig;
 import org.processmining.AOPM.models.ConstraintFormula;
 import org.processmining.AOPM.models.ContextDescription;
 import org.processmining.AOPM.models.TimeWindow;
-import org.processmining.AOPM.simulation.ProcessSimulation;
 import org.processmining.AOPM.simulation.Simulator;
+import org.processmining.EIS.Simulation.ProcessSimulation;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -48,6 +48,7 @@ public class Main {
 		temp_set4.add(action4);
 		action_pack.put("c4",temp_set4);
 		*/
+		String filePath = "/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/OH-OCL-2020-05-23-13-51-12.xml";
 		CMConfig cmConfig = new CMConfig(10000);
 		String cfName = "c1: An order must be delivered in 72";
 		String filter= "event";
@@ -59,7 +60,7 @@ public class Main {
 		Map<String,Set<String>> vmap = new LinkedHashMap<String,Set<String>>();
 		String proc = "OH";
 		Set<String> orderSet = new HashSet<String>();
-		orderSet.add("forall");
+		orderSet.add("foreach");
 		omap.put("Order", orderSet);
 		ContextDescription ctxdesc = new ContextDescription(procSet,actSet,resSet,omap,vmap);
 		
@@ -89,6 +90,7 @@ public class Main {
 		pmap.put("target", "Order");
 		ActionFormula af = new ActionFormula(afName, ccvDescription, actionPredicate, operation, pmap);
 		aeConfig.addAction(af, 24, 24, new TimeWindow(-24,0));
+		System.out.println(ccvDescription);
 
 		String afName2 = "a2: alert case manager for the delayed orders";
 		Map<String, Set <String>> ccvDescription2 = new LinkedHashMap<String, Set <String>>();

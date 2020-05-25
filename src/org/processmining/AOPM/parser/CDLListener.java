@@ -49,16 +49,6 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitFilterName(@NotNull CDLParser.FilterNameContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CDLParser#unaryPredicate}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryPredicate(@NotNull CDLParser.UnaryPredicateContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CDLParser#unaryPredicate}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryPredicate(@NotNull CDLParser.UnaryPredicateContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link CDLParser#eos}.
 	 * @param ctx the parse tree
 	 */
@@ -68,6 +58,16 @@ public interface CDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEos(@NotNull CDLParser.EosContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#procName}.
+	 * @param ctx the parse tree
+	 */
+	void enterProcName(@NotNull CDLParser.ProcNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#procName}.
+	 * @param ctx the parse tree
+	 */
+	void exitProcName(@NotNull CDLParser.ProcNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CDLParser#validatePredicate}.
 	 * @param ctx the parse tree
@@ -99,15 +99,15 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitAcquireQuery(@NotNull CDLParser.AcquireQueryContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CDLParser#constraintName}.
+	 * Enter a parse tree produced by {@link CDLParser#actName}.
 	 * @param ctx the parse tree
 	 */
-	void enterConstraintName(@NotNull CDLParser.ConstraintNameContext ctx);
+	void enterActName(@NotNull CDLParser.ActNameContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CDLParser#constraintName}.
+	 * Exit a parse tree produced by {@link CDLParser#actName}.
 	 * @param ctx the parse tree
 	 */
-	void exitConstraintName(@NotNull CDLParser.ConstraintNameContext ctx);
+	void exitActName(@NotNull CDLParser.ActNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CDLParser#binaryPredicate}.
 	 * @param ctx the parse tree
@@ -119,6 +119,16 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitBinaryPredicate(@NotNull CDLParser.BinaryPredicateContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CDLParser#vmap}.
+	 * @param ctx the parse tree
+	 */
+	void enterVmap(@NotNull CDLParser.VmapContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#vmap}.
+	 * @param ctx the parse tree
+	 */
+	void exitVmap(@NotNull CDLParser.VmapContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CDLParser#predicate}.
 	 * @param ctx the parse tree
 	 */
@@ -128,16 +138,6 @@ public interface CDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPredicate(@NotNull CDLParser.PredicateContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CDLParser#relationalPredicate}.
-	 * @param ctx the parse tree
-	 */
-	void enterRelationalPredicate(@NotNull CDLParser.RelationalPredicateContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CDLParser#relationalPredicate}.
-	 * @param ctx the parse tree
-	 */
-	void exitRelationalPredicate(@NotNull CDLParser.RelationalPredicateContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CDLParser#funcName}.
 	 * @param ctx the parse tree
@@ -149,6 +149,16 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitFuncName(@NotNull CDLParser.FuncNameContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CDLParser#resName}.
+	 * @param ctx the parse tree
+	 */
+	void enterResName(@NotNull CDLParser.ResNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#resName}.
+	 * @param ctx the parse tree
+	 */
+	void exitResName(@NotNull CDLParser.ResNameContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CDLParser#setPredicate}.
 	 * @param ctx the parse tree
 	 */
@@ -159,15 +169,15 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitSetPredicate(@NotNull CDLParser.SetPredicateContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CDLParser#acqName}.
+	 * Enter a parse tree produced by {@link CDLParser#ctxVmap}.
 	 * @param ctx the parse tree
 	 */
-	void enterAcqName(@NotNull CDLParser.AcqNameContext ctx);
+	void enterCtxVmap(@NotNull CDLParser.CtxVmapContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CDLParser#acqName}.
+	 * Exit a parse tree produced by {@link CDLParser#ctxVmap}.
 	 * @param ctx the parse tree
 	 */
-	void exitAcqName(@NotNull CDLParser.AcqNameContext ctx);
+	void exitCtxVmap(@NotNull CDLParser.CtxVmapContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CDLParser#entityName}.
 	 * @param ctx the parse tree
@@ -199,6 +209,126 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitTruthValue(@NotNull CDLParser.TruthValueContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CDLParser#attrName}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttrName(@NotNull CDLParser.AttrNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#attrName}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttrName(@NotNull CDLParser.AttrNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#contextDetails}.
+	 * @param ctx the parse tree
+	 */
+	void enterContextDetails(@NotNull CDLParser.ContextDetailsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#contextDetails}.
+	 * @param ctx the parse tree
+	 */
+	void exitContextDetails(@NotNull CDLParser.ContextDetailsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#ctxProc}.
+	 * @param ctx the parse tree
+	 */
+	void enterCtxProc(@NotNull CDLParser.CtxProcContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#ctxProc}.
+	 * @param ctx the parse tree
+	 */
+	void exitCtxProc(@NotNull CDLParser.CtxProcContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#ctxAct}.
+	 * @param ctx the parse tree
+	 */
+	void enterCtxAct(@NotNull CDLParser.CtxActContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#ctxAct}.
+	 * @param ctx the parse tree
+	 */
+	void exitCtxAct(@NotNull CDLParser.CtxActContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#unaryPredicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryPredicate(@NotNull CDLParser.UnaryPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#unaryPredicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryPredicate(@NotNull CDLParser.UnaryPredicateContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#objValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjValue(@NotNull CDLParser.ObjValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#objValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjValue(@NotNull CDLParser.ObjValueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#constraintName}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstraintName(@NotNull CDLParser.ConstraintNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#constraintName}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstraintName(@NotNull CDLParser.ConstraintNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#objName}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjName(@NotNull CDLParser.ObjNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#objName}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjName(@NotNull CDLParser.ObjNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#ctxOmap}.
+	 * @param ctx the parse tree
+	 */
+	void enterCtxOmap(@NotNull CDLParser.CtxOmapContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#ctxOmap}.
+	 * @param ctx the parse tree
+	 */
+	void exitCtxOmap(@NotNull CDLParser.CtxOmapContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#relationalPredicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalPredicate(@NotNull CDLParser.RelationalPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#relationalPredicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalPredicate(@NotNull CDLParser.RelationalPredicateContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#ctxRes}.
+	 * @param ctx the parse tree
+	 */
+	void enterCtxRes(@NotNull CDLParser.CtxResContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#ctxRes}.
+	 * @param ctx the parse tree
+	 */
+	void exitCtxRes(@NotNull CDLParser.CtxResContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#acqName}.
+	 * @param ctx the parse tree
+	 */
+	void enterAcqName(@NotNull CDLParser.AcqNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#acqName}.
+	 * @param ctx the parse tree
+	 */
+	void exitAcqName(@NotNull CDLParser.AcqNameContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CDLParser#objectName}.
 	 * @param ctx the parse tree
 	 */
@@ -209,6 +339,16 @@ public interface CDLListener extends ParseTreeListener {
 	 */
 	void exitObjectName(@NotNull CDLParser.ObjectNameContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CDLParser#omap}.
+	 * @param ctx the parse tree
+	 */
+	void enterOmap(@NotNull CDLParser.OmapContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#omap}.
+	 * @param ctx the parse tree
+	 */
+	void exitOmap(@NotNull CDLParser.OmapContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CDLParser#constraint}.
 	 * @param ctx the parse tree
 	 */
@@ -218,6 +358,16 @@ public interface CDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConstraint(@NotNull CDLParser.ConstraintContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CDLParser#attrValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttrValue(@NotNull CDLParser.AttrValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CDLParser#attrValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttrValue(@NotNull CDLParser.AttrValueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CDLParser#binaryPredicateName}.
 	 * @param ctx the parse tree

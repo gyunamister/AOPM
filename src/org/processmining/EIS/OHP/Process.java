@@ -1,17 +1,12 @@
 package org.processmining.EIS.OHP;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class Process {
 	public String prev_act;
@@ -24,9 +19,9 @@ public abstract class Process {
 
 	public abstract void proceedNextActivity();
 
-	public int recordEvent(Map<String, Map<String, Object>> eventlog, String o1, String i1, String p1, String r1,
-			String act, String res, int start, int complete, int e) {
-		String event_id = "event" + e;
+	public OrderHandlingEvent generateEvent(Map<String, Map<String, Object>> eventlog, String o1, String i1, String p1, String r1,
+			String act, String res, int start, int complete, int eventNumber) {
+		String event_id = "event" + eventNumber;
 		String process = "order-handling-process";
 		eventlog.put(event_id, new HashMap<String, Object>());
 		if (o1 != null) {
@@ -46,30 +41,37 @@ public abstract class Process {
 //		eventlog.get(event_id).put("start_timestamp", start);
 		eventlog.get(event_id).put("complete_timestamp", complete);
 
-		Map<String,String> omap = new LinkedHashMap<String,String>();
-		omap.put("Order", o1);
-		omap.put("Item", i1);
-		omap.put("Package", p1);
-		omap.put("Route", r1);
+		Map<String,Set<String>> omap = new LinkedHashMap<String,Set<String>>();
+		Set<String> orderSet = new HashSet<String>();
+		orderSet.add(o1);
+		Set<String> itemSet = new HashSet<String>();
+		itemSet.add(i1);
+		Set<String> packageSet = new HashSet<String>();
+		packageSet.add(p1);
+		Set<String> routeSet = new HashSet<String>();
+		routeSet.add(r1);
+		omap.put("Order", orderSet);
+		omap.put("Item", itemSet);
+		omap.put("Package", packageSet);
+		omap.put("Route", routeSet);
 		OrderHandlingEvent event = new OrderHandlingEvent(event_id, process, act, res, complete, omap);
-		List<String> lines = Arrays.asList(event.toString());
-		if (e == 1) {
-			Path file = Paths.get("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/IS_OHP/eventlog.csv");
-			try {
-				Files.write(file, lines, StandardCharsets.UTF_8);
-			} catch (IOException ex) {
-				System.out.println(ex);
-			}
-		} else {
-			Path file = Paths.get("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/IS_OHP/eventlog.csv");
-			try {
-				Files.write(file, lines, StandardOpenOption.APPEND);
-			} catch (IOException ex) {
-				System.out.println(ex);
-			}
-		}
+//		List<String> lines = Arrays.asList(event.toString());
+//		if (e == 1) {
+//			Path file = Paths.get("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/IS_OHP/eventlog.csv");
+//			try {
+//				Files.write(file, lines, StandardCharsets.UTF_8);
+//			} catch (IOException ex) {
+//				System.out.println(ex);
+//			}
+//		} else {
+//			Path file = Paths.get("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/IS_OHP/eventlog.csv");
+//			try {
+//				Files.write(file, lines, StandardOpenOption.APPEND);
+//			} catch (IOException ex) {
+//				System.out.println(ex);
+//			}
+//		}
 
-		e = e + 1;
-		return e;
+		return event;
 	}
 }

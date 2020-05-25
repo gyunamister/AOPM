@@ -4,7 +4,7 @@ import org.processmining.AOPM.models.AEConfig;
 import org.processmining.AOPM.models.CMConfig;
 import org.processmining.AOPM.models.YourFirstInput;
 import org.processmining.AOPM.models.YourSecondInput;
-import org.processmining.AOPM.simulation.ProcessSimulation;
+import org.processmining.EIS.Simulation.ProcessSimulation;
 import org.processmining.basicutils.parameters.impl.PluginParametersImpl;
 
 public class YourParameters extends PluginParametersImpl {

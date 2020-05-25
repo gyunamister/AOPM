@@ -30,7 +30,6 @@ public class ConstraintFormula {
 	public Set<EvalResult> apply(Set<Event> eventSet,TimeWindow tw){
 		Set<EvalResult> results = new HashSet<EvalResult>();
 		Set<Context> ctxSet = this.genContextSet(eventSet,tw);
-//		System.out.println(ctxSet);
 		for(Context ctx:ctxSet) {
 			String outcome = this.eval(eventSet, tw, ctx);
 			EvalResult evalResult = new EvalResult(ctx,outcome);
@@ -48,7 +47,7 @@ public class ConstraintFormula {
 		Set<Set<String>> resSetCollection = new HashSet<Set<String>>();
 		Set<Map<String,Set<String>>> objectMapCollection = new HashSet<Map<String,Set<String>>>();
 		
-		if(this.ctxdesc.getProcSet().contains("forall")) {
+		if(this.ctxdesc.getProcSet().contains("foreach")) {
 			Set<String> temp = twFtEventSet.stream().map(Event::getProcess).collect(Collectors.toSet());
 			for(String p:temp) {
 				Set<String> procSet = new HashSet<String>(); 
@@ -58,7 +57,7 @@ public class ConstraintFormula {
 		}else {
 			procSetCollection.add(this.ctxdesc.getProcSet());
 		}
-		if(this.ctxdesc.getActSet().contains("forall")) {
+		if(this.ctxdesc.getActSet().contains("foreach")) {
 			Set<String> temp = twFtEventSet.stream().map(Event::getAct).collect(Collectors.toSet());
 			for(String p:temp) {
 				Set<String> actSet = new HashSet<String>(); 
@@ -68,7 +67,7 @@ public class ConstraintFormula {
 		}else {
 			actSetCollection.add(this.ctxdesc.getActSet());
 		}
-		if(this.ctxdesc.getResSet().contains("forall")) {
+		if(this.ctxdesc.getResSet().contains("foreach")) {
 			Set<String> temp = twFtEventSet.stream().map(Event::getRes).collect(Collectors.toSet());
 			for(String p:temp) {
 				Set<String> resSet = new HashSet<String>(); 
@@ -78,9 +77,9 @@ public class ConstraintFormula {
 		}else {
 			resSetCollection.add(this.ctxdesc.getResSet());
 		}
-//		Assume forall is allowed for just one property
+//		Assume foreach is allowed for just one property
 		for(String object: this.ctxdesc.getOmap().keySet()) { 
-			if(this.ctxdesc.getOmap().get(object).contains("forall")) {
+			if(this.ctxdesc.getOmap().get(object).contains("foreach")) {
 				Set<Map<String,Set<String>>> temp = twFtEventSet.stream().map(Event::getOmap).collect(Collectors.toSet());
 				Set<String> objectSet = new HashSet<String>();
 				for(Map<String,Set<String>> omap : temp) {
@@ -128,9 +127,9 @@ public class ConstraintFormula {
 		int val = 0;
 		if(c.contains("Throughput")) {
 			Set<Event> ec = this.ft.objectFilter(eventSet, tw, ctx);
-			if(ctx.getOmap().get("Order").iterator().next().equals("o70")) {
-				System.out.println(tw.getEnd()+ " "+ec);
-			}
+//			if(ctx.getOmap().get("Order").iterator().next().equals("o70")) {
+//				System.out.println(tw.getEnd()+ " "+ec);
+//			}
 			
 			val = this.dv.calcThroughputTime(ec,tw.getEnd());
 		}

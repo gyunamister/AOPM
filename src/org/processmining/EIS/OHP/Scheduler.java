@@ -2,15 +2,16 @@ package org.processmining.EIS.OHP;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.processmining.EIS.OHP.Resource;
-
 public class Scheduler {
-	public List<Resource> resourceList;
+	public List<Resource> resourceList; 
+	public int eventNumber = 1;
 
 	public List<String> getResourceNames(){
 		List<String> r_names = new ArrayList<String>();
@@ -35,7 +36,8 @@ public class Scheduler {
 		this.resourceList = resourceList;
 	}
 
-	public int assign(Map<String, Map<String,Object>> eventlog, List<ObjectType> rot, int t, int e) {
+	public Set<OrderHandlingEvent> assign(Map<String, Map<String,Object>> eventlog, List<ObjectType> rot, int t) {
+		Set<OrderHandlingEvent> eventSet = new HashSet<OrderHandlingEvent>();
 		Random random = new Random(t);
 		for(Resource r : this.resourceList) {
 			if(r.status.equals("ready_to_assign")) {
@@ -46,8 +48,8 @@ public class Scheduler {
 						for(String task : r.tasks.keySet()) {
 							if(rot.get(i).process.next_act.equals(task)) {
 								index=i;
-								//e was incremented in recordEvent -> need to deduct 1
-								rot.get(index).setHistory("event"+e);
+								//e was incremented in generateEvent -> need to deduct 1
+								rot.get(index).setHistory("event"+eventNumber);
 								//assign task and adjust values
 								rot.get(index).process.proceedNextActivity();
 								rot.get(index).prev_sojourn_time = t-rot.get(index).available_at;
@@ -58,7 +60,8 @@ public class Scheduler {
 								r.available_at = t+processingTime;
 								r.setStatus("work_in_process");
 
-								//record event
+								//generate event
+								OrderHandlingEvent event;
 								if(rot.get(index) instanceof Order) {
 									String orderName = ((Order)rot.get(index)).getObjectName();
 									List<String> items = ((Order)rot.get(index)).items.stream().map(Item::getObjectName).collect(Collectors.toList());
@@ -66,36 +69,41 @@ public class Scheduler {
 									if(items.size()!=0) {
 										itemNames = String.join("&", items);
 									}
-									e = rot.get(index).process.recordEvent(eventlog, orderName, itemNames, null, null,
-											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, e);
+									event = rot.get(index).process.generateEvent(eventlog, orderName, itemNames, null, null,
+											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, eventNumber);
+									eventNumber+=1;
+									eventSet.add(event);
 								}else if(rot.get(index) instanceof Item) {
 									String orderName = ((Item)rot.get(index)).order.getObjectName();
 									String itemName = ((Item)rot.get(index)).getObjectName();
-									e = rot.get(index).process.recordEvent(eventlog, orderName, itemName, null, null,
-											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, e);
+									event = rot.get(index).process.generateEvent(eventlog, orderName, itemName, null, null,
+											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, eventNumber);
+									eventNumber+=1;
+									eventSet.add(event);
 								}else if(rot.get(index) instanceof Package) {
 									String orderName = ((Package)rot.get(index)).order.getObjectName();
 									List<String> items = ((Package)rot.get(index)).items.stream().map(Item::getObjectName).collect(Collectors.toList());
 									String itemNames = String.join("&", items);
 									String packageName = ((Package)rot.get(index)).getObjectName();
-									e = rot.get(index).process.recordEvent(eventlog, orderName, itemNames, packageName, null,
-											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, e);
+									event = rot.get(index).process.generateEvent(eventlog, orderName, itemNames, packageName, null,
+											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, eventNumber);
+									eventNumber+=1;
+									eventSet.add(event);
 								}else if(rot.get(index) instanceof Route) {
 									String orderName = ((Route)rot.get(index)).order.getObjectName();
 									List<String> items = ((Route)rot.get(index)).packages.items.stream().map(Item::getObjectName).collect(Collectors.toList());
 									String itemNames = String.join("&", items);
 									String packageName = ((Route)rot.get(index)).packages.getObjectName();
 									String routeName = ((Route)rot.get(index)).getObjectName();
-									e = rot.get(index).process.recordEvent(eventlog, orderName, itemNames, packageName, routeName,
-											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, e);
+									event = rot.get(index).process.generateEvent(eventlog, orderName, itemNames, packageName, routeName,
+											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, eventNumber);
+									eventNumber+=1;
+									eventSet.add(event);
 								}else {
-									e = rot.get(index).process.recordEvent(eventlog, null, null, null, null,
-											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, e);
+									event = rot.get(index).process.generateEvent(eventlog, null, null, null, null,
+											rot.get(index).process.current_act, r.resource_name, t, rot.get(index).available_at, eventNumber);
+									eventSet.add(event);
 								}
-
-//								System.out.println(rot.get(index).object_name + " completes " + rot.get(index).process.current_act +
-//										" at " + rot.get(index).available_at);
-
 								rot.remove(rot.get(index));
 								break outerloop;
 							}
@@ -105,8 +113,7 @@ public class Scheduler {
 				}
 			}
 		}
-
-	return e;
+	return eventSet;
 	}
 
 	public void updateResourceStatus(int t) {

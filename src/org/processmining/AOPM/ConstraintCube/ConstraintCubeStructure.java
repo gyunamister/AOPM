@@ -1,60 +1,137 @@
 package org.processmining.AOPM.ConstraintCube;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.processmining.AOPM.models.ConstraintInstance;
 
 public class ConstraintCubeStructure {
-	public Set<String> D;
-	public Map<String,Set<Object>> elem;
-	public Map<String,Set<Set<Object>>> hier;
+	Set<ConstraintInstance> cis;
+	Set<String> dim;
+	Set<String> defaultDim;
+	Set<String> objectDim;
+	Set<String> attrDim;
+	public Map<String,Set<String>> elem;
+	public Map<String,Set<Set<String>>> hier;
 	
-	public ConstraintCubeStructure() {
-		this.elem = new LinkedHashMap<String,Set<Object>>();
-	}
-	
-	public void setDimension(Set<ConstraintInstance> CIS) {
-		String[] dims = {"cf","proc","act","res","Order","Item","Package","Route", "time"};
-		for(String d: dims) {
-			this.D.add(d);
+	public ConstraintCubeStructure(Set<ConstraintInstance> cis, Set<String> defaultProp, Set<String> objectProp, Set<String> attrProp) {
+		this.cis = cis;
+		this.setDim(defaultProp, objectProp, attrProp);
+		
+		this.elem = new LinkedHashMap<String,Set<String>>();
+		for(String defaultName:this.defaultDim) {
+			this.elem.put(defaultName, new LinkedHashSet<String>());
+		}
+		for(String objName:this.objectDim) {
+			this.elem.put(objName, new LinkedHashSet<String>());
+		}
+		for(String attrName:this.attrDim) {
+			this.elem.put(attrName, new LinkedHashSet<String>());
+		}
+		
+		this.hier = new LinkedHashMap<String,Set<Set<String>>>();
+		for(String defaultName:this.defaultDim) {
+			this.hier.put(defaultName, new LinkedHashSet<Set<String>>());
+		}
+		for(String objName:this.objectDim) {
+			this.hier.put(objName, new LinkedHashSet<Set<String>>());
+		}
+		for(String attrName:this.attrDim) {
+			this.hier.put(attrName, new LinkedHashSet<Set<String>>());
 		}
 	}
 	
-	public void setElem(Set<ConstraintInstance> CIS) {	 
-		List<String> nonContextDims = Arrays.asList("cf","time");
-		for(String d: this.D) {
-			Set<Object> dElem = new HashSet<Object>();
-			if(!nonContextDims.contains(d)) {
-				for(ConstraintInstance ci : CIS) {
-					dElem.addAll(ci.projectContext(d));
-				}
-			}else if(d=="cf"){
-				for(ConstraintInstance ci : CIS) {
-					dElem.add(ci.getcfName());
-				}
-			}else if(d=="time") {
-				for(ConstraintInstance ci : CIS) {
-					dElem.add(ci.getTime());
-				}
-			} 
-			this.elem.put(d, dElem);
-		}
+	public void setDim(Set<String> defaultProp, Set<String> objectProp, Set<String> attrProp) {
+		this.defaultDim = defaultProp;
+		this.objectDim = objectProp;
+		this.attrDim=attrProp;
+		this.dim = new LinkedHashSet<String>();
+		this.dim.addAll(defaultDim);
+		this.dim.addAll(objectDim);
+		this.dim.addAll(attrDim);
 	}
 	
-	public void setHier(Set<ConstraintInstance> CIS) {
-		for(Map.Entry<String,Set<Object>> e : this.elem.entrySet()) {
-			Set<Set<Object>> dHier = new HashSet<Set<Object>>();
-			for(Object o : e.getValue()) {
-				Set<Object> temp = new HashSet<Object>();
-				temp.add(o);
-				dHier.add(temp);
+	public Set<String> getDim(){
+		return this.dim;
+	}
+	
+	public void updateElem(int t) {
+		Set<ConstraintInstance> tempCIS = this.cis.stream().filter(x-> Integer.valueOf(x.getTime())==t).collect(Collectors.toSet());
+		for(ConstraintInstance ci : tempCIS) {
+			this.elem.get("cf").add(ci.getcfName());
+			for(String proc : ci.getContext().getProcSet()) {
+				this.elem.get("proc").add(proc);
 			}
-			this.hier.put(e.getKey(), dHier);
+			for(String act : ci.getContext().getActSet()) {
+				this.elem.get("act").add(act);
+			}
+			for(String res : ci.getContext().getResSet()) {
+				this.elem.get("res").add(res);
+			}
+			this.elem.get("time").add(ci.getTime());
+			for(String objName:this.objectDim) {
+				if(ci.getContext().getOmap().get(objName)!=null) {
+					for(String obj:ci.getContext().getOmap().get(objName)) {
+						this.elem.get(objName).add(obj);
+					}
+				}
+			}
+			for(String attrName:this.attrDim) {
+				for(String attr:ci.getContext().getVmap().get(attrName)) {
+					this.elem.get(attrName).add(attr);
+				}
+			}
 		}
 	}
+	
+	public void updateHier(int t) {
+		Set<ConstraintInstance> tempCIS = this.cis.stream().filter(x-> Integer.valueOf(x.getTime())==t).collect(Collectors.toSet());
+		for(ConstraintInstance ci : tempCIS) {
+			Set<String> cfSet = new LinkedHashSet<String>();
+			cfSet.add(ci.getcfName());
+			this.hier.get("cf").add(cfSet);
+			for(String proc : ci.getContext().getProcSet()) {
+				Set<String> procSet = new LinkedHashSet<String>();
+				procSet.add(proc);
+				hier.get("proc").add(procSet);
+			}
+			for(String act : ci.getContext().getActSet()) {
+				Set<String> actSet = new LinkedHashSet<String>();
+				actSet.add(act);
+				hier.get("act").add(actSet);
+			}
+			for(String res : ci.getContext().getResSet()) {
+				Set<String> resSet = new LinkedHashSet<String>();
+				resSet.add(res);
+				hier.get("res").add(resSet);
+			}
+			Set<String> timeSet = new LinkedHashSet<String>();
+			timeSet.add(ci.getTime());
+			hier.get("time").add(timeSet);
+			
+			for(String objName:this.objectDim) {
+				if(ci.getContext().getOmap().get(objName)!=null) {
+					for(String obj:ci.getContext().getOmap().get(objName)) {
+						Set<String> objSet = new LinkedHashSet<String>();
+						objSet.add(obj);
+						this.hier.get(objName).add(objSet);
+					}
+				}
+			}
+			
+			for(String attrName:this.attrDim) {
+				if(ci.getContext().getVmap().get(attrName)!=null) {
+					for(String attr:ci.getContext().getVmap().get(attrName)) {
+						Set<String> attrSet = new LinkedHashSet<String>();
+						attrSet.add(attr);
+						this.hier.get(attrName).add(attrSet);
+					}
+				}
+			}
+		}
+	}
+
 }

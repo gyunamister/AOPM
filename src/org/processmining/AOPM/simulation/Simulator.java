@@ -1,37 +1,42 @@
 package org.processmining.AOPM.simulation;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
+import org.processmining.AOPM.ConstraintCube.ConstraintCubeStructure;
+import org.processmining.AOPM.Exporter.AISExporter;
+import org.processmining.AOPM.Importer.OCXMLImporter;
 import org.processmining.AOPM.algorithms.ActionEngine;
 import org.processmining.AOPM.algorithms.ConstraintMonitor;
 import org.processmining.AOPM.models.AEConfig;
-import org.processmining.AOPM.models.ActionGateway;
+import org.processmining.AOPM.models.ActionInstance;
 import org.processmining.AOPM.models.CMConfig;
 import org.processmining.AOPM.models.ConstraintInstance;
-import org.processmining.AOPM.models.ConstraintStorage;
+import org.processmining.AOPM.models.ConstraintInstanceStream;
 import org.processmining.AOPM.models.Dashboard;
 import org.processmining.AOPM.models.Event;
 import org.processmining.AOPM.models.EventStream;
-
-import com.opencsv.CSVReader;
+import org.processmining.EIS.OHP.ActionGateway;
+import org.processmining.EIS.Simulation.ProcessSimulation;
 
 
 public class Simulator implements Runnable{
+	public OCXMLImporter importer;
+	public String AISfilePath; 
+	public AISExporter exporter;
 	public CMConfig cmConfig;
 	public AEConfig aeConfig;
 	public ConstraintMonitor cm;
-	public ConstraintStorage cs;
+	public ConstraintInstanceStream cs;
+	public ConstraintCubeStructure ccs;
 	public Dashboard db;
 	public ActionEngine ae;
 	public EventStream es;
 	public ProcessSimulation pSimulator;
 	public ActionGateway aGateway;
-//	public List<Event> eventlog;
 	public Set<String> objectSet = new HashSet<String>();
 	
 	public int speed;
@@ -62,9 +67,9 @@ public class Simulator implements Runnable{
 //			this.eventlog = new ArrayList<Event>();
 			this.es = new EventStream();
 			this.cm = new ConstraintMonitor(cmConfig);
-			this.cs = new ConstraintStorage();
-//			this.db = new Dashboard(cmConfig, this.cs);
-			this.ae = new ActionEngine(this.cs, aeConfig);
+			this.cs = new ConstraintInstanceStream();
+			this.db = new Dashboard(cmConfig, this.cs);
+			this.ae = new ActionEngine(aeConfig);
 			this.cmConfig = cmConfig;
 			this.aeConfig = aeConfig;
 		}else if(this.mode=="log-replay") {
@@ -75,20 +80,30 @@ public class Simulator implements Runnable{
 	}
 	
 	public Simulator(CMConfig cmConfig, AEConfig aeConfig, ProcessSimulation pSimulator){
-		if(this.mode=="order-handling-process") {
+		if(this.mode.equals("order-handling-process")) {
 //			this.eventlog = new ArrayList<Event>();
 			this.es = new EventStream();
 			this.cm = new ConstraintMonitor(cmConfig);
-			this.cs = new ConstraintStorage();
-//			this.db = new Dashboard(cmConfig, this.cs);
-			this.ae = new ActionEngine(this.cs, aeConfig);
+			this.cs = new ConstraintInstanceStream();
+//			(TODO) hard-coded properties
+			Set<String> defaultProp= new HashSet<String>();
+			Collections.addAll(defaultProp, "cf","proc","act","res","time");
+			Set<String> objectProp= new HashSet<String>();
+			Collections.addAll(objectProp, "Order","Item","Package","Route");
+			Set<String> attrProp= new HashSet<String>();
+			this.ccs = new ConstraintCubeStructure(this.cs.cis,defaultProp,objectProp,attrProp);
+			this.db = new Dashboard(cmConfig, this.cs);
+			this.ae = new ActionEngine(aeConfig);
 			this.cmConfig = cmConfig;
 			this.aeConfig = aeConfig;
+			this.pSimulator=pSimulator;
 			this.aGateway = new ActionGateway(pSimulator);
 		}else {
 			System.out.println("Mode not existing");
 		}
-		
+		this.importer = new OCXMLImporter(pSimulator.filePath);
+		this.AISfilePath = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/OH-AIS-%s.xml",new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()));
+		this.exporter = new AISExporter(this.AISfilePath);
 	}
 
 	
@@ -96,47 +111,27 @@ public class Simulator implements Runnable{
 
 
 	public void simulate(int t) {
-		Set<Event> eventsAtT = this.readEvents(t);
+//		Set<Event> eventsAtT = this.readEvents(t);
+		this.pSimulator.simulateProcess(t);
+		Set<Event> eventsAtT = this.importer.readOCXML(t);
 		this.es.setEventSet(eventsAtT);
-//		int monitorInterval = 24; 
-//		int executeInterval = 24;
 		Set<ConstraintInstance> cis = this.cm.monitor(t,this.es);
 		this.cs.addInstances(cis);
-//		this.db.updateVMap(t);
-//		Set<ActionInstance> ais = this.ae.generateInstanceLevelAction(t);
-//		this.aGateway.apply(ais);
+		this.ccs.updateElem(t);
+		this.ccs.updateHier(t);
+		this.db.updateVMap(t);
+		Set<ActionInstance> ais = this.ae.engine(t,this.cs,this.ccs);
+		this.recordAI(ais);
+		this.aGateway.apply(ais);
 	}
 	
-	public Set<Event> readEvents(int time) {
-		Set<Event> eventAtT = new HashSet<Event>();  
-		try {
-			CSVReader csvReader = new CSVReader(new FileReader("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/IS_OHP/eventlog.csv"));
-			String[] row;
-			int e = -1;
-			while ((row = csvReader.readNext()) != null) {
-				e+=1;
-				if(e==0) {
-					continue;
-				}
-				String[] objectNames = {"Order", "Item", "Package", "Route"};
-				Map<String,Set<String>> omap = new LinkedHashMap<String,Set<String>>();
-				for(int i=5;i<row.length;i++) {
-					Set<String> objectSet = new HashSet<String>();
-					for(String s:row[i].split("&")) {
-						objectSet.add(s);
-					}
-					omap.put(objectNames[i-5], objectSet);
-				}
-				//Read the events at time t
-				if(time==Integer.parseInt(row[4])) {
-					Event event = new Event(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]),omap);
-					eventAtT.add(event);
-				}
+	public void recordAI(Set<ActionInstance> aisAtT) {
+		for(ActionInstance ai:aisAtT) {
+			try {
+				this.exporter.recordAI(ai);
+			} catch(Exception e){
+				e.printStackTrace();
 			}
-			csvReader.close();
-		}catch (IOException ex) {
-			System.out.println(ex);
 		}
-		return eventAtT;
 	}
 	}

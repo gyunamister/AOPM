@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.processmining.AOPM.models.ActionFormula;
 import org.processmining.AOPM.parser.ADLLexer;
 import org.processmining.AOPM.parser.ADLListenerImpl;
 import org.processmining.AOPM.parser.ADLParser;
@@ -39,7 +40,8 @@ public class ADLParserTest
 		ADLListenerImpl listener = new ADLListenerImpl(actionMap);
 		ParseTreeWalker walker = new ParseTreeWalker();
 		walker.walk(listener, tree);
-		System.out.println(actionMap);
+		Map<String, ActionFormula> cfMap = listener.genafMap(actionMap);
+		System.out.println(cfMap);
 //		Gson gson = new Gson();
 //		String json = gson.toJson(actionMap);
 //		System.out.println(json);

@@ -8,12 +8,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 public class Dashboard {
 	public Map<String,List<Double>> vMap;
-	public ConstraintStorage cs;
+	public ConstraintInstanceStream cs;
 	public Set<String> constraintNames;
 	public String agg;
 	
 	
-	public Dashboard(CMConfig cmConfig, ConstraintStorage cs) {
+	public Dashboard(CMConfig cmConfig, ConstraintInstanceStream cs) {
 		this.vMap = new LinkedHashMap<String,List<Double>>();
 		this.cs = cs;
 		this.constraintNames = cmConfig.getCFNames();
@@ -30,9 +30,9 @@ public class Dashboard {
 		}
 	}
 	
-	public double aggCIs(List<ConstraintInstance> cis, int t, String constr, String agg) {
+	public double aggCIs(Set<ConstraintInstance> cis, int t, String constr, String agg) {
 		double result = 0.0;
-		List<String>violated = findViolated(cis, t, constr);
+		Set<ConstraintInstance>violated = findViolated(cis, t, constr);
 		if(!violated.isEmpty()) {
 			if(agg.equals("count")) {
 				result = violated.size();
@@ -41,16 +41,15 @@ public class Dashboard {
 		return result;
 	}
 	
-	public List<String> findViolated(List<ConstraintInstance> cis, int t, String constr){
-		List<String> violated_instances = new ArrayList<String>();
-		List<ConstraintInstance> cInstanceList = cis.stream() 
-				.filter((x) -> constr.equals(x.getConstraintName()) && t==x.getTime()).collect(Collectors.toList());
+	public Set<ConstraintInstance> findViolated(Set<ConstraintInstance> cis, int t, String constr){
+		Set<ConstraintInstance> violated_instances = new HashSet<ConstraintInstance>();
+		Set<ConstraintInstance> cInstanceList = cis.stream() 
+				.filter((x) -> constr.equals(x.getcfName()) && t==Integer.valueOf(x.getTime())).collect(Collectors.toSet());
 		if(!cInstanceList.isEmpty()) {
-			List<String> nok_w_dup = cInstanceList.stream().filter((x) -> "nok"
-			.equals(x.getCheck()))
-					.map(ConstraintInstance::getpEntity).collect(Collectors.toList());
-			Set<String> nok_wo_dup = new HashSet<String>(nok_w_dup);			
-			violated_instances = new ArrayList<String>(nok_wo_dup);
+			List<ConstraintInstance> nok_w_dup = cInstanceList.stream().filter((x) -> "nok"
+			.equals(x.getoutc())).collect(Collectors.toList());
+//			Set<String> nok_wo_dup = new HashSet<String>(nok_w_dup);			
+			violated_instances = new HashSet<ConstraintInstance>(nok_w_dup);
 		}
 		return violated_instances;
 	}

@@ -346,6 +346,16 @@ IEclipsePreferences#com-dubture-twig-ui {
 		'editorColorLineComment=#C7DD0C | null | null | false | null | null'
 		'editorColorNumber=#7FB347 | null | null | null | null | null'
 }
+IEclipsePreferences#com-genuitec-eclipse-sqlexplorer {
+	preferences:
+		'sql_columns=171,115,255'
+		'sql_default=210,215,218'
+		'sql_keyword=141,203,226'
+		'sql_multi_line_comment=199,221,12'
+		'sql_single_line_comment=199,221,12'
+		'sql_string=255,198,0'
+		'sql_table=49,132,255'
+}
 IEclipsePreferences#com-github-rustdt-ide-ui {
 	preferences:
 		'editor.coloring2.number#dark#=127,179,71'
@@ -1734,6 +1744,16 @@ IEclipsePreferences#org-eclipse-e4-CSS {
 		'org.eclipse.e4.CSS.syntaxColorer.tokenStyles.string.color=255,198,0'
 		'org.eclipse.e4.CSS.syntaxColorer.tokenStyles.ClassID.color=255,255,255'
 }
+IEclipsePreferences#org-eclipse-emf-mwe2-language-ui {
+	preferences:
+		'syntaxColorer.deprecated_element.color=165,30,52'
+		'syntaxColorer.deprecated_element.style=536870912'
+		'syntaxColorer.feature_ref.color=17,139,189'
+		'syntaxColorer.property_ref.color=102,225,248'
+		'syntaxColorer.property_ref.style=2'
+		'syntaxColorer.string_prop_ref.color=167,236,33'
+		'syntaxColorer.string_prop_ref.style=1'
+}
 IEclipsePreferences#org-eclipse-jdt-ui {
 	preferences:
 		'content_assist_completion_replacement_background=200,200,0'
@@ -1906,17 +1926,24 @@ IEclipsePreferences#org-eclipse-mylyn-wikitext-ui {
 }
 IEclipsePreferences#org-eclipse-pde-ui {
 	preferences:
-		'editor.color.header_assignment=216,216,216'
-		'editor.color.externalized_string=255,198,0'
-		'editor.color.instr=255,255,255'
-		'editor.color.string=255,198,0'
-		'editor.color.tag=121,171,255'
-		'editor.color.header_osgi=141,203,226'
 		'editor.color.default=216,216,216'
-		'editor.color.header_key=141,203,226'
+		'editor.color.externalized_string=255,198,0'
+		'editor.color.externalized_string_italic=true'
+		'editor.color.header_assignment=216,216,216'
+		'editor.color.header_assignment_bold=true'
 		'editor.color.header_attributes=121,171,255'
-		'editor.color.xml_comment=199,221,12'
+		'editor.color.header_key=141,203,226'
+		'editor.color.header_key_bold=true'
+		'editor.color.header_osgi=141,203,226'
 		'editor.color.header_value=255,198,0'
+		'editor.color.header_value_italic=true'
+		'editor.color.instr=255,255,255'
+		'editor.color.instr_bold=true'
+		'editor.color.string=255,198,0'
+		'editor.color.string_italic=true'
+		'editor.color.tag=121,171,255'
+		'editor.color.tag_bold=true'
+		'editor.color.xml_comment=199,221,12'
 }
 IEclipsePreferences#org-eclipse-php-ui {
 	preferences:
@@ -2393,6 +2420,16 @@ IEclipsePreferences#org-eclipse-xtend-core-Xtend {
 		'org.eclipse.xtend.core.Xtend.syntaxColorer.tokenStyles.xbase.static.method.invocation.color=190,214,255'
 		'org.eclipse.xtend.core.Xtend.syntaxColorer.tokenStyles.xtend.richText.bgColor=39,44,48'
 }
+IEclipsePreferences#org-eclipse-xtend-ide {
+	preferences:
+		'syntaxColorer.xtend.active.annotation.color=165,46,0'
+		'syntaxColorer.xtend.insignificant.template.text.color=23,198,163'
+		'syntaxColorer.xtend.potential.line.break.color=23,198,163'
+		'syntaxColorer.xtend.richText.bgColor=69,78,84'
+		'syntaxColorer.xtend.richText.color=23,198,163'
+		'syntaxColorer.xtend.template.line.bgColor=69,78,84'
+		'syntaxColorer.xtend.template.line.break.color=23,198,163'
+}
 IEclipsePreferences#org-eclipse-xtext-ui {
 	preferences:
 		'syntaxColorer.comment.color=85,96,104'
@@ -2414,6 +2451,16 @@ IEclipsePreferences#org-eclipse-xtext-ui {
 		'syntaxColorer.xbase.static.field.style=2'
 		'syntaxColorer.xbase.static.method.invocation.color=150,236,63'
 		'syntaxColorer.xbase.static.method.invocation.style=2'
+}
+IEclipsePreferences#org-eclipse-xtext-xtext-ui {
+	preferences:
+		'syntaxColorer.DataTypeIndicator.color=141,218,248'
+		'syntaxColorer.NeverCalledRule.color=115,130,140'
+		'syntaxColorer.RuleDeclaration.color=17,139,189'
+		'syntaxColorer.SpecialFeature.color=165,46,0'
+		'syntaxColorer.TypeReference.color=102,225,248'
+		'syntaxColorer.TypeReference.style=2'
+		'syntaxColorer.UnusedValue.color=115,130,140'
 }
 IEclipsePreferences#org-epic-perleditor {
 	preferences:

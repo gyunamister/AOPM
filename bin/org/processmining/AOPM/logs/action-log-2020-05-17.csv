@@ -1,0 +1,27 @@
+
+Set higher priority,o10,144
+Send an email to the case manager,o10,168
+Set higher priority,o10,168
+Set higher priority,o20,192
+Set higher priority,o30,216
+Set higher priority,o20,216
+Send an email to the case manager,o20,216
+Set higher priority,o30,240
+Send an email to the case manager,o30,240
+Set higher priority,o40,264
+Set higher priority,o57,288
+Send an email to the case manager,o40,288
+Set higher priority,o40,288
+Set higher priority,o50,288
+Set higher priority,o50,312
+Send an email to the case manager,o50,312
+Set higher priority,o60,336
+Set higher priority,o70,360
+Send an email to the case manager,o60,360
+Set higher priority,o60,360
+Set higher priority,o70,384
+Send an email to the case manager,o70,384
+Set higher priority,o80,408
+Set higher priority,o80,432
+Send an email to the case manager,o80,432
+Set higher priority,o90,432

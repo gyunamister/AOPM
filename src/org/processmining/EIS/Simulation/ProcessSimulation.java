@@ -2,10 +2,15 @@ package org.processmining.EIS.Simulation;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.processmining.EIS.Exporter.OCXMLExporter;
+import org.processmining.EIS.OHP.OrderHandlingEvent;
 import org.processmining.EIS.OHP.OrderHandlingProcess;
 import org.processmining.EIS.OHP.Resource;
 import org.processmining.EIS.OHP.Scheduler;
@@ -14,7 +19,7 @@ import com.opencsv.CSVReader;
 
 
 public class ProcessSimulation{
-	public int e = 1;
+	public OCXMLExporter exporter;
 	public OrderHandlingProcess mp;
 	public Scheduler sch;
 	public int speed;
@@ -22,8 +27,11 @@ public class ProcessSimulation{
 	public List<Resource> resourceList;
 	public boolean isRestart = false;
 	public boolean isSleep = false;
+	public String filePath;
 
 	public ProcessSimulation(){
+		this.filePath = String.format("/Users/GYUNAM/Documents/AOPM/src/org/processmining/AOPM/logs/OH-OCL-%s.xml",new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()));
+		exporter = new OCXMLExporter(filePath);
 		mp = new OrderHandlingProcess();
 		String resoureFile = "/Users/GYUNAM/Documents/AOPM/tests/testfiles/res_act_mat.csv";
 		resourceList = this.generateResource(resoureFile);
@@ -59,7 +67,8 @@ public class ProcessSimulation{
 		/*
 		 * assign resource and generate event
 		 * */
-		this.e = this.sch.assign(mp.eventlog, mp.ready_object_list, t, this.e);
+		Set<OrderHandlingEvent> eventAtT = this.sch.assign(mp.eventlog, mp.ready_object_list, t);
+		this.recordLog(eventAtT);
 	}
 
 	public List<Resource> generateResource(String csvFile) {
@@ -96,5 +105,16 @@ public class ProcessSimulation{
 		}
 		this.resourceList.add(r);
 
+	}
+	
+	public void recordLog(Set<OrderHandlingEvent> eventAtT) {
+		for(OrderHandlingEvent event:eventAtT) {
+			try {
+				this.exporter.recordEvent(event);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }

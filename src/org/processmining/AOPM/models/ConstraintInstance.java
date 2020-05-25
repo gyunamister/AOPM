@@ -6,13 +6,29 @@ public class ConstraintInstance {
 	public String cfName;
 	public Context ctx;
 	public String outc;
-	public int time;
+	public String time;
 	
 	public ConstraintInstance(String cfName, Context ctx, int t, String outcome) {
 		this.cfName = cfName;
 		this.ctx = ctx;
 		this.outc = outcome;
-		this.time = t;
+		this.time = Integer.toString(t);
+	}
+	
+	public String get(String d) {
+		if(d.equals("cf")) {
+			return this.cfName;
+		}else if(d.equals("outc")) {
+			return this.outc;
+		}else if(d.equals("time")) {
+			return this.time;
+		}else {
+			return "Not defined";
+		}
+	}
+	
+	public Set<String> getCtx(String d){
+		return this.ctx.get(d);
 	}
 	
 	public ConstraintInstance getThis() {
@@ -31,7 +47,7 @@ public class ConstraintInstance {
 		return this.outc;
 	}
 	
-	public int getTime() {
+	public String getTime() {
 		return this.time;
 	}
 	
